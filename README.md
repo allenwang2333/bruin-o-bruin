@@ -1,3 +1,5 @@
 # bruin-o-bruin
-Group project for CS 35L Fall 2022
-from 羊了个羊
+## Group project for CS 35L Fall 2022
+
+inspired by 羊了个羊
+
