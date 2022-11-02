@@ -1,8 +1,13 @@
 const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('./db/test.db');
+const db = new sqlite3.Database('./db/test.db', (err) => {
+    if (err) {
+      return console.error(err.message);
+    }
+    console.log('Connected to the SQlite database.');
+});
 
 db.serialize(() => {
-    db.run("CREATE TABLE lorem (info TEXT)");
+    db.run("CREATE TABLE IF NOT EXISTS lorem (info TEXT)");
 
     const stmt = db.prepare("INSERT INTO lorem VALUES (?)");
     for (let i = 0; i < 10; i++) {
