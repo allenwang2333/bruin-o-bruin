@@ -27,6 +27,7 @@ function randomPlaceBlock (board, pieceSet, count) {
     return board
 }
 
+
 // function test(){
 //     bA = [[[1,1,1,1,1], [1,1,1,1,1], [1,1,1,1,1], [1,1,1,1,1]], [[1,1,1,0], [1,1,0,1]], [[1,1], [1,1]]];
 //     count = 30
