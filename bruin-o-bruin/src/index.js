@@ -46,8 +46,25 @@ const gameItemsArr = [
 const itemsArr = (level) => {
     let arr = [...gameItemsArr];
     // Determine how many items on each level --> Can be changed later
-    const floorItemsArr = [9, 16, 25, 36, 49, 64, 81];
-    const floorNumsArr = [3, 4, 5, 6, 7, 8, 9];
+
+    const floorNumsArr = [];
+    const floorItemsArr = [];
+
+    let startNum = 3;
+    let endNum = 9;
+    let totalLevelNum = endNum - startNum + 1;
+
+    // init floorNumArr
+    for (let i = 0; i < totalLevelNum; i++) {
+        floorNumsArr.push(startNum+i); 
+    }
+
+    // init floorItemsArr
+    for (let i = 0; i < totalLevelNum; i++) {
+        floorItemsArr.push(floorNumsArr[i] ** 2);
+    }
+    //const floorItemsArr = [9, 16, 25, 36, 49, 64, 81];
+    //const floorNumsArr = [3, 4, 5, 6, 7, 8, 9];
 
     // How many empty items on each level
     const noItemsNum = [7, 14, 14, 24, 49, 40];
