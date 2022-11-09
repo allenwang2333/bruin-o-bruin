@@ -123,7 +123,7 @@ const isItemCanClick = (item, allItems) => {
     const nowItem = {...item};
     const nowItemFloor = nowItem.position[0];
     // The button floor --> doesn't matter
-    if (nowItemFloor === allItems.length) return;
+    // if (nowItemFloor === allItems.length) return;
 
     const upFloor = allItems[nowItemFloor - 2]?.arr.filter((itemNow) => itemNow.name !== '') || [];
 
