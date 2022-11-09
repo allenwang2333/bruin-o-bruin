@@ -1,13 +1,105 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.gamebox {
+  width: 600px;
+  margin: 0 auto;
+  border-radius: 20px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.titleAreaTitle {
+  font-size: 30px;
+  text-shadow: 1px 1px 1px rgb(78, 75, 75)
+}
+
+.titleAreaScore {
+  font-size: 25px;
+}
+
+.titleArea {
+  width: 100%;
+  height: 23%;
+  background-color: #FFD100;  /*UCLA Yellow Color*/
+  border-radius: 10px;
+  margin-bottom: 2%;
+  text-align: center;
+}
+
+.gameArea {
+  position: relative;
+  border: 2px solid black;
+  height: 500px;
+  border-radius: 9px;
+
+}
+
+.gameAreaFloor {
+  pointer-events: none;
+  display: flex;
+  flex-wrap: wrap;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.operateArea {
+  width: 100%;
+  height: 80px;
+  border: 2px solid black;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+
+
+}
+
+.gameItem {
+  pointer-events: auto;
+  border-radius: 8px;
+  width: 48px;
+  height: 48px;
+  text-align: center;
+  font-size: 25px;
+  line-height: 50px;
+  box-shadow: 2px 2px 4px #000;
+  border: 1px solid #c2cbcbee;
+  cursor: pointer;
+  margin: 0px 5px 5px 0;
+
+}
+
+.gameItemOperate {
+  border-radius: 8px;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  font-size: 25px;
+  line-height: 50px;
+  box-shadow: 2px 2px 4px #aaaaaa;
+  border: 1px solid #000;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.operateBtnArr {
+  position: absolute;
+  display: flex;
+  padding: 10px;
+  top: 20px;
+  left: 100px;
+
+}
+
+.operateBtn {
+  width: 120px;
+  height: 50px;
+  font-size: 20px;
+  line-height: 50px;
+  background-color: #f08300;
+  margin-right: 10px;
+  text-align: center;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 2px 2px 4px #aaaaaa;
+
 }
