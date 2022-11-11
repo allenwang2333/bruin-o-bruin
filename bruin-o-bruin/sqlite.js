@@ -1,41 +1,100 @@
+/*
+    Handles the request of database query
+    @author Allen Wang
+    @date Nov 8 2022
+*/
+
 const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('./db/db.sqlite', (err) => {
-    if (err) {
-      return console.error(err.message);
-    }
-    console.log('Connected to the SQlite database.');
-});
 
 var schema = {
     "users": ["id", "username", "passwd"]
 };
 
-/* 
-    Read all info from the table
-    However, This function is synchronous. It's weird.
-    Author: Allen Wang Nov 8 2022
-*/
-function readTableAll(table, callback) {
-    var queryString = "SELECT * FROM " + table;
-    let data = {};
-    db.all(queryString, (err, rows) => {
-        if (err) throw err;
-        rows.forEach(function (row) {
-            data[row.id] = {};
-            for (var i = 0; i < schema[table].length; i++) {
-                data[row.id][schema[table][i]] = row[schema[table][i]];
+class QueryDatabase {
+    constructor(filePath, schema) {
+        this.filePath = filePath;
+        this.schema = schema;
+    }  
+
+    connectDatabase() {
+        this.db = new sqlite3.Database(this.filePath, (err) => {
+            if (err) {
+                return console.error(err.message);
             }
+            console.log("-------- Connected to " + this.filePath + " database --------");
         });
-        callback(data);
-    });
-    return data;
+    }
+
+    readTableAll(table, callback) {
+        var queryString = "SELECT * FROM " + table;
+        let data = {};
+        this.db.all(queryString, (err, rows) => {
+            if (err) throw err;
+            rows.forEach(function (row) {
+                data[row.username] = {};
+                for (var i = 0; i < schema[table].length; i++) {
+                    data[row.username][schema[table][i]] = row[schema[table][i]];
+                }
+            });
+            callback(data);
+        });
+        return data;
+    }
+
+    readTableByUsernames(table, username, callback) {
+        var queryString = 
+            "SELECT * FROM " + table + 
+            " WHERE username == \"" + username + "\"";
+        let userInfo = {}; 
+        this.db.all(queryString, (err, rows) => {
+            if (err) throw err;
+            rows.forEach(function (row) {
+                userInfo[schema[table][1]] = row[schema[table][1]];
+                userInfo[schema[table][2]] = row[schema[table][2]];
+            });
+            callback(userInfo);
+        });
+    }
+
+    addUser(table, username, passwd, callback) {
+        var testExist = 
+        "SELECT * FROM " + table + 
+        " WHERE username == \"" + username + "\"";
+        var queryString = 
+        "INSERT INTO " + table + 
+        " (username, passwd) VALUES (\"" + username + "\", \"" + passwd + "\") ";
+        this.db.all(testExist, (err, rows) => {
+            if (err) throw err;
+            if (rows.length > 0) {
+                console.log("User \"" + username + "\" already exists");
+                return;
+            }
+            else {
+                this.db.run(queryString, (err) => {
+                    if (err) throw err;
+                    callback(username);            
+                }); 
+            }
+        });        
+}
+
+    closeDatabase() {
+        this.db.close((err) => {
+            if (err) {
+                return console.error(err.message);
+            }
+            console.log("-------- Closed the database connection --------");
+        });
+    }
 }
 
 function print(data) {
     console.log(data);
 }
 
-readTableAll("users", print);
-
-db.close();
-console.log("Database connection closed");
+userDatabase = new QueryDatabase("./db/db.sqlite", schema);
+userDatabase.connectDatabase();
+userDatabase.readTableAll("users", print);
+userDatabase.readTableByUsernames("users", "allen", print);
+userDatabase.addUser("users", "James", "test", print);
+userDatabase.closeDatabase();
