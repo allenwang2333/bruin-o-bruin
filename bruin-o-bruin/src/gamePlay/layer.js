@@ -1,4 +1,4 @@
-import {Block} from "./block.js";
+import Block from "./block.js";
 import React from 'react';
 
 class Layer extends React.Component{
@@ -12,8 +12,8 @@ class Layer extends React.Component{
     renderRow(i){
         var res = null;
         var row = this.state.blocks[i];
-        for(var i = 0; i < row.length; i++){
-            res += <Block block={row[i]} onClick={this.props.onClick()}/>;
+        for(var j = 0; i < row.length; j++){
+            res += <Block block={row[j]} onClick={() => this.props.onClick(i, j)}/>;
         }
         return res;
     }
@@ -29,3 +29,5 @@ class Layer extends React.Component{
         return {res};
     }
 }
+
+export default Layer;
