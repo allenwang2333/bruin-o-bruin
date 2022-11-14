@@ -65,13 +65,14 @@ class QueryDatabase {
         "INSERT INTO " + table + 
         " (email ,username, passwd) VALUES (" + "\"" + email + "\", \"" + username + "\", \"" + passwd + "\")";
         this.db.all(testExist, (err, rows) => {
+            let userInfo = {};
             if (err) throw err;
             if (rows.length > 0) {
                 console.log("User \"" + email + "\" already exists");
+                callback(userInfo);
                 return;
             }
-            else {
-                let userInfo = {}; 
+            else { 
                 this.db.run(queryString, (err) => {
                     userInfo[schema[table][1]] = email;
                     userInfo[schema[table][2]] = username;
@@ -97,10 +98,13 @@ function print(data) {
     console.log(data);
 }
 
-userDatabase = new QueryDatabase("./db/db.sqlite", schema);
-userDatabase.connectDatabase();
-userDatabase.readTableAll("users", print);
-userDatabase.readTableByEmail("users", "allen@admin", print);
-userDatabase.addUser("users", "james@admin", "james" , "jamestesting", print);
-userDatabase.addUser("users", "sakura@admin", "sakura" , "sakuratesting", print);
-userDatabase.closeDatabase();
+// userDatabase = new QueryDatabase("./db/db.sqlite", schema);
+// userDatabase.connectDatabase();
+// userDatabase.readTableAll("users", print);
+// userDatabase.readTableByEmail("users", "allen@admin", print);
+// userDatabase.addUser("users", "james@admin", "james" , "jamestesting", print);
+// userDatabase.addUser("users", "sakura@admin", "sakura" , "sakuratesting", print);
+// userDatabase.closeDatabase();
+
+module.exports.QueryDatabase = QueryDatabase;
+module.exports.schema = schema;
