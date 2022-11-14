@@ -76,7 +76,7 @@ class QueryDatabase {
                 }); 
             }
         });        
-}
+    }
 
     closeDatabase() {
         this.db.close((err) => {
