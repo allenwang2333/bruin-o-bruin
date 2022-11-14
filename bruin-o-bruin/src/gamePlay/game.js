@@ -5,40 +5,53 @@ import React from "react"
 
 class Game extends React.Component{
     constructor(){
-        var layer1 = [
-            [1, 1, 1, 0, 1, 1, 1],
-            [0, 1, 1, 1, 1, 1, 0],
-            [1, 1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 0, 1, 1, 1]
-        ]
-        var layer2 = [
-            [1, 1, 1, 1, 1, 1],
-            [1, 1, 0, 0, 1, 1],
-            [1, 1, 1, 1, 1, 1],
-            [1, 0 ,1, 0, 1, 0],
-            [1, 1, 1, 1, 1, 1]
-        ]
-        var layer3 = [
-            [1, 0, 0, 1],
-            [1, 1, 1, 1],
-            [0, 1, 1, 0],
-            [1, 0, 0, 1]
-        ]
-        var layer4 = [
-            [1, 0, 1],
-            [0, 0, 0],
-            [1, 0, 1],
-        ]
-        var layer5 = [
-            [0, 1, 0],
-            [1, 0, 1],
-            [0, 1, 0]
-        ]
-        this.state={
-            board: [layer1, layer2, layer3, layer4, layer5],
-            seen: this.checkSeen(),
-            hand: Array(7).fill(null),
+        super();
+        const layer0 = Array(6).fill(Array(6).fill({
+                layer: 0,
+                col: null,
+                row: null,
+                category: null,
+                parent: null,
+                child: null,
+            }))
+        const layer1 = Array(5).fill(Array(5).fill({
+                layer: 1,
+                col: null,
+                row: null,
+                category: null,
+                parent: null,
+                child: null,
+            }))
+        const layer2 = Array(4).fill(Array(4).fill({
+                layer: 2,
+                col: null,
+                row: null,
+                category: null,
+                parent: null,
+                child: null,
+            }))
+        const layer3 = Array(3).fill(Array(3).fill({
+                layer: 3,
+                col: null,
+                row: null,
+                category: null,
+                parent: null,
+                child: null,
+            }))
+        const layer4 = Array(3).fill(Array(3).fill({
+                layer: 4,
+                col: null,
+                row: null,
+                category: null,
+                parent: null,
+                child: null,
+            }))
+        var board = [layer0, layer1, layer2, layer3, layer4];
+        const seen = this.checkSeen(board);
+        this.state = {
+            board: board,
+            seen: seen,
+            hand: Array(7).fill({category: null}),
             handSize: 0,
         }
     }

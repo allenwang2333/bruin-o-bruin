@@ -1,20 +1,24 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
 import Block from './block.js';
 
 class Hand extends React.Component{
-    constructor(){
+    constructor(props){
+        super(props);
         this.state = {
-            blocks: Array(7).fill(null),
+            blocks: this.props.hand,
         /* TODO: Add more state or lift up */
         };
+    }
+
+    non_reponse_onClick(){
+
     }
 
     renderBlockAtHand(i) {
         return (
             /* TODO: change return value and handle click might be added if case of unplacing blocks from hand back to board */
             <Block
-                value={this.state.blocks[i]}
+                value={this.state.blocks[i]} onClick={this.non_reponse_onClick}
             />
             
         )

@@ -10,15 +10,13 @@ class Board extends React.Component{
     }
 
     render(){
-        var res = null;
         var board = this.state.board;
-        for(var i = 0; i < board.length; i++){
-            res +=  <div className="layer">
-                        <Layer layer={board[i]} onClick={(r, c) => this.props.onClick(i, r, c)}/>
-                    </div>
-        }
-
-        return {res};
+        console.log(board)
+        return (
+            <div className="board">
+                {board.map((layer, index) => <Layer layer={layer} key={index} onClick={(l, r, c) => this.props.onClick(l, r, c)}/>)}
+            </div>
+        )
     }
 }
 

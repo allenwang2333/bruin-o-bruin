@@ -1,4 +1,4 @@
-import Block from "./block.js";
+import Row from "./row.js";
 import React from 'react';
 
 class Layer extends React.Component{
@@ -9,24 +9,11 @@ class Layer extends React.Component{
         }
     }
 
-    renderRow(i){
-        var res = null;
-        var row = this.state.blocks[i];
-        for(var j = 0; i < row.length; j++){
-            res += <Block block={row[j]} onClick={() => this.props.onClick(i, j)}/>;
-        }
-        return res;
-    }
-    
     render(){
-        var res = null;
-        var layer = this.state.blocks;
-        for(var i = 0; i < layer.length; i++){
-            res +=  <div className="layerRow">
-                        {this.renderRow(i)}
-                    </div>
-        }
-        return {res};
+        const layer = this.state.blocks;
+        return (<div className="layer">
+                    {layer.map((row, index) => (<Row row={row} key={index} onClick={(l, r, c) => this.props.onClick(l, r, c)}/>))}
+                </div>);
     }
 }
 
