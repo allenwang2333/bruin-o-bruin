@@ -5,7 +5,7 @@ function randomPlaceBlock (board, pieceSet, count) {
     // Assign least occurance to each piece
     num *= length;
     let remain = (count - num) / 3;
-    for(i = 0; i < remain; i++){
+    for(var i = 0; i < remain; i++){
         pieces[Math.floor(Math.random() * length)] += 3;
     }
     for(const layer in board){
