@@ -9,12 +9,7 @@ import Game from "./gamePlay/game.js"
 class App extends React.Component{
   render(){
   return (
-    <BrowserRouter>
-      <ul className="App-header">  
-        <li> <Link to="/">Home</Link></li>  
-        <li> <Link to="/auth">SignIn/SignUp</Link> </li>  
-        <li> <Link to="/game">Game</Link> </li>
-      </ul>  
+    <BrowserRouter> 
       <Routes>
         <Route exact path="/" element={<Home/>} />
         <Route path="/auth" element={<Auth/>} />
