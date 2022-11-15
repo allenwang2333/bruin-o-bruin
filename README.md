@@ -3,7 +3,7 @@
 
 inspired by 羊了个羊
 
-in root directory:
+in root directory: <br /> <br />
 run ```npm install``` <br /><br />
 run ```npm run dev``` to start the server <br /><br />
 then ```cd bruin-o-bruin``` to get into the react directory <br /><br />
