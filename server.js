@@ -55,6 +55,7 @@ app.post('/server_auth_signup', function (req, res) {
 
 app.post('/reset_passwd', function(req, res){
   var user_email = req.body.email;
+  var user_name = req.body.fullname;
   var user_password = req.body.password;
   var user_password_confirm = req.body.password_confirm;
   if (user_password != user_password_confirm){
@@ -62,10 +63,10 @@ app.post('/reset_passwd', function(req, res){
   }
   else {
     db.connectDatabase();
-    db.updatePassword("users", user_email, user_password, function (userInfo) {
+    db.updatePassword("users", user_email, user_name ,user_password, function (userInfo) {
       console.log(userInfo)
-      if (Object.keys(userInfo).length === 0) {
-        res.send('<>User does not exist<>');
+      if (Object.keys(userInfo).length === 0 || userInfo.username != user_name) {
+        res.send('<>User does not exist or wrong user name<>');
       }
       else {
         res.send(userInfo.username);
