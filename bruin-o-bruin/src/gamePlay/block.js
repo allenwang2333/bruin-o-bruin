@@ -1,4 +1,5 @@
 import React from 'react';
+import "./gamePlay.css"
 
 class Block extends React.Component{
     constructor(props) {
