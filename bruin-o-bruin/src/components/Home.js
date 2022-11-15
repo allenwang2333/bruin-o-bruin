@@ -17,7 +17,8 @@ const Home = () => {
     return (
       <div>
         <h1>Home Page</h1>
-        <a href="/auth">SignIn/SignUp</a> 
+        <a href="/auth">SignIn/SignUp</a> <br></br>
+        <a href="/game">play as guest</a> 
       </div>
     );
   }
