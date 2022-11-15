@@ -53,6 +53,29 @@ app.post('/server_auth_signup', function (req, res) {
   });
 })
 
+app.post('/reset_passwd', function(req, res){
+  var user_email = req.body.email;
+  var user_password = req.body.password;
+  var user_password_confirm = req.body.password_confirm;
+  if (user_password != user_password_confirm){
+    res.send("<>Password should be consistent<>");
+  }
+  else {
+    db.connectDatabase();
+    db.updatePassword("users", user_email, user_password, function (userInfo) {
+      console.log(userInfo)
+      if (Object.keys(userInfo).length === 0) {
+        res.send('<>User does not exist<>');
+      }
+      else {
+        res.send('Password has been reset');
+      }
+    });
+  }
+  
+  
+});
+
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../bruin-o-bruin/bruin-o-bruin/build', 'index.html'));
 });

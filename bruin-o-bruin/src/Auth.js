@@ -61,7 +61,7 @@ export default function (props) {
     params.append('password', hashString(event.currentTarget.elements.password.value).toString());
     params.append('password_confirm', hashString(event.currentTarget.elements.password_confirm.value).toString());
     params.append('fullname', event.currentTarget.elements.fullname.value);
-    const response = await fetch('http://localhost:8080/server_auth_signup', {method: 'POST', body: params});
+    const response = await fetch('http://localhost:8080/reset_passwd', {method: 'POST', body: params});
     const msgFromResponse = await response.text();
     if(msgFromResponse.match(/^[a-zA-Z0-9]+$/)){
       alert("Successfully reseted password");
@@ -70,7 +70,7 @@ export default function (props) {
           window.location.href = "/";
       }, 500);
     } else {
-      alert("The email is already registered");
+      alert(msgFromResponse);
     }
   }
 
