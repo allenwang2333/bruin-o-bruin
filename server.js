@@ -68,7 +68,7 @@ app.post('/reset_passwd', function(req, res){
         res.send('<>User does not exist<>');
       }
       else {
-        res.send('Password has been reset');
+        res.send(userInfo.username);
       }
     });
   }

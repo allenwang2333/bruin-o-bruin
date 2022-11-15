@@ -63,6 +63,7 @@ export default function (props) {
     params.append('fullname', event.currentTarget.elements.fullname.value);
     const response = await fetch('http://localhost:8080/reset_passwd', {method: 'POST', body: params});
     const msgFromResponse = await response.text();
+    console.log(msgFromResponse);
     if(msgFromResponse.match(/^[a-zA-Z0-9]+$/)){
       alert("Successfully reseted password");
       sessionStorage.setItem("userName", msgFromResponse);
@@ -70,7 +71,7 @@ export default function (props) {
           window.location.href = "/";
       }, 500);
     } else {
-      alert(msgFromResponse);
+      alert(msgFromResponse.split("<>")[1]);
     }
   }
 
