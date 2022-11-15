@@ -84,7 +84,7 @@ class QueryDatabase {
         });        
     }
 
-    updatePassword(table, email, passwd, callback) {
+    updatePassword(table, email, username , passwd, callback) {
         var testExist = 
         "SELECT * FROM " + table + 
         " WHERE email == \"" + email + "\"";
@@ -95,16 +95,17 @@ class QueryDatabase {
         this.db.all(testExist, (err, rows) => {
             let userInfo = {};
             if (err) throw err;
-            if (rows.length > 0) {
+            if (rows.length > 0 && rows[0].username == username) {
                 this.db.run(updateString, (err) => {
                     if (err) throw err;
                     userInfo[schema[table][1]] = email;
+                    userInfo[schema[table][2]] = username;
                     userInfo[schema[table][3]] = passwd;
                     callback(userInfo);
                 });  
             }
             else {
-                console.log("User does not exist");
+                console.log("User does not exist or wrong username");
                 callback(userInfo);
                 return;
             }
