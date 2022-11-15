@@ -4,7 +4,10 @@
 inspired by 羊了个羊
 
 in root directory:
+run ```npm install``` <br /><br />
 run ```npm run dev``` to start the server <br /><br />
 then ```cd bruin-o-bruin``` to get into the react directory <br /><br />
+run ```npm install``` <br /><br />
 run ```npm run build``` <br /><br />
-then, check http://localhost:8080/ to see the web-app
+then, check http://localhost:8080/ to see the web-app 
+
