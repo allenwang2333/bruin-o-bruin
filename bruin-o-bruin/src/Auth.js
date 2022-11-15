@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import {hashString} from 'react-hash-string'
 
 export default function (props) {
   let [authMode, setAuthMode] = useState("signin")
@@ -11,7 +12,7 @@ export default function (props) {
     event.preventDefault()
     const params = new URLSearchParams();
     params.append('email', event.currentTarget.elements.email.value);
-    params.append('password', event.currentTarget.elements.password.value);
+    params.append('password', hashString(event.currentTarget.elements.password.value).toString());
     const response = await fetch('http://localhost:8080/server_auth_signin', {method: 'POST', body: params});
     const msgFromResponse = await response.text();
     if(msgFromResponse.match(/^[a-zA-Z0-9]+$/)){
@@ -29,7 +30,7 @@ export default function (props) {
     event.preventDefault()
     const params = new URLSearchParams();
     params.append('email', event.currentTarget.elements.email.value);
-    params.append('password', event.currentTarget.elements.password.value);
+    params.append('password', hashString(event.currentTarget.elements.password.value).toString());
     params.append('fullname', event.currentTarget.elements.fullname.value);
     const response = await fetch('http://localhost:8080/server_auth_signup', {method: 'POST', body: params});
     const msgFromResponse = await response.text();
@@ -80,7 +81,7 @@ export default function (props) {
               </button>
             </div>
             <p className="text-center mt-2">
-              Forgot <a href="#">password?</a>
+              Forgot <a href="https://it.ucla.edu/iamucla/reset-password">password?</a>
             </p>
           </div>
         </form>
@@ -132,7 +133,7 @@ export default function (props) {
             </button>
           </div>
           <p className="text-center mt-2">
-            Forgot <a href="#">password?</a>
+            Forgot <a href="https://it.ucla.edu/iamucla/reset-password">password?</a>
           </p>
         </div>
       </form>
