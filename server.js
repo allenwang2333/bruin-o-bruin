@@ -63,7 +63,7 @@ app.post('/reset_passwd', function(req, res){
   }
   else {
     db.connectDatabase();
-    db.updatePassword("users", user_email, user_password, function (userInfo) {
+    db.updatePassword("users", user_email, user_name ,user_password, function (userInfo) {
       console.log(userInfo)
       if (Object.keys(userInfo).length === 0 || userInfo.username != user_name) {
         res.send('<>User does not exist or wrong user name<>');
