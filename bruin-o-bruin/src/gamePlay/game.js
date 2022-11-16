@@ -7,48 +7,57 @@ import "./gamePlay.css"
 class Game extends React.Component{
     constructor(){
         super();
+        /*
         const layer0 = Array(6).fill(Array(6).fill({
                 layer: 0,
-                col: null,
                 row: null,
+                col: null,
                 category: null,
                 parent: null,
                 child: null,
             }))
         const layer1 = Array(5).fill(Array(5).fill({
                 layer: 1,
-                col: null,
                 row: null,
+                col: null,
                 category: null,
                 parent: null,
                 child: null,
             }))
         const layer2 = Array(4).fill(Array(4).fill({
                 layer: 2,
-                col: null,
                 row: null,
+                col: null,
                 category: null,
                 parent: null,
                 child: null,
             }))
         const layer3 = Array(3).fill(Array(3).fill({
                 layer: 3,
-                col: null,
                 row: null,
+                col: null,
                 category: null,
                 parent: null,
                 child: null,
             }))
         const layer4 = Array(3).fill(Array(3).fill({
                 layer: 4,
-                col: null,
                 row: null,
+                col: null,
                 category: null,
                 parent: null,
                 child: null,
             }))
+<<<<<<< HEAD
         var board = [layer0, layer1, layer2, layer3, layer4];
         const seen = this.initSeen(board);
+=======
+        */  
+        const cLayout = require("./layout.json")
+        var board = cLayout.board;
+        console.log(board);
+        const seen = this.checkSeen(board);
+>>>>>>> 2f6a3450693bf377c43a5c2a5bbed82c00f9cf05
         this.state = {
             board: board,
             seen: seen,
