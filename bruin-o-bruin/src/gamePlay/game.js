@@ -47,7 +47,7 @@ class Game extends React.Component{
                 child: null,
             }))
         var board = [layer0, layer1, layer2, layer3, layer4];
-        const seen = this.checkSeen(board);
+        const seen = this.initSeen(board);
         this.state = {
             board: board,
             seen: seen,
@@ -56,8 +56,34 @@ class Game extends React.Component{
         }
     }
 
-    checkSeen(){
-        return [[0, 0, 0], [0, 0, 1], [0, 0, 2]]; //*TODO This is simply for testing purposes
+    initSeen(board){
+        var seen = [];
+        for(const layer in board){
+            for(const row in board[layer]){
+                for(const col in board[layer][row]){
+                    const curr = board[layer][row][col];
+                    if(curr.fill && curr.parent === [])
+                        seen.concat([layer, row, col]);
+                }
+            }
+        }
+        return seen; //*TODO This is simply for testing purposes
+    }
+
+    checkSeen(curr, child){
+        var board = this.state.board;
+        var seen = this.state.seen;
+        seen.splice(seen.indexOf(curr))
+        for(const index in child){
+            var idx = board[index[0]][index[1]][index[2]].parent.indexOf(curr);
+            board[index[0]][index[1]][index[2]].parent.splice(idx, 1);
+            if(board[index[0]][index[1]][index[2]].parent.length === 0)
+                seen.concat(index);
+        }
+        this.setState({
+            board: board,
+            seen: seen,
+        })
     }
 
     handleClick(layer, row, col){
