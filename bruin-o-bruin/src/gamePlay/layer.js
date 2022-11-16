@@ -1,5 +1,6 @@
 import Row from "./row.js";
 import React from 'react';
+import "./gamePlay.css"
 
 class Layer extends React.Component{
     constructor(props){
