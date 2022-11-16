@@ -27,6 +27,8 @@ class Block extends React.Component{
             /* intended to move the block from board to hand or vice versa if case of the undo feature*/
         )
     }
+
 }
 
 export default Block;
+
