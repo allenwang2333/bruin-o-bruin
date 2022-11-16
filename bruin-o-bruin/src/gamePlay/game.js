@@ -2,6 +2,7 @@ import Board from "./board.js"
 import Hand from "./hand.js"
 import randomPlace from "./randomPlace.js"
 import React from "react"
+import "./gamePlay.css"
 
 class Game extends React.Component{
     constructor(){

@@ -84,6 +84,35 @@ class QueryDatabase {
         });        
     }
 
+    updatePassword(table, email, username , passwd, callback) {
+        var testExist = 
+        "SELECT * FROM " + table + 
+        " WHERE email == \"" + email + "\"";
+        var updateString = 
+        "UPDATE " + table +
+        " SET passwd = \"" + passwd + "\"" +
+        " WHERE email == \"" + email + "\"";
+        this.db.all(testExist, (err, rows) => {
+            let userInfo = {};
+            if (err) throw err;
+            if (rows.length > 0 && rows[0].username == username) {
+                this.db.run(updateString, (err) => {
+                    if (err) throw err;
+                    userInfo[schema[table][1]] = email;
+                    userInfo[schema[table][2]] = username;
+                    userInfo[schema[table][3]] = passwd;
+                    callback(userInfo);
+                });  
+            }
+            else {
+                console.log("User does not exist or wrong username");
+                callback(userInfo);
+                return;
+            }
+        });
+
+    }
+
     closeDatabase() {
         this.db.close((err) => {
             if (err) {
@@ -101,7 +130,8 @@ function print(data) {
 // userDatabase = new QueryDatabase("./db/db.sqlite", schema);
 // userDatabase.connectDatabase();
 // userDatabase.readTableAll("users", print);
-// userDatabase.readTableByEmail("users", "allen@admin", print);
+// userDatabase.updatePassword("users", "adefen@admin", "efihsrgifed", print);
+//userDatabase.readTableByEmail("users", "allen@admin", print);
 // userDatabase.addUser("users", "james@admin", "james" , "jamestesting", print);
 // userDatabase.addUser("users", "sakura@admin", "sakura" , "sakuratesting", print);
 // userDatabase.closeDatabase();

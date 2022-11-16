@@ -1,4 +1,5 @@
 import React from 'react';
+import "./gamePlay.css"
 
 class Block extends React.Component{
     constructor(props) {
@@ -26,6 +27,8 @@ class Block extends React.Component{
             /* intended to move the block from board to hand or vice versa if case of the undo feature*/
         )
     }
+
 }
 
 export default Block;
+
