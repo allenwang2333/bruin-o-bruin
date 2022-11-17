@@ -15,13 +15,14 @@ class Hand extends React.Component{
     }
 
     renderBlockAtHand(i) {
-        return (
+        //return (
             /* TODO: change return value and handle click might be added if case of unplacing blocks from hand back to board */
-            <Block
-                value={this.state.blocks[i]} onClick={this.non_reponse_onClick}
-            />
             
-        )
+         //   <Block
+           //     value={this.state.blocks[i]} onClick={this.non_reponse_onClick}
+           // />
+            
+        //)
     }
 
     render() {
