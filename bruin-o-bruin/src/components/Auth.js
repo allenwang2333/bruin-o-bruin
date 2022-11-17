@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import {hashString} from 'react-hash-string'
+import './style.css';
 
 export default function (props) {
   let [authMode, setAuthMode] = useState("signin")
@@ -28,7 +29,7 @@ export default function (props) {
       alert("Successfully logged in");
       sessionStorage.setItem("userName", msgFromResponse);
       window.setTimeout(function() {
-          window.location.href = "/";
+          window.location.href = "/home";
       }, 500);
     } else {
       alert("Invalid email or password");
@@ -47,7 +48,7 @@ export default function (props) {
       alert("Successfully logged in");
       sessionStorage.setItem("userName", msgFromResponse);
       window.setTimeout(function() {
-          window.location.href = "/";
+          window.location.href = "/home";
       }, 500);
     } else {
       alert("The email is already registered");
@@ -68,7 +69,7 @@ export default function (props) {
       alert("Successfully reseted password");
       sessionStorage.setItem("userName", msgFromResponse);
       window.setTimeout(function() {
-          window.location.href = "/";
+          window.location.href = "/home";
       }, 500);
     } else {
       alert(msgFromResponse.split("<>")[1]);
