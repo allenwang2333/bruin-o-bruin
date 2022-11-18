@@ -54,6 +54,7 @@ class Game extends React.Component{
             if(board[index[0]][index[1]][index[2]].parent.length === 0)
                 seen.push(index);
         }
+        board[layer][row][col].child = null;
         this.setState({
             board: board,
             seen: seen,
