@@ -1,11 +1,6 @@
 import React from 'react';
 
 class HandBlock extends React.Component{
-    constructor(props) {
-        super(props);
-    }
-
-
     render() {
         return (
             <button className="handblock"> 

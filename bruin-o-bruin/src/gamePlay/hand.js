@@ -3,10 +3,6 @@ import HandBlock from './handblock.js';
 import "./gamePlay.css"
 
 class Hand extends React.Component{
-    constructor(props){
-        super(props);
-    }
-
     renderBlockAtHand(i) {
         return (
             /* TODO: change return value and handle click might be added if case of unplacing blocks from hand back to board */

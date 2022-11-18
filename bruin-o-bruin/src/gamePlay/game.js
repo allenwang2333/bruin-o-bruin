@@ -84,11 +84,12 @@ class Game extends React.Component{
                 hand[handSize++] = board[layer][row][col].category;
             }
             board[layer][row][col].fill = 0;
+            board[layer][row][col].category = null;
             this.setState({
                 board: board,
                 hand: hand,
                 handSize: handSize,
-            })
+            });
             this.handleEliminate();
         }
     }

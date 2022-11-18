@@ -2,23 +2,11 @@ import React from 'react';
 import "./gamePlay.css"
 
 class Block extends React.Component{
-    constructor(props) {
-        super(props);
-        this.state = { 
-            layer: this.props.block.layer,
-            col: this.props.block.col,
-            row: this.props.block.row,
-            category: this.props.block.category,
-            parent: this.props.block.parent,
-            child: this.props.block.child,
-        };
-    }
-
     render() {
-        const layer = this.state.layer;
-        const row = this.state.row;
-        const col = this.state.col;
-        const category = this.state.category;
+        const layer = this.props.block.layer;
+        const row = this.props.block.row;
+        const col = this.props.block.col;
+        const category = this.props.block.category;
         return (
             <button className="block" onClick={() => this.props.onClick(layer, row, col)}> 
                 {category}
