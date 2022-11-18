@@ -72,25 +72,14 @@ app.post('/reset_passwd', function (req, res) {
 });
 
 app.post('/compose', function (req, res) {
-  var user_email = req.body.email;
-  var user_name = req.body.fullname;
-  var user_password = req.body.password;
-  var user_password_confirm = req.body.password_confirm;
-  if (user_password != user_password_confirm) {
-    res.send("<>Password should be consistent<>");
-  }
-  else {
-    db.connectDatabase();
-    db.updatePassword("users", user_email, user_name, user_password, function (userInfo) {
-      console.log(userInfo)
-      if (Object.keys(userInfo).length === 0 || userInfo.username != user_name) {
-        res.send('<>User does not exist or wrong user name<>');
-      }
-      else {
-        res.send(userInfo.username);
-      }
-    });
-  }
+  var author_name = req.body.author_name;
+  var author_id = req.body.author_id;
+  var post_title = req.body.title;
+  var post_body = req.body.body;
+  var post_img = req.body.img;
+  var post_id = uuidv4();
+  console.log(author_name+author_id);
+  res.send([{"valid": true}, {"message": "successfully posted"}]);
 });
 
 app.get('/posts', function (req, res) {

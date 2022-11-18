@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useRef } from "react";
+import axios from "axios";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { Button, Col, Container, Nav, Navbar, Row } from "react-bootstrap";
 import Popup from 'reactjs-popup';
@@ -16,6 +17,24 @@ function Social() {
           navigate("/unauthorized");
         }
       });*/
+    const ref = useRef();
+    const closeTooltip = () => ref.current.close();
+
+    async function handleSubmitPost(event) {
+        event.preventDefault()
+        const params = new URLSearchParams();
+        console.log(event.currentTarget.elements.title.value);
+        params.append('title', event.currentTarget.elements.title.value);
+        params.append('body', event.currentTarget.elements.body.value);
+        params.append('img', event.currentTarget.elements.image.value);
+        params.append('author_name', sessionStorage.getItem("userName"));
+        params.append('author_id', sessionStorage.getItem("userID"));
+        const response = await axios.post('http://localhost:8080/compose', params);
+        if(response.data[0].valid){
+            closeTooltip();
+        }
+        alert(response.data[1].message);
+    }
 
     return (
         <Container fluid>
@@ -46,23 +65,29 @@ function Social() {
                     <Nav className={styles.navContainer}>
                         <ul className="list-group">
                             <li className="list-group-item fs-5 py-3 text-success shadow">
-                                <Popup trigger={<span> <AiFillEdit /> Write Post </span>} position="left center">
-                                    <div><div className="modal">
-                                        <div className="form-area">
-                                            <form role="form">
-                                                <br styles="clear:both" />
-                                                <div className="header">
-                                                    <input type="text" className="form-control" id="title" name="title" placeholder="Title" required />
-                                                </div>
+                                <Popup ref={ref} modal repositionOnResize nested trigger={<span> <AiFillEdit /> Write Post </span>}>
+                                    <div>
+                                        <div className="col-md-15">
+                                            <div className="form-area">
+                                                <form onSubmit={handleSubmitPost}>
+                                                    <br styles="clear:both" />
+                                                    <div className>
+                                                        <input type="text" className="form-control" id="title" name="title" placeholder="Title" required />
+                                                    </div>
 
-                                                <div className="form-group">
-                                                    <textarea className="form-control" type="textarea" id="subject" placeholder="Subject" maxlength="140" rows="7"></textarea>
-                                                </div>
+                                                    <div className="form-group">
+                                                        <textarea className="form-control" type="textarea" id="body" placeholder="Subject" maxlength="140" rows="7"></textarea>
+                                                    </div>
 
-                                                <button type="button" id="submit" name="submit" className="btn btn-primary pull-right">Add Post</button>
-                                            </form>
+                                                    <div className="file-upload">
+                                                        <input type="file" id="image" name="image" capture="environment" accept="image/png, image/jpeg" />
+                                                    </div>
+
+                                                    <button type="submit" id="submit" name="submit" className="btn btn-primary pull-right">Add Post</button>
+                                                </form>
+                                            </div>
                                         </div>
-                                    </div></div>
+                                    </div>
                                 </Popup>
                             </li>
                         </ul>
