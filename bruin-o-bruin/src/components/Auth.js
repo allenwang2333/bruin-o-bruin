@@ -44,7 +44,7 @@ export default function (props) {
     params.append('fullname', event.currentTarget.elements.fullname.value);
     const response = await fetch('http://localhost:8080/server_auth_signup', {method: 'POST', body: params});
     const msgFromResponse = await response.text();
-    if(msgFromResponse.match(/^[a-zA-Z0-9]+$/)){
+    if(msgFromResponse.match(/^[a-zA-Z0-9-]+$/)){
       alert("Successfully logged in");
       sessionStorage.setItem("userName", msgFromResponse);
       window.setTimeout(function() {
