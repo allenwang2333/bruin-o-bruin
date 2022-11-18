@@ -74,8 +74,6 @@ app.post('/reset_passwd', function (req, res) {
       }
     });
   }
-<<<<<<< HEAD
-=======
 });
 
 app.get('/posts', function (req, res) {
@@ -143,7 +141,6 @@ app.get('/posts', function (req, res) {
     },
   ];
   res.send(blogPosts);
->>>>>>> compose_post
 });
 
 app.get('*', (req, res) => {
