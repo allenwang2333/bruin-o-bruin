@@ -5,10 +5,6 @@ import "./gamePlay.css"
 class Hand extends React.Component{
     constructor(props){
         super(props);
-        this.state = {
-            blocks: this.props.hand,
-        /* TODO: Add more state or lift up */
-        };
     }
 
     renderBlockAtHand(i) {

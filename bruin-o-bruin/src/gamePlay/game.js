@@ -14,7 +14,7 @@ class Game extends React.Component{
         this.state = {
             board: board,
             seen: seen,
-            hand: Array(7).fill({category: null}),
+            hand: Array(7).fill(null),
             handSize: 0,
         }
     }
@@ -78,8 +78,9 @@ class Game extends React.Component{
             if(handSize === 7){
                 console.log("You Loose") //TODO How end game is shown
             }else{
-                hand[handSize++] = board[layer][row][col];
+                hand[handSize++] = board[layer][row][col].category;
             }
+            console.log(hand)
             board[layer][row][col].fill = 0;
             this.setState({
                 board: board,
