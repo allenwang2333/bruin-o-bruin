@@ -14,14 +14,14 @@ class Block extends React.Component{
         };
     }
 
-
     render() {
         const layer = this.state.layer;
         const row = this.state.row;
         const col = this.state.col;
+        const category = this.state.category;
         return (
-            <button className="block" onClick={this.props.onClick(layer, row, col)}> 
-                {layer},{row},{col}
+            <button className="block" onClick={() => this.props.onClick(layer, row, col)}> 
+                {category}
             </button> 
             /* TODO: onClick should be lifted up to be handled */
             /* intended to move the block from board to hand or vice versa if case of the undo feature*/
