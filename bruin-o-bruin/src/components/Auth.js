@@ -5,7 +5,7 @@ import './style.css';
 
 export default function (props) {
   let [authMode, setAuthMode] = useState("signin")
-
+  const [status, setStatus] = useState('')
   const changeAuthMode = () => {
     if (authMode === "reset") {
       setAuthMode("signin")
@@ -26,12 +26,12 @@ export default function (props) {
     params.append('password', hashString(event.currentTarget.elements.password.value).toString());
     const response = await axios.post('http://localhost:8080/server_auth_signin', params);
     if(response.data[0].valid){
-      alert("Successfully logged in");
+      setAuthMode("success");
       sessionStorage.setItem("userName", response.data[1].username);
       sessionStorage.setItem("userID", response.data[2].userID);
       window.setTimeout(function() {
           window.location.href = "/home";
-      }, 500);
+      }, 1500);
     } else {
       alert(response.data[1].message);
     }
@@ -45,12 +45,12 @@ export default function (props) {
     params.append('fullname', event.currentTarget.elements.fullname.value);
     const response = await axios.post('http://localhost:8080/server_auth_signup', params);
     if(response.data[0].valid){
-      alert("Successfully logged in");
+      setAuthMode("success");
       sessionStorage.setItem("userName", response.data[1].username);
       sessionStorage.setItem("userID", response.data[2].userID);
       window.setTimeout(function() {
           window.location.href = "/home";
-      }, 500);
+      }, 1500);
     } else {
       alert(response.data[1].message);
     }
@@ -65,15 +65,28 @@ export default function (props) {
     params.append('fullname', event.currentTarget.elements.fullname.value);
     const response = await axios.post('http://localhost:8080/reset_passwd', params);
     if(response.data[0].valid){
-      alert("Successfully reseted password");
+      setAuthMode("success");
       sessionStorage.setItem("userName", response.data[1].username);
       sessionStorage.setItem("userID", response.data[2].userID);
       window.setTimeout(function() {
           window.location.href = "/home";
-      }, 500);
+      }, 1500);
     } else {
       alert(response.data[1].message);
     }
+  }
+
+  if (authMode === "success") {
+    return (
+      <div className="Auth-form-container">
+        <form onSubmit={handleSubmitSignin} className="Auth-form">
+          <div className="Auth-form-content">
+            <h3 className="Auth-form-title"> You have successfully logged in!</h3>
+              <div className="success-content"></div>
+          </div>
+        </form>
+      </div>
+    )
   }
 
   if (authMode === "signin") {
