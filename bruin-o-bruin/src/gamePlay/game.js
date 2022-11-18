@@ -1,6 +1,5 @@
 import Board from "./board.js"
 import Hand from "./hand.js"
-import randomPlace from "./randomPlace.js"
 import React from "react"
 import "./gamePlay.css"
 import randomPlaceBlock from "./randomPlace.js"
@@ -35,15 +34,25 @@ class Game extends React.Component{
         return seen; //*TODO This is simply for testing purposes
     }
 
-    checkSeen(curr, child){
+    checkSeen(layer, row, col, i){
         var board = this.state.board;
         var seen = this.state.seen;
-        seen.splice(seen.indexOf(curr))
-        for(const index in child){
-            var idx = board[index[0]][index[1]][index[2]].parent.indexOf(curr);
+        var curr = board[layer][row][col];
+        var child = curr.child;
+        seen.splice(i, 1);
+        for(let j = 0; j < child.length; j++){
+            const index = child[0]
+            var idx;
+            for(let i = 0; i < board[index[0]][index[1]][index[2]].parent.length; i++){
+                if(JSON.stringify(board[index[0]][index[1]][index[2]].parent[i])
+                    === JSON.stringify([layer, row, col])){
+                    idx = i;
+                    break;
+                }
+            }
             board[index[0]][index[1]][index[2]].parent.splice(idx, 1);
             if(board[index[0]][index[1]][index[2]].parent.length === 0)
-                seen.concat(index);
+                seen.push(index);
         }
         this.setState({
             board: board,
@@ -57,19 +66,21 @@ class Game extends React.Component{
         var hand = this.state.hand;
         var handSize = this.state.handSize;
         const coor = JSON.stringify([layer.toString(), row.toString(), col.toString()])
-        var found = false;
-        seen.forEach(element => {
-            if(coor == JSON.stringify(element)){
-                found = true;
+        var idx = -1;
+        for(let i = 0; i < seen.length; i++){
+            if(JSON.stringify(seen[i]) === coor){
+                idx = i;
+                break;
             }
-        });
-        if(found){   
-            if(handSize == 7){
+        }
+        if(idx !== -1){   
+            this.checkSeen(layer, row, col, idx);
+            if(handSize === 7){
                 console.log("You Loose") //TODO How end game is shown
             }else{
                 hand[handSize++] = board[layer][row][col];
             }
-            board[layer][row][col] = 0;
+            board[layer][row][col].fill = 0;
             this.setState({
                 board: board,
                 hand: hand,
