@@ -91,7 +91,7 @@ app.get('/posts', function (req, res) {
       author: "Nishant Singh ",
       imgUrl:
         "https://media.geeksforgeeks.org/img-practice/banner/diving-into-excel-thumbnail.png",
-      time: "3/31/2020",
+      time: new Date("July 21, 2021 01:15:00"),
     },
     {
       title: "Data Structure ",
@@ -107,7 +107,7 @@ app.get('/posts', function (req, res) {
       author: "Suresh Kr",
       imgUrl:
         "https://media.geeksforgeeks.org/img-practice/banner/coa-gate-2022-thumbnail.png",
-        time: "4/01/2020"
+        time: new Date("Aug 21, 2021 11:00:00"),
     },
     {
       title: "Algorithm",
@@ -121,7 +121,7 @@ app.get('/posts', function (req, res) {
       author: "Monu Kr",
       imgUrl:
         "https://media.geeksforgeeks.org/img-practice/banner/google-test-series-thumbnail.png",
-        time: "7/12/2020"
+        time: new Date("Sep 05, 2021 21:28:00"),
     },
     {
       title: "Computer Network",
@@ -137,7 +137,7 @@ app.get('/posts', function (req, res) {
       author: "Sonu Kr",
       imgUrl:
         "https://media.geeksforgeeks.org/img-practice/banner/cp-maths-java-thumbnail.png",
-        time: "1/22/2021"
+        time: new Date("Dec 21, 2021 13:12:10")
     },
   ];
   res.send(blogPosts);

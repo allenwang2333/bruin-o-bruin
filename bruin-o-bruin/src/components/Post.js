@@ -8,7 +8,7 @@ imgUrl, author, time }, index }) => {
       <img className="image" src={imgUrl} alt="post" />
       <p>{body}</p>
       <div className="info">      
-        <h4>Written by: {author} at {time}</h4>
+        <h4>Written by: {author} at {time.toString()}</h4>
       </div>
     </div>
   );
