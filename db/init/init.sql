@@ -10,10 +10,3 @@ CREATE TABLE IF NOT EXISTS users (
     username TEXT NOT NULL,
     passwd TEXT NOT NULL
 );
-
-INSERT INTO users 
-    (email, username, passwd) 
-VALUES 
-    ('admin@admin', 'admin', 'admin'),
-    ('allen@admin', 'allen', 'allentesting'),
-    ('jack@admin', 'jack', 'jacktesting');

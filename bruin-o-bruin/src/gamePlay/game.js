@@ -2,51 +2,56 @@ import Board from "./board.js"
 import Hand from "./hand.js"
 import randomPlace from "./randomPlace.js"
 import React from "react"
+import "./gamePlay.css"
 
 class Game extends React.Component{
     constructor(){
         super();
+        /*
         const layer0 = Array(6).fill(Array(6).fill({
                 layer: 0,
-                col: null,
                 row: null,
+                col: null,
                 category: null,
                 parent: null,
                 child: null,
             }))
         const layer1 = Array(5).fill(Array(5).fill({
                 layer: 1,
-                col: null,
                 row: null,
+                col: null,
                 category: null,
                 parent: null,
                 child: null,
             }))
         const layer2 = Array(4).fill(Array(4).fill({
                 layer: 2,
-                col: null,
                 row: null,
+                col: null,
                 category: null,
                 parent: null,
                 child: null,
             }))
         const layer3 = Array(3).fill(Array(3).fill({
                 layer: 3,
-                col: null,
                 row: null,
+                col: null,
                 category: null,
                 parent: null,
                 child: null,
             }))
         const layer4 = Array(3).fill(Array(3).fill({
                 layer: 4,
-                col: null,
                 row: null,
+                col: null,
                 category: null,
                 parent: null,
                 child: null,
             }))
-        var board = [layer0, layer1, layer2, layer3, layer4];
+        */  
+        const cLayout = require("./layout.json")
+        var board = cLayout.board;
+        console.log(board);
         const seen = this.checkSeen(board);
         this.state = {
             board: board,
