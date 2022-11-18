@@ -87,7 +87,7 @@ class QueryDatabase {
         });        
     }
 
-    updatePassword(table, email, username , passwd, callback) {
+    updatePassword(table, email, username, passwd, callback) {
         var testExist = 
         "SELECT * FROM " + table + 
         " WHERE email == \"" + email + "\"";
@@ -103,7 +103,7 @@ class QueryDatabase {
                     if (err) throw err;
                     userInfo[schema[table][1]] = email;
                     userInfo[schema[table][2]] = username;
-                    userInfo[schema[table][3]] = userid;
+                    userInfo[schema[table][3]] = rows[0].userid;
                     userInfo[schema[table][4]] = passwd;
                     callback(userInfo);
                 });  
