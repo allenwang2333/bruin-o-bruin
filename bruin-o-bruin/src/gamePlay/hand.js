@@ -1,5 +1,6 @@
 import React from 'react';
 import HandBlock from './handblock.js';
+import "./gamePlay.css"
 
 class Hand extends React.Component{
     constructor(props){

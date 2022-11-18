@@ -7,7 +7,8 @@
 const sqlite3 = require('sqlite3').verbose();
 
 var schema = {
-    "users": ["id", "email", "username", "passwd"]
+    "users": ["id", "email", "username", "passwd"],
+    "posts": ["id", "title", "author", "content", "imageurl", "image"]
 };
 
 class QueryDatabase {
@@ -31,9 +32,9 @@ class QueryDatabase {
         this.db.all(queryString, (err, rows) => {
             if (err) throw err;
             rows.forEach(function (row) {
-                data[row.username] = {};
+                data[row.id] = {};
                 for (var i = 0; i < schema[table].length; i++) {
-                    data[row.username][schema[table][i]] = row[schema[table][i]];
+                    data[row.id][schema[table][i]] = row[schema[table][i]];
                 }
             });
             callback(data);
@@ -84,6 +85,51 @@ class QueryDatabase {
         });        
     }
 
+    updatePassword(table, email, username , passwd, callback) {
+        var testExist = 
+        "SELECT * FROM " + table + 
+        " WHERE email == \"" + email + "\"";
+        var updateString = 
+        "UPDATE " + table +
+        " SET passwd = \"" + passwd + "\"" +
+        " WHERE email == \"" + email + "\"";
+        this.db.all(testExist, (err, rows) => {
+            let userInfo = {};
+            if (err) throw err;
+            if (rows.length > 0 && rows[0].username == username) {
+                this.db.run(updateString, (err) => {
+                    if (err) throw err;
+                    userInfo[schema[table][1]] = email;
+                    userInfo[schema[table][2]] = username;
+                    userInfo[schema[table][3]] = passwd;
+                    callback(userInfo);
+                });  
+            }
+            else {
+                console.log("User does not exist or wrong username");
+                callback(userInfo);
+                return;
+            }
+        });
+    }
+
+    addNewPost(table, title, author, content, imageurl, image, callback) {
+        var queryString =
+        "INSERT INTO " + table +
+        " (title, author, content, imageurl, image)" +
+        " VALUES (" + "\"" + title + "\", \"" + author + "\", \"" + content + "\", \"" + imageurl + "\", \"" + image + "\")";
+        let postInfo = {};
+        this.db.run(queryString, (err) => {
+            if (err) throw err;
+            postInfo[schema[table][1]] = title;
+            postInfo[schema[table][2]] = author;
+            postInfo[schema[table][3]] = content;
+            postInfo[schema[table][4]] = imageurl;
+            postInfo[schema[table][5]] = image;
+            callback(postInfo);
+        });
+    }
+
     closeDatabase() {
         this.db.close((err) => {
             if (err) {
@@ -98,13 +144,20 @@ function print(data) {
     console.log(data);
 }
 
-// userDatabase = new QueryDatabase("./db/db.sqlite", schema);
-// userDatabase.connectDatabase();
+//userDatabase = new QueryDatabase("./db/db.sqlite", schema);
+//userDatabase.connectDatabase();
 // userDatabase.readTableAll("users", print);
-// userDatabase.readTableByEmail("users", "allen@admin", print);
+// userDatabase.updatePassword("users", "adefen@admin", "efihsrgifed", print);
+//userDatabase.readTableByEmail("users", "allen@admin", print);
 // userDatabase.addUser("users", "james@admin", "james" , "jamestesting", print);
 // userDatabase.addUser("users", "sakura@admin", "sakura" , "sakuratesting", print);
 // userDatabase.closeDatabase();
+
+// postDatabase = new QueryDatabase("./db/db.sqlite", schema);
+// postDatabase.connectDatabase();
+// //postDatabase.readTableAll("posts", print);
+// postDatabase.addNewPost("posts", "test post 2", "allen", "test content 2", "test imageurl 2", "test image 2", print);
+// postDatabase.readTableAll("posts", print);
 
 module.exports.QueryDatabase = QueryDatabase;
 module.exports.schema = schema;

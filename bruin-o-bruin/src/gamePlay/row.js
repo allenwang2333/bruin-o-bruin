@@ -1,5 +1,7 @@
 import Block from "./block.js";
 import React from 'react';
+import "./gamePlay.css"
+
 
 class Row extends React.Component{
     constructor(props){

@@ -1,5 +1,6 @@
 import React from "react";
 import Layer from "./layer.js"
+import "./gamePlay.css"
 
 class Board extends React.Component{
     constructor(props){
