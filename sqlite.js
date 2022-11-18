@@ -7,7 +7,7 @@
 const sqlite3 = require('sqlite3').verbose();
 
 var schema = {
-    "users": ["id", "email", "username", "passwd"],
+    "users": ["id", "email", "username", "userid" ,"passwd"],
     "posts": ["id", "title", "author", "content", "imageurl", "image"]
 };
 
@@ -53,18 +53,19 @@ class QueryDatabase {
                 userInfo[schema[table][1]] = row[schema[table][1]];
                 userInfo[schema[table][2]] = row[schema[table][2]];
                 userInfo[schema[table][3]] = row[schema[table][3]];
+                userInfo[schema[table][4]] = row[schema[table][4]];
             });
             callback(userInfo);
         });
     }
 
-    addUser(table, email, username, passwd, callback) {
+    addUser(table, email, username, userid, passwd, callback) {
         var testExist = 
         "SELECT * FROM " + table + 
         " WHERE email == \"" + email + "\"";
         var queryString = 
         "INSERT INTO " + table + 
-        " (email ,username, passwd) VALUES (" + "\"" + email + "\", \"" + username + "\", \"" + passwd + "\")";
+        " (email ,username, userid, passwd) VALUES (" + "\"" + email + "\", \"" + username + "\", \"" + userid + "\", \"" + passwd + "\")";
         this.db.all(testExist, (err, rows) => {
             let userInfo = {};
             if (err) throw err;
@@ -77,7 +78,8 @@ class QueryDatabase {
                 this.db.run(queryString, (err) => {
                     userInfo[schema[table][1]] = email;
                     userInfo[schema[table][2]] = username;
-                    userInfo[schema[table][3]] = passwd;
+                    userInfo[schema[table][3]] = userid;
+                    userInfo[schema[table][4]] = passwd;
                     if (err) throw err;
                     callback(userInfo);            
                 }); 
@@ -85,7 +87,7 @@ class QueryDatabase {
         });        
     }
 
-    updatePassword(table, email, username , passwd, callback) {
+    updatePassword(table, email, username, passwd, callback) {
         var testExist = 
         "SELECT * FROM " + table + 
         " WHERE email == \"" + email + "\"";
@@ -101,7 +103,8 @@ class QueryDatabase {
                     if (err) throw err;
                     userInfo[schema[table][1]] = email;
                     userInfo[schema[table][2]] = username;
-                    userInfo[schema[table][3]] = passwd;
+                    userInfo[schema[table][3]] = rows[0].userid;
+                    userInfo[schema[table][4]] = passwd;
                     callback(userInfo);
                 });  
             }
