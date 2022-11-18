@@ -5,6 +5,7 @@ const { nextTick } = require('process');
 var sqlite_db = require('./sqlite.js');
 const schema = require('./sqlite.js');
 const { v4: uuidv4 } = require('uuid');
+const { userInfo } = require('os');
 
 console.log(schema.schema);
 const db = new sqlite_db.QueryDatabase('./db/db.sqlite', schema.schema);
@@ -18,11 +19,10 @@ app.post('/server_auth_signin', function (req, res) {
   var user_password = req.body.password;
   console.log("Connected to react page");
   db.connectDatabase();
-  console.log(schema);
   db.readTableByEmail("users", user_email, function (userInfo) {
     console.log(userInfo);
     if (userInfo.email == user_email && userInfo.passwd == user_password) {
-      res.send({"username": userInfo.username}, {"userID": userInfo.user_id});
+      res.send({"username": userInfo.username}, {"userID": userInfo.userid});
     }
     else {
       res.send("<>Invalid email or password<>");
@@ -38,14 +38,13 @@ app.post('/server_auth_signup', function (req, res) {
   console.log("Connected to react page");
   console.log(user_name, user_id, user_email, user_password);
   db.connectDatabase();
-  db.addUser("users", user_email, user_name, user_password, user_id, function (userInfo) {
-  // TODO; add userid to the database
+  db.addUser("users", user_email, user_name, user_id, user_password, function (userInfo) {
     console.log(userInfo);
-    if (Object.keys(userInfo).length === 0) {
+    if (Object.keys(userInfo).length == 0) {
       res.send('<>The email is already registered<>');
     }
     else {
-      res.send({"username": userInfo.username}, {"userID": userInfo.user_id});
+      res.send({"username": userInfo.username}, {"userID": userInfo.userid});
     }
   });
 })
@@ -66,7 +65,7 @@ app.post('/reset_passwd', function (req, res) {
         res.send('<>User does not exist or wrong user name<>');
       }
       else {
-        res.send({"username": userInfo.username}, {"userID": userInfo.user_id});
+        res.send({"username": userInfo.username}, {"userID": userInfo.userid});
       }
     });
   }
