@@ -104,7 +104,7 @@ class QueryDatabase {
                     userInfo[schema[table][1]] = email;
                     userInfo[schema[table][2]] = username;
                     userInfo[schema[table][3]] = userid;
-                    userInfo[schema[table][3]] = passwd;
+                    userInfo[schema[table][4]] = passwd;
                     callback(userInfo);
                 });  
             }
