@@ -73,8 +73,6 @@ app.post('/reset_passwd', function(req, res){
       }
     });
   }
-  
-  
 });
 
 app.get('*', (req, res) => {
