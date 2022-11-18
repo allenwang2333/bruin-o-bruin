@@ -16,7 +16,7 @@ class HandBlock extends React.Component{
 
     render() {
         return (
-            <button className="handblock" onClick={this.props.onClick()}> 
+            <button className="handblock"> 
                 Category is {this.props.block.category}
             </button> 
             /* TODO: onClick should be lifted up to be handled */
