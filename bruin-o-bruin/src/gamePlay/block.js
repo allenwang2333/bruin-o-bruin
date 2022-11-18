@@ -5,12 +5,12 @@ class Block extends React.Component{
     constructor(props) {
         super(props);
         this.state = { 
-            layer: this.props.layer,
-            col: this.props.col,
-            row: this.props.row,
-            category: this.props.category,
-            parent: this.props.parent,
-            child: this.props.child,
+            layer: this.props.block.layer,
+            col: this.props.block.col,
+            row: this.props.block.row,
+            category: this.props.block.category,
+            parent: this.props.block.parent,
+            child: this.props.block.child,
         };
     }
 

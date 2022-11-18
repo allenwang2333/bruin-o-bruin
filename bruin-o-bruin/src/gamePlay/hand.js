@@ -1,5 +1,5 @@
 import React from 'react';
-import Block from './block.js';
+import HandBlock from './handblock.js';
 import "./gamePlay.css"
 
 class Hand extends React.Component{
@@ -11,15 +11,11 @@ class Hand extends React.Component{
         };
     }
 
-    non_reponse_onClick(){
-
-    }
-
     renderBlockAtHand(i) {
         return (
             /* TODO: change return value and handle click might be added if case of unplacing blocks from hand back to board */
-            <Block
-                value={this.state.blocks[i]} onClick={this.non_reponse_onClick}
+            <HandBlock
+                block={this.props.hand[i]}
             />
             
         )
