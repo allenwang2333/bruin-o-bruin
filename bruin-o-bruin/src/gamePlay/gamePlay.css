@@ -16,6 +16,13 @@
     margin-top: 10px;
 }
 
+.layer{
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+}
+
 .block{
     pointer-events: auto;
     border-radius: 8px;
@@ -31,3 +38,17 @@
     margin: 5px 5px 5px 0;
 }
 
+.handBlock{
+    pointer-events: none;
+    border-radius: 8px;
+    width: 64px;
+    height: 64px;
+    text-align: center;
+    font-size: 25px;
+    color: crimson;
+    line-height: 50px;
+    box-shadow: 2px 2px 4px #000;
+    border: 1px solid #c2cbcbee;
+    cursor: pointer;
+    margin: 5px 5px 5px 0;
+}

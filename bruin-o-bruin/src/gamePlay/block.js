@@ -7,8 +7,9 @@ class Block extends React.Component{
         const row = this.props.block.row;
         const col = this.props.block.col;
         const category = this.props.block.category;
+        const style = this.props.block.fill ? {visibility: "visible"} : {visibility: "hidden"};
         return (
-            <button className="block" onClick={() => this.props.onClick(layer, row, col)}> 
+            <button className="block" style={style} onClick={() => this.props.onClick(layer, row, col)}> 
                 {category}
             </button> 
             /* TODO: onClick should be lifted up to be handled */

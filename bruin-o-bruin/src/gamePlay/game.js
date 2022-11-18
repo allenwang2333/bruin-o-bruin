@@ -76,7 +76,7 @@ class Game extends React.Component{
                 break;
             }
         }
-        if(idx !== -1){   
+        if(idx !== -1){
             this.checkSeen(layer, row, col, idx);
             if(handSize === 7){
                 console.log("You Loose") //TODO How end game is shown
