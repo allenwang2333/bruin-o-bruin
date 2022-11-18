@@ -22,10 +22,10 @@ app.post('/server_auth_signin', function (req, res) {
   db.readTableByEmail("users", user_email, function (userInfo) {
     console.log(userInfo);
     if (userInfo.email == user_email && userInfo.passwd == user_password) {
-      res.send({"username": userInfo.username}, {"userID": userInfo.userid});
+      res.send([{"valid": true}, {"username": userInfo.username}, {"userID": userInfo.userid}]);
     }
     else {
-      res.send("<>Invalid email or password<>");
+      res.send([{"valid": false}, {"message": "Invalid email or password"}]);
     }
   });
 })
@@ -41,10 +41,10 @@ app.post('/server_auth_signup', function (req, res) {
   db.addUser("users", user_email, user_name, user_id, user_password, function (userInfo) {
     console.log(userInfo);
     if (Object.keys(userInfo).length == 0) {
-      res.send('<>The email is already registered<>');
+      res.send([{"valid": false}, {"message": "The email is already registered"}]);
     }
     else {
-      res.send({"username": userInfo.username}, {"userID": userInfo.userid});
+      res.send([{"valid": true}, {"username": userInfo.username}, {"userID": userInfo.userid}]);
     }
   });
 })
@@ -55,17 +55,17 @@ app.post('/reset_passwd', function (req, res) {
   var user_password = req.body.password;
   var user_password_confirm = req.body.password_confirm;
   if (user_password != user_password_confirm) {
-    res.send("<>Password should be consistent<>");
+    res.send([{"valid": false}, {"message": "Password should be consistent"}]);
   }
   else {
     db.connectDatabase();
     db.updatePassword("users", user_email, user_name, user_password, function (userInfo) {
       console.log(userInfo)
       if (Object.keys(userInfo).length === 0 || userInfo.username != user_name) {
-        res.send('<>User does not exist or wrong user name<>');
+        res.send([{"valid": false}, {"message": "User does not exist or wrong user name"}]);
       }
       else {
-        res.send({"username": userInfo.username}, {"userID": userInfo.userid});
+        res.send([{"valid": true}, {"username": userInfo.username}, {"userID": userInfo.userid}]);
       }
     });
   }

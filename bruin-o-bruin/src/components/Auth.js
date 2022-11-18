@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import axios from "axios";
 import {hashString} from 'react-hash-string'
 import './style.css';
 
@@ -23,16 +24,16 @@ export default function (props) {
     const params = new URLSearchParams();
     params.append('email', event.currentTarget.elements.email.value);
     params.append('password', hashString(event.currentTarget.elements.password.value).toString());
-    const response = await fetch('http://localhost:8080/server_auth_signin', {method: 'POST', body: params});
-    const msgFromResponse = await response.text();
-    if(msgFromResponse.match(/^[a-zA-Z0-9]+$/)){
+    const response = await axios.post('http://localhost:8080/server_auth_signin', params);
+    if(response.data[0].valid){
       alert("Successfully logged in");
-      sessionStorage.setItem("userName", msgFromResponse);
+      sessionStorage.setItem("userName", response.data[1].username);
+      sessionStorage.setItem("userID", response.data[2].userID);
       window.setTimeout(function() {
           window.location.href = "/home";
       }, 500);
     } else {
-      alert("Invalid email or password");
+      alert(response.data[1].message);
     }
   }
 
@@ -42,16 +43,16 @@ export default function (props) {
     params.append('email', event.currentTarget.elements.email.value);
     params.append('password', hashString(event.currentTarget.elements.password.value).toString());
     params.append('fullname', event.currentTarget.elements.fullname.value);
-    const response = await fetch('http://localhost:8080/server_auth_signup', {method: 'POST', body: params});
-    const msgFromResponse = await response.text();
-    if(msgFromResponse.match(/^[a-zA-Z0-9-]+$/)){
+    const response = await axios.post('http://localhost:8080/server_auth_signup', params);
+    if(response.data[0].valid){
       alert("Successfully logged in");
-      sessionStorage.setItem("userName", msgFromResponse);
+      sessionStorage.setItem("userName", response.data[1].username);
+      sessionStorage.setItem("userID", response.data[2].userID);
       window.setTimeout(function() {
           window.location.href = "/home";
       }, 500);
     } else {
-      alert("The email is already registered");
+      alert(response.data[1].message);
     }
   }
 
@@ -62,17 +63,16 @@ export default function (props) {
     params.append('password', hashString(event.currentTarget.elements.password.value).toString());
     params.append('password_confirm', hashString(event.currentTarget.elements.password_confirm.value).toString());
     params.append('fullname', event.currentTarget.elements.fullname.value);
-    const response = await fetch('http://localhost:8080/reset_passwd', {method: 'POST', body: params});
-    const msgFromResponse = await response.text();
-    console.log(msgFromResponse);
-    if(msgFromResponse.match(/^[a-zA-Z0-9]+$/)){
+    const response = await axios.post('http://localhost:8080/reset_passwd', params);
+    if(response.data[0].valid){
       alert("Successfully reseted password");
-      sessionStorage.setItem("userName", msgFromResponse);
+      sessionStorage.setItem("userName", response.data[1].username);
+      sessionStorage.setItem("userID", response.data[2].userID);
       window.setTimeout(function() {
           window.location.href = "/home";
       }, 500);
     } else {
-      alert(msgFromResponse.split("<>")[1]);
+      alert(response.data[1].message);
     }
   }
 
