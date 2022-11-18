@@ -1,49 +1,60 @@
 /* Buttons */
 .logout-btn {
-align-items: center;
-display: flex;
-flex-direction: column;
-justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 
 .Auth-form-container {
-display: flex;
-justify-content: center;
-align-items: center;
-width: 100vw;
-height: 100vh;
-background-image: url("assets/title.png"), url("assets/skyline.jpg");
-background-position: 50% 10%, center;
-background-size: 23% 10%, 100% 100%;
-background-repeat: no-repeat;
-background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-image: url("assets/title.png"), url("assets/skyline.jpg");
+    background-position: 50% 10%, center;
+    background-size: 23% 10%, 100% 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.success-content {
+    display: flex;
+    width: 100vw;
+    height: 30vh;
+    background-image: url("assets/success.png");
+    background-position: 50% 57%;
+    background-size:  20% 30%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 .Auth-form {
-width: 420px;
-box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
-padding-top: 30px;
-padding-bottom: 20px;
-border-radius: 8px;
-background-color: white;
+    width: 420px;
+    box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
+    padding-top: 30px;
+    padding-bottom: 20px;
+    border-radius: 8px;
+    background-color: white;
 }
 
 .Auth-form-content {
-padding-left: 12%;
-padding-right: 12%;
+    padding-left: 12%;
+    padding-right: 12%;
 }
 
 .Auth-form-title {
-text-align: center;
-margin-bottom: 1em;
-font-size: 24px;
-color: rgb(34, 34, 34);
-font-weight: 800;
+    text-align: center;
+    margin-bottom: 1em;
+    font-size: 24px;
+    color: rgb(34, 34, 34);
+    font-weight: 800;
 }
 
 label {
-font-size: 14px;
-font-weight: 600;
-color: rgb(34, 34, 34);
+    font-size: 14px;
+    font-weight: 600;
+    color: rgb(34, 34, 34);
 }
