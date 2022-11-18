@@ -3,8 +3,9 @@ const test = () => {
     async function get() {
         const params = new URLSearchParams();
         const response = await fetch('http://localhost:8080/test', { method: 'POST', body: params });
-        const msgFromResponse = await response.text();
-        console.log(msgFromResponse);
+        axios.get('/weather').then((res) => {
+            console.log(res);
+        });
     }
     get();
     return (

@@ -4,19 +4,13 @@ var path = require('path');
 const { nextTick } = require('process');
 var sqlite_db = require('./sqlite.js');
 const schema = require('./sqlite.js');
-const bodyParser = require("body-parser");
 const { v4: uuidv4 } = require('uuid');
 
 console.log(schema.schema);
 const db = new sqlite_db.QueryDatabase('./db/db.sqlite', schema.schema);
-app.use(express.urlencoded());
-app.use(bodyParser.json());
+app.use(express.urlencoded( {extended: false}));
+app.use(express.json());
 app.use(express.static(path.resolve(__dirname, '../bruin-o-bruin/bruin-o-bruin/build')));
-
-app.post('/test', (req, res) => {
-  var user_id = uuidv4();
-  res.send({"username": "jack"}, {"userID": user_id});
-});
 
 app.post('/server_auth_signin', function (req, res) {
   var table = "users";
