@@ -41,7 +41,7 @@ class Game extends React.Component{
         var child = curr.child;
         seen.splice(i, 1);
         for(let j = 0; j < child.length; j++){
-            const index = child[0]
+            const index = child[j];
             var idx;
             for(let i = 0; i < board[index[0]][index[1]][index[2]].parent.length; i++){
                 if(JSON.stringify(board[index[0]][index[1]][index[2]].parent[i])
