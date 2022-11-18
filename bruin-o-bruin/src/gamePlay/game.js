@@ -61,8 +61,10 @@ class Game extends React.Component{
     }
 
     handleClick(layer, row, col){
-        var seen = this.state.seen;
         var board = this.state.board;
+        if(board[layer][row][col].fill === 0)
+            return;    
+        var seen = this.state.seen;
         var hand = this.state.hand;
         var handSize = this.state.handSize;
         const coor = JSON.stringify([layer.toString(), row.toString(), col.toString()])
@@ -80,7 +82,6 @@ class Game extends React.Component{
             }else{
                 hand[handSize++] = board[layer][row][col].category;
             }
-            console.log(hand)
             board[layer][row][col].fill = 0;
             this.setState({
                 board: board,
