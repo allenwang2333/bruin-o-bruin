@@ -127,12 +127,14 @@ class QueryDatabase {
 
     likeOrUnlikePost(table, postid, count, callback) {
         var queryString = `SELECT * FROM ${table} WHERE postid == "${postid}"`;
-        this.db.all(queryString, (err) => {
+        this.db.all(queryString, (err, rows) => {
             if (err) throw err;
             if (rows.length > 0) {
                 var likeInfo = {};
+                console.log(rows[0].likes);
                 if (!(rows[0].likes == 0 && count == -1)) {
-                    var newCount = rows[0].likes + count;
+                    var newCount = rows[0].likes + Number(count);
+                    console.log(newCount); // here the newCount is correct
                     var updateString = `UPDATE ${table} SET likes = "${newCount} WHERE postid == "${postid}}"`;
                     this.db.run(updateString, (err) => {
                         likeInfo['postid'] = postid;
