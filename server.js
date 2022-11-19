@@ -87,10 +87,10 @@ app.post('/compose', function (req, res) {
   res.send([{"valid": true}, {"message": "successfully posted"}]);
 });
 
-app.post('/server_postLike', function (req, res) {
-  var count = req.body.count;
+app.post('/server_post_like', function (req, res) {
+  var table = "posts";
+  var count = req.body.count; // count is 1 for like, -1 for unlike
   var id = req.body.postID;
-  // TODO: update the like count in the database, count has state 1 or -1, indicating like or unlike
   res.send([{"valid": true}, {"message": "successfully posted"}]);
 });
 

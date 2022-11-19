@@ -39,7 +39,6 @@ class QueryDatabase {
             });
             callback(data);
         });
-        return data;
     }
 
     readTableByEmail(table, email, callback) {
@@ -102,7 +101,6 @@ class QueryDatabase {
             else {
                 console.log("User does not exist or wrong username");
                 callback(userInfo);
-                return;
             }
         });
     }
@@ -121,6 +119,29 @@ class QueryDatabase {
             postInfo[schema[table][6]] = postid;
             postInfo[schema[table][7]] = image;
             callback(postInfo);
+        });
+    }
+
+    likeOrUnlikePost(table, postid, count, callback) {
+        var queryString = `SELECT * FROM ${table} WHERE postid == "${postid}"`;
+        this.db.all(queryString, (err) => {
+            if (err) throw err;
+            if (rows.length > 0) {
+                var likeInfo = {};
+                if (!(rows[0].likes == 0 && count == -1)) {
+                    var newCount = rows[0].likes + count;
+                    var updateString = `UPDATE ${table} SET likes = "${newCount} WHERE postid == "${postid}}"`;
+                    this.db.run(updateString, (err) => {
+                        likeInfo['postid'] = postid;
+                        likeInfo['newCount'] = newCount;
+                        callback(likeInfo);
+                    });
+                }
+                else {
+                    callback(likeInfo);
+                    console.log('Cannot unlike post when there are no likes');
+                }
+            }
         });
     }
 
