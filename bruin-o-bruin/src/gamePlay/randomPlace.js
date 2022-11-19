@@ -1,4 +1,6 @@
-function randomPlaceBlock (board, pieceSet, count) {
+//import 3D board, a pieceSet array of block pics, count of blocks.
+//export 3D board with piece assigned
+export default function randomPlaceBlock (board, pieceSet, count) { 
     let length = pieceSet.length;
     let num = Math.floor(Math.floor((count / 3)) / length) * 3;
     var pieces = new Array(length).fill(num);
@@ -10,31 +12,20 @@ function randomPlaceBlock (board, pieceSet, count) {
     }
     for(const layer in board){
         for(const row in board[layer]){
-            for(const piece in board[layer][row]){
-                if(board[layer][row][piece]){
-                    let curr = Math.floor(Math.random() * pieces.length);
-                    while(pieces[curr] == 0){
+            for(const col in board[layer][row]){
+                if(board[layer][row][col].fill){
+                    let curr;
+                    do {
                         curr = Math.floor(Math.random() * pieces.length);
-                    }
-                    board[layer][row][piece] = pieceSet[curr];
+                    }while(pieces[curr] === 0);
+                    board[layer][row][col].category = pieceSet[curr];
                     pieces[curr]--;
-                }else {
-                    board[layer][row][piece] = null;
                 }
+                // else {
+                //     board[layer][row][piece].category = null;
+                // }
             }
         }
     }
-    return board
+    return board;
 }
-
-
-// function test(){
-//     bA = [[[1,1,1,1,1], [1,1,1,1,1], [1,1,1,1,1], [1,1,1,1,1]], [[1,1,1,0], [1,1,0,1]], [[1,1], [1,1]]];
-//     count = 30
-//     pieceSetA = ["A", "B", "C", "D", "E", "F"]
-//     pieceSetB = ["A", "B", "C", "D"]
-
-//     console.log(randomPlaceBlock(bA, pieceSetA, count))
-//     console.log(randomPlaceBlock(bA, pieceSetB, count))
-// }
-// test()
