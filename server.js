@@ -91,7 +91,12 @@ app.post('/server_post_like', function (req, res) {
   var table = "posts";
   var count = req.body.count; // count is 1 for like, -1 for unlike
   var id = req.body.postID;
-  res.send([{"valid": true}, {"message": "successfully posted"}]);
+  db.connectDatabase();
+  db.updateLikes(table, id, count, function (postInfo) {
+    if (Object.keys(postInfo).length !== 0) {
+      res.send([{"valid": true}, {"message": "successfully posted"}]);
+    }
+  });
 });
 
 app.get('/posts', function (req, res) {
