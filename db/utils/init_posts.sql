@@ -1,0 +1,11 @@
+CREATE TABLE IF NOT EXISTS posts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    author TEXT NOT NULL,
+    authorid TEXT NOT NULL,
+    content TEXT NOT NULL,
+    likes INTEGER NOT NULL,
+    postid TEXT NOT NULL,
+    image BLOB DEFAULT NULL,
+    time TEXT NOT NULL
+);

@@ -8,7 +8,7 @@ const sqlite3 = require('sqlite3').verbose();
 
 var schema = {
     "users": ["id", "email", "username", "userid" ,"passwd"],
-    "posts": ["id", "title", "author", "content", "imageurl", "image"]
+    "posts": ["id", "title", "author", "authorid" ,"content", "likes", "postid", "image", "time"]
 };
 
 class QueryDatabase {
@@ -27,25 +27,24 @@ class QueryDatabase {
     }
 
     readTableAll(table, callback) {
-        var queryString = "SELECT * FROM " + table;
+        var queryString = `SELECT * FROM ${table}`;
         let data = {};
         this.db.all(queryString, (err, rows) => {
             if (err) throw err;
-            rows.forEach(function (row) {
-                data[row.id] = {};
+            data = [];
+            rows.forEach((row) => {
+                let rowInfo = {};
                 for (var i = 0; i < schema[table].length; i++) {
-                    data[row.id][schema[table][i]] = row[schema[table][i]];
+                    rowInfo[schema[table][i]] = row[schema[table][i]];
                 }
+                data.push(rowInfo);
             });
             callback(data);
         });
-        return data;
     }
 
     readTableByEmail(table, email, callback) {
-        var queryString = 
-            "SELECT * FROM " + table + 
-            " WHERE email == \"" + email + "\"";
+        var queryString = `SELECT * FROM ${table} WHERE email == "${email}"`;
         let userInfo = {}; 
         this.db.all(queryString, (err, rows) => {
             if (err) throw err;
@@ -60,17 +59,15 @@ class QueryDatabase {
     }
 
     addUser(table, email, username, userid, passwd, callback) {
-        var testExist = 
-        "SELECT * FROM " + table + 
-        " WHERE email == \"" + email + "\"";
+        var testExist = `SELECT * FROM ${table} WHERE email == "${email}"`;
         var queryString = 
-        "INSERT INTO " + table + 
-        " (email ,username, userid, passwd) VALUES (" + "\"" + email + "\", \"" + username + "\", \"" + userid + "\", \"" + passwd + "\")";
+        `INSERT INTO ${table} (email, username, userid, passwd) ` + 
+        `VALUES ("${email}", "${username}", "${userid}", "${passwd}")`;
         this.db.all(testExist, (err, rows) => {
             let userInfo = {};
             if (err) throw err;
             if (rows.length > 0) {
-                console.log("User \"" + email + "\" already exists");
+                console.log(`User ${username} already exists`);
                 callback(userInfo);
                 return;
             }
@@ -88,13 +85,8 @@ class QueryDatabase {
     }
 
     updatePassword(table, email, username, passwd, callback) {
-        var testExist = 
-        "SELECT * FROM " + table + 
-        " WHERE email == \"" + email + "\"";
-        var updateString = 
-        "UPDATE " + table +
-        " SET passwd = \"" + passwd + "\"" +
-        " WHERE email == \"" + email + "\"";
+        var testExist = `SELECT * FROM ${table} WHERE email == "${email}"`;
+        var updateString = `UPDAT ${table} SET passed = "${passwd}" WHERE email == "$email"`;
         this.db.all(testExist, (err, rows) => {
             let userInfo = {};
             if (err) throw err;
@@ -111,25 +103,48 @@ class QueryDatabase {
             else {
                 console.log("User does not exist or wrong username");
                 callback(userInfo);
-                return;
             }
         });
     }
 
-    addNewPost(table, title, author, content, imageurl, image, callback) {
-        var queryString =
-        "INSERT INTO " + table +
-        " (title, author, content, imageurl, image)" +
-        " VALUES (" + "\"" + title + "\", \"" + author + "\", \"" + content + "\", \"" + imageurl + "\", \"" + image + "\")";
+    addNewPost(table, title, author, authorid, content, likes, postid , image, time, callback) {
+        var queryString = `INSERT INTO ${table} (title, author, authorid, content, likes, postid, image, time) ` + 
+        `VALUES ("${title}", "${author}", "${authorid}", "${content}", "${likes}", "${postid}", "${image}", "${time}")`
         let postInfo = {};
         this.db.run(queryString, (err) => {
             if (err) throw err;
             postInfo[schema[table][1]] = title;
             postInfo[schema[table][2]] = author;
-            postInfo[schema[table][3]] = content;
-            postInfo[schema[table][4]] = imageurl;
-            postInfo[schema[table][5]] = image;
+            postInfo[schema[table][3]] = authorid;
+            postInfo[schema[table][4]] = content;
+            postInfo[schema[table][5]] = likes;
+            postInfo[schema[table][6]] = postid;
+            postInfo[schema[table][7]] = image;
+            postInfo[schema[table][8]] = time;
             callback(postInfo);
+        });
+    }
+
+    likeOrUnlikePost(table, postid, count, callback) {
+        var queryString = `SELECT * FROM ${table} WHERE postid == "${postid}"`;
+        this.db.all(queryString, (err) => {
+            if (err) throw err;
+            if (rows.length > 0) {
+                var likeInfo = {};
+                if (!(rows[0].likes == 0 && count == -1)) {
+                    var newCount = rows[0].likes + count;
+                    var updateString = `UPDATE ${table} SET likes = "${newCount} WHERE postid == "${postid}}"`;
+                    this.db.run(updateString, (err) => {
+                        likeInfo['postid'] = postid;
+                        likeInfo['newCount'] = newCount;
+                        callback(likeInfo);
+                    });
+                }
+                else {
+                    callback(likeInfo);
+                    console.log('Cannot unlike post when there are no likes');
+                }
+            }
         });
     }
 
