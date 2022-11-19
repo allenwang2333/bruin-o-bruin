@@ -12,7 +12,6 @@ const Posts = () => {
     const params = new Headers();
     params.append('username', username);
     const response = await axios.get('http://localhost:8080/posts', params);
-    console.log(response.data);
     if(response.data[0].valid){
       setPosts(response.data.slice(1));
     } else {
@@ -20,7 +19,7 @@ const Posts = () => {
     }
   }
   getPosts();
-  
+
   useEffect(() => {
     const interval = setInterval(() => {getPosts();}, 10000);//refreshes every 10 second
     return () => clearInterval(interval);

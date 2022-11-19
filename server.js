@@ -82,10 +82,18 @@ app.post('/compose', function (req, res) {
   res.send([{"valid": true}, {"message": "successfully posted"}]);
 });
 
+app.post('/server_postLike', function (req, res) {
+  var count = req.body.count;
+  var Id = req.body.postID;
+  // TODO: update the like count in the database, count has state 1 or -1, indicating like or unlike
+  res.send([{"valid": true}, {"message": "successfully posted"}]);
+});
+
 app.get('/posts', function (req, res) {
   const blogPosts = [ 
     {"valid": true},
     {
+      postID: "1",
       title: "JAVASCRIPT",
       body: `JavaScript is the world most popular 
       lightweight, interpreted compiled programming 
@@ -99,8 +107,10 @@ app.get('/posts', function (req, res) {
       imgUrl:
         "https://media.geeksforgeeks.org/img-practice/banner/diving-into-excel-thumbnail.png",
       time: new Date("July 21, 2021 01:15:00"),
+      like: 1,
     },
     {
+      postID: "2",
       title: "Data Structure ",
       body: `There are many real-life examples of 
       a stack. Consider an example of plates stacked 
@@ -115,8 +125,10 @@ app.get('/posts', function (req, res) {
       imgUrl:
         "https://media.geeksforgeeks.org/img-practice/banner/coa-gate-2022-thumbnail.png",
         time: new Date("Aug 21, 2021 11:00:00"),
+        like: 2,
     },
     {
+      postID: "3",
       title: "Algorithm",
       body: `The word Algorithm means “a process 
       or set of rules to be followed in calculations 
@@ -129,8 +141,10 @@ app.get('/posts', function (req, res) {
       imgUrl:
         "https://media.geeksforgeeks.org/img-practice/banner/google-test-series-thumbnail.png",
         time: new Date("Sep 05, 2021 21:28:00"),
+        like: 3,
     },
     {
+      postID: "4",
       title: "Computer Network",
       body: `An interconnection of multiple devices, 
       also known as hosts, that are connected using 
@@ -144,7 +158,8 @@ app.get('/posts', function (req, res) {
       author: "Sonu Kr",
       imgUrl:
         "https://media.geeksforgeeks.org/img-practice/banner/cp-maths-java-thumbnail.png",
-        time: new Date("Dec 21, 2021 13:12:10")
+        time: new Date("Dec 21, 2021 13:12:10"),
+        like: 4,
     },
   ];
   res.send(blogPosts);

@@ -1,7 +1,38 @@
-import React from "react";
+import React , {useState} from "react";
 import "./Posts.css";
-const Post = ({ post: { title, body,
-imgUrl, author, time }, index }) => {
+import axios from "axios";
+import {AiOutlineLike ,AiTwotoneLike} from "react-icons/ai";
+
+const Post = ({ post: { postID, title, body,
+imgUrl, author, time, like }, index }) => {
+  let [icon, setIcon] = useState(<AiOutlineLike/>);
+  let [liked, setLiked] = useState(false);
+
+  const changeLike = () => {
+    if (liked) { //unlike
+      setIcon(<AiOutlineLike/>);
+      setLiked(false);
+      handleLike(-1);
+    }
+    else { //unlike
+      setIcon(<AiTwotoneLike/>);
+      setLiked(true);
+      handleLike(1);
+    }
+  }
+
+  async function handleLike(count) {
+    const params = new URLSearchParams();
+    params.append('postID', postID);
+    params.append('count', count);
+    const response = await axios.post('http://localhost:8080/server_postLike', params);
+    if(response.data[0].valid){
+      like=like+1;
+    }
+    else {
+      alert(response.data[1].message);
+    }
+  }
   return (  
     <div className="post-container">
       <h1 className="heading">{title}</h1>
@@ -10,6 +41,7 @@ imgUrl, author, time }, index }) => {
       <div className="info">      
         <h4>Written by: {author} at {time.toString()}</h4>
       </div>
+      <div><button id="like" class="btn btn-light" onClick={changeLike}>{icon}{like+liked}</button></div>
     </div>
   );
 };
