@@ -22,7 +22,7 @@ class QueryDatabase {
             if (err) {
                 return console.error(err.message);
             }
-            console.log("-------- Connected to " + this.filePath + " database --------");
+            //console.log("-------- Connected to " + this.filePath + " database --------");
         });
     }
 
@@ -153,7 +153,7 @@ class QueryDatabase {
             if (err) {
                 return console.error(err.message);
             }
-            console.log("-------- Closed the database connection --------");
+            //console.log("-------- Closed the database connection --------");
         });
     }
 }

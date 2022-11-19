@@ -86,20 +86,24 @@ app.post('/compose', function (req, res) {
   var post_time = new Date().toLocaleString('en-US', {timeZone: 'America/Los_Angeles'});
   db.connectDatabase();
   db.addNewPost(table, post_title, author_name, author_id, post_body, post_likes, post_id, post_img, post_time, function (postInfo) {
-    console.log(postInfo);
+    //console.log(postInfo);
   });
   res.send([{"valid": true}, {"message": "successfully posted"}]);
   db.closeDatabase();
 });
 
-app.post('/server_post_like', function (req, res) {
+app.post('/server_postLike', function (req, res) {
   var table = "posts";
   var count = req.body.count; // count is 1 for like, -1 for unlike
   var id = req.body.postID;
+  console.log(count);
   db.connectDatabase();
   db.updateLikes(table, id, count, function (postInfo) {
     if (Object.keys(postInfo).length !== 0) {
       res.send([{"valid": true}, {"message": "successfully posted"}]);
+    }
+    else {
+      res.send([{"valid": false}, {"message": "failed to post"}]);
     }
   });
   db.closeDatabase();
@@ -122,7 +126,7 @@ app.get('/posts', function (req, res) {
       data["like"] = posts[i].likes; 
       blogPosts.push(data);
     }
-    console.log(blogPosts);
+    //console.log(blogPosts);
     res.send(blogPosts);
   });
   db.closeDatabase();
