@@ -72,19 +72,24 @@ app.post('/reset_passwd', function (req, res) {
 });
 
 app.post('/compose', function (req, res) {
+  var table = "posts";
+  var post_title = req.body.title;
   var author_name = req.body.author_name;
   var author_id = req.body.author_id;
-  var post_title = req.body.title;
   var post_body = req.body.body;
-  var post_img = req.body.img;
   var post_id = uuidv4();
-  console.log(author_name+author_id);
+  var post_likes = 0;
+  var post_img = req.body.img;
+  db.connectDatabase();
+  db.addNewPost(table, post_title, author_name, author_id, post_body, post_likes, post_id, post_img, function (postInfo) {
+    console.log(postInfo);
+  });
   res.send([{"valid": true}, {"message": "successfully posted"}]);
 });
 
 app.post('/server_postLike', function (req, res) {
   var count = req.body.count;
-  var Id = req.body.postID;
+  var id = req.body.postID;
   // TODO: update the like count in the database, count has state 1 or -1, indicating like or unlike
   res.send([{"valid": true}, {"message": "successfully posted"}]);
 });

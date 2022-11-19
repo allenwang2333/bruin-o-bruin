@@ -8,7 +8,7 @@ const sqlite3 = require('sqlite3').verbose();
 
 var schema = {
     "users": ["id", "email", "username", "userid" ,"passwd"],
-    "posts": ["id", "title", "author", "content", "likes", "postid" ,"imageurl", "image"]
+    "posts": ["id", "title", "author", "authorid" ,"content", "likes", "postid", "image"]
 };
 
 class QueryDatabase {
@@ -107,17 +107,19 @@ class QueryDatabase {
         });
     }
 
-    addNewPost(table, title, author, content, likes = 0, postid ,imageurl, image, callback) {
-        var queryString = `INSERT INTO ${table} (title, author, content, imageurl, image) ` + 
-        `VALUES ("${title}", "${author}", "${content}", "${likes}", "${imageurl}", "${image}")`
+    addNewPost(table, title, author, authorid, content, likes, postid , image, callback) {
+        var queryString = `INSERT INTO ${table} (title, author, authorid, content, likes, postid, image) ` + 
+        `VALUES ("${title}", "${author}", "${authorid}", "${content}", "${likes}", "${postid}", "${image}")`
         let postInfo = {};
         this.db.run(queryString, (err) => {
             if (err) throw err;
             postInfo[schema[table][1]] = title;
             postInfo[schema[table][2]] = author;
-            postInfo[schema[table][3]] = content;
-            postInfo[schema[table][4]] = imageurl;
-            postInfo[schema[table][5]] = image;
+            postInfo[schema[table][3]] = authorid;
+            postInfo[schema[table][4]] = content;
+            postInfo[schema[table][5]] = likes;
+            postInfo[schema[table][6]] = postid;
+            postInfo[schema[table][7]] = image;
             callback(postInfo);
         });
     }
