@@ -9,13 +9,15 @@ class Game extends React.Component{
         super();
         const cLayout = require("./layout.json")
         var board = cLayout.board;
-        board = randomPlaceBlock(board, [1,2,3,4,5], 90)
+        const coor = cLayout["board-coor"]
+        board = randomPlaceBlock(board, [1,2,3,4,5], cLayout.count)
         const seen = this.initSeen(board);
         this.state = {
             board: board,
             seen: seen,
             hand: Array(7).fill(null),
             handSize: 0,
+            coor: coor,
         }
     }
 
@@ -40,8 +42,10 @@ class Game extends React.Component{
         var curr = board[layer][row][col];
         var child = curr.child;
         seen.splice(i, 1);
+        if(child == null)
+            return
         for(let j = 0; j < child.length; j++){
-            const index = child[j];
+            var index = child[j];
             var idx;
             for(let i = 0; i < board[index[0]][index[1]][index[2]].parent.length; i++){
                 if(JSON.stringify(board[index[0]][index[1]][index[2]].parent[i])
@@ -51,8 +55,10 @@ class Game extends React.Component{
                 }
             }
             board[index[0]][index[1]][index[2]].parent.splice(idx, 1);
-            if(board[index[0]][index[1]][index[2]].parent.length === 0)
+            if(board[index[0]][index[1]][index[2]].parent.length === 0){
+                index = [index[0].toString(), index[1].toString(), index[2].toString()]
                 seen.push(index);
+            }
         }
         board[layer][row][col].child = null;
         this.setState({
@@ -90,18 +96,13 @@ class Game extends React.Component{
                 hand: hand,
                 handSize: handSize,
             });
-            this.handleEliminate();
         }
-    }
-
-    handleEliminate(){
-        //TODO
     }
 
     render(){
         return (
             <div className="gameBody">
-                <Board board={this.state.board} onClick={(i, r, c) => this.handleClick(i, r, c)}/>
+                <Board board={this.state.board} coor={this.state.coor} onClick={(i, r, c) => this.handleClick(i, r, c)}/>
                 <Hand hand={this.state.hand}/>
             </div>
         )
