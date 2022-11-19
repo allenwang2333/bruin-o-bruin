@@ -8,7 +8,7 @@ const sqlite3 = require('sqlite3').verbose();
 
 var schema = {
     "users": ["id", "email", "username", "userid" ,"passwd"],
-    "posts": ["id", "title", "author", "authorid" ,"content", "likes", "postid", "image"]
+    "posts": ["id", "title", "author", "authorid" ,"content", "likes", "postid", "image", "time"]
 };
 
 class QueryDatabase {
@@ -31,11 +31,13 @@ class QueryDatabase {
         let data = {};
         this.db.all(queryString, (err, rows) => {
             if (err) throw err;
-            rows.forEach(function (row) {
-                data[row.id] = {};
+            data = [];
+            rows.forEach((row) => {
+                let rowInfo = {};
                 for (var i = 0; i < schema[table].length; i++) {
-                    data[row.id][schema[table][i]] = row[schema[table][i]];
+                    rowInfo[schema[table][i]] = row[schema[table][i]];
                 }
+                data.push(rowInfo);
             });
             callback(data);
         });
@@ -105,9 +107,9 @@ class QueryDatabase {
         });
     }
 
-    addNewPost(table, title, author, authorid, content, likes, postid , image, callback) {
-        var queryString = `INSERT INTO ${table} (title, author, authorid, content, likes, postid, image) ` + 
-        `VALUES ("${title}", "${author}", "${authorid}", "${content}", "${likes}", "${postid}", "${image}")`
+    addNewPost(table, title, author, authorid, content, likes, postid , image, time, callback) {
+        var queryString = `INSERT INTO ${table} (title, author, authorid, content, likes, postid, image, time) ` + 
+        `VALUES ("${title}", "${author}", "${authorid}", "${content}", "${likes}", "${postid}", "${image}", "${time}")`
         let postInfo = {};
         this.db.run(queryString, (err) => {
             if (err) throw err;
@@ -118,6 +120,7 @@ class QueryDatabase {
             postInfo[schema[table][5]] = likes;
             postInfo[schema[table][6]] = postid;
             postInfo[schema[table][7]] = image;
+            postInfo[schema[table][8]] = time;
             callback(postInfo);
         });
     }

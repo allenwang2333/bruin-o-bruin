@@ -7,5 +7,5 @@ CREATE TABLE IF NOT EXISTS posts (
     likes INTEGER NOT NULL,
     postid TEXT NOT NULL,
     image BLOB DEFAULT NULL,
-    timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+    time TEXT NOT NULL
 );
