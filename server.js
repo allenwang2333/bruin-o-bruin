@@ -83,7 +83,8 @@ app.post('/compose', function (req, res) {
 });
 
 app.get('/posts', function (req, res) {
-  const blogPosts = [
+  const blogPosts = [ 
+    {"valid": true},
     {
       title: "JAVASCRIPT",
       body: `JavaScript is the world most popular 

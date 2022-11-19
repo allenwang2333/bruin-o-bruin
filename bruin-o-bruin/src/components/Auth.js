@@ -5,7 +5,6 @@ import './style.css';
 
 export default function (props) {
   let [authMode, setAuthMode] = useState("signin")
-  const [status, setStatus] = useState('')
   const changeAuthMode = () => {
     if (authMode === "reset") {
       setAuthMode("signin")
