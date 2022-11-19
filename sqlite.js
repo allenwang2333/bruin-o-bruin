@@ -8,7 +8,7 @@ const sqlite3 = require('sqlite3').verbose();
 
 var schema = {
     "users": ["id", "email", "username", "userid" ,"passwd"],
-    "posts": ["id", "title", "author", "content", "imageurl", "image"]
+    "posts": ["id", "title", "author", "content", "likes", "postid" ,"imageurl", "image"]
 };
 
 class QueryDatabase {
@@ -27,7 +27,7 @@ class QueryDatabase {
     }
 
     readTableAll(table, callback) {
-        var queryString = "SELECT * FROM " + table;
+        var queryString = `SELECT * FROM ${table}`;
         let data = {};
         this.db.all(queryString, (err, rows) => {
             if (err) throw err;
@@ -43,9 +43,7 @@ class QueryDatabase {
     }
 
     readTableByEmail(table, email, callback) {
-        var queryString = 
-            "SELECT * FROM " + table + 
-            " WHERE email == \"" + email + "\"";
+        var queryString = `SELECT * FROM ${table} WHERE email == "${email}"`;
         let userInfo = {}; 
         this.db.all(queryString, (err, rows) => {
             if (err) throw err;
@@ -60,17 +58,15 @@ class QueryDatabase {
     }
 
     addUser(table, email, username, userid, passwd, callback) {
-        var testExist = 
-        "SELECT * FROM " + table + 
-        " WHERE email == \"" + email + "\"";
+        var testExist = `SELECT * FROM ${table} WHERE email == "${email}"`;
         var queryString = 
-        "INSERT INTO " + table + 
-        " (email ,username, userid, passwd) VALUES (" + "\"" + email + "\", \"" + username + "\", \"" + userid + "\", \"" + passwd + "\")";
+        `INSERT INTO ${table} (email, username, userid, passwd) ` + 
+        `VALUES ("${email}", "${username}", "${userid}", "${passwd}")`;
         this.db.all(testExist, (err, rows) => {
             let userInfo = {};
             if (err) throw err;
             if (rows.length > 0) {
-                console.log("User \"" + email + "\" already exists");
+                console.log(`User ${username} already exists`);
                 callback(userInfo);
                 return;
             }
@@ -88,13 +84,8 @@ class QueryDatabase {
     }
 
     updatePassword(table, email, username, passwd, callback) {
-        var testExist = 
-        "SELECT * FROM " + table + 
-        " WHERE email == \"" + email + "\"";
-        var updateString = 
-        "UPDATE " + table +
-        " SET passwd = \"" + passwd + "\"" +
-        " WHERE email == \"" + email + "\"";
+        var testExist = `SELECT * FROM ${table} WHERE email == "${email}"`;
+        var updateString = `UPDAT ${table} SET passed = "${passwd}" WHERE email == "$email"`;
         this.db.all(testExist, (err, rows) => {
             let userInfo = {};
             if (err) throw err;
@@ -116,11 +107,9 @@ class QueryDatabase {
         });
     }
 
-    addNewPost(table, title, author, content, imageurl, image, callback) {
-        var queryString =
-        "INSERT INTO " + table +
-        " (title, author, content, imageurl, image)" +
-        " VALUES (" + "\"" + title + "\", \"" + author + "\", \"" + content + "\", \"" + imageurl + "\", \"" + image + "\")";
+    addNewPost(table, title, author, content, likes = 0, postid ,imageurl, image, callback) {
+        var queryString = `INSERT INTO ${table} (title, author, content, imageurl, image) ` + 
+        `VALUES ("${title}", "${author}", "${content}", "${likes}", "${imageurl}", "${image}")`
         let postInfo = {};
         this.db.run(queryString, (err) => {
             if (err) throw err;
