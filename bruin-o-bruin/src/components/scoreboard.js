@@ -18,15 +18,15 @@ export default function Board() {
     )
 }
 
-
-
+// To make leaders arrange in order of score
 function between(data, between){
     const today = new Date(); // today's date
     const previous = new Date(today);
-    previous.setDate(previous.getDate() - (between + 1));
+    previous.setDate(previous.getDate() - (between + 1)); // How many previous date to consider for leaderboard
 
     let filter = data.filter(val => {
-        let userDate = new Date(val.dt);
+
+        let userDate = new Date(val.post_time);
         if (between === 0) return val;
         return previous <= userDate && today >= userDate;
     })

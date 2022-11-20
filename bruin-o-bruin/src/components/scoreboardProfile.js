@@ -7,10 +7,9 @@ export default function profiles({ Leaderboard }) {
         </div>
     )
 }
-
+//  TODO: Need to add score item
 function Item(data){
     return (
-
         <>
             {
                 data.map((value, index) => (
@@ -24,7 +23,9 @@ function Item(data){
                                 </div>
                             </div>
                             <div className="item">
+
                                 <span>{value.score}</span>
+
                             </div>
                         </div>
                     )

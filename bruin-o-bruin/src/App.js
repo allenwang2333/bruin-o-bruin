@@ -7,6 +7,7 @@ import Social from "./components/Social";
 import DashBoard from "./components/DashBoard";
 import Auth from "./components/Auth"
 import Game from "./gamePlay/game.js"
+import Board from "./components/scoreboard.js";
 
 class App extends React.Component{
   render(){
@@ -18,6 +19,7 @@ class App extends React.Component{
         <Route path="/game" element={<Game/>} />
         <Route path="/home" element={<Home/>} />
         <Route path="/social" element={<Social/>} />
+        <Route path="/scoreboard" element={<Board/>} />
       </Routes>
     </BrowserRouter>
   );
