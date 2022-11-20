@@ -94,9 +94,8 @@ app.post('/compose', function (req, res) {
 
 app.post('/server_postLike', function (req, res) {
   var table = "posts";
-  var count = req.body.count; // count is 1 for like, -1 for unlike
+  var count = Number(req.body.count); // count is 1 for like, -1 for unlike
   var id = req.body.postID;
-  console.log(count);
   db.connectDatabase();
   db.likeOrUnlikePost(table, id, count, function (postInfo) {
     if (Object.keys(postInfo).length !== 0) {
@@ -128,8 +127,8 @@ app.get('/posts', function (req, res) {
     }
     //console.log(blogPosts);
     res.send(blogPosts);
+    db.closeDatabase();
   });
-  db.closeDatabase();
 });
 
 app.get('*', (req, res) => {

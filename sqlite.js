@@ -17,7 +17,7 @@ class QueryDatabase {
         this.schema = schema;
     }  
 
-    connectDatabase() {
+    async connectDatabase() {
         this.db = new sqlite3.Database(this.filePath, (err) => {
             if (err) {
                 return console.error(err.message);
@@ -26,10 +26,10 @@ class QueryDatabase {
         });
     }
 
-    readTableAll(table, callback) {
+    async readTableAll(table, callback) {
         var queryString = `SELECT * FROM ${table}`;
         let data = {};
-        this.db.all(queryString, (err, rows) => {
+        await this.db.all(queryString, (err, rows) => {
             if (err) throw err;
             data = [];
             rows.forEach((row) => {
@@ -43,10 +43,10 @@ class QueryDatabase {
         });
     }
 
-    readTableByEmail(table, email, callback) {
+    async readTableByEmail(table, email, callback) {
         var queryString = `SELECT * FROM ${table} WHERE email == "${email}"`;
         let userInfo = {}; 
-        this.db.all(queryString, (err, rows) => {
+        await this.db.all(queryString, (err, rows) => {
             if (err) throw err;
             rows.forEach(function (row) {
                 userInfo[schema[table][1]] = row[schema[table][1]];
@@ -58,12 +58,12 @@ class QueryDatabase {
         });
     }
 
-    addUser(table, email, username, userid, passwd, callback) {
+    async addUser(table, email, username, userid, passwd, callback) {
         var testExist = `SELECT * FROM ${table} WHERE email == "${email}"`;
         var queryString = 
         `INSERT INTO ${table} (email, username, userid, passwd) ` + 
         `VALUES ("${email}", "${username}", "${userid}", "${passwd}")`;
-        this.db.all(testExist, (err, rows) => {
+        await this.db.all(testExist, (err, rows) => {
             let userInfo = {};
             if (err) throw err;
             if (rows.length > 0) {
@@ -84,10 +84,10 @@ class QueryDatabase {
         });        
     }
 
-    updatePassword(table, email, username, passwd, callback) {
+    async updatePassword(table, email, username, passwd, callback) {
         var testExist = `SELECT * FROM ${table} WHERE email == "${email}"`;
-        var updateString = `UPDAT ${table} SET passed = "${passwd}" WHERE email == "$email"`;
-        this.db.all(testExist, (err, rows) => {
+        var updateString = `UPDATE ${table} SET passwd = "${passwd}" WHERE email == "${email}"`;
+        await this.db.all(testExist, (err, rows) => {
             let userInfo = {};
             if (err) throw err;
             if (rows.length > 0 && rows[0].username == username) {
@@ -107,11 +107,11 @@ class QueryDatabase {
         });
     }
 
-    addNewPost(table, title, author, authorid, content, likes, postid , image, time, callback) {
+    async addNewPost(table, title, author, authorid, content, likes, postid , image, time, callback) {
         var queryString = `INSERT INTO ${table} (title, author, authorid, content, likes, postid, image, time) ` + 
         `VALUES ("${title}", "${author}", "${authorid}", "${content}", "${likes}", "${postid}", "${image}", "${time}")`
         let postInfo = {};
-        this.db.run(queryString, (err) => {
+        await this.db.run(queryString, (err) => {
             if (err) throw err;
             postInfo[schema[table][1]] = title;
             postInfo[schema[table][2]] = author;
@@ -125,18 +125,21 @@ class QueryDatabase {
         });
     }
 
-    likeOrUnlikePost(table, postid, count, callback) {
-        var queryString = `SELECT * FROM ${table} WHERE postid == "${postid}"`;
-        this.db.all(queryString, (err, rows) => {
+    async likeOrUnlikePost(table, postid, count, callback) {
+        var queryString = `SELECT * FROM ${table} WHERE postid = "${postid}"`;
+        await this.db.all(queryString, (err, rows) => {
             if (err) throw err;
             if (rows.length > 0) {
                 var likeInfo = {};
+                //console.log(rows[0].likes);
+                console.log(count);
                 console.log(rows[0].likes);
                 if (!(rows[0].likes == 0 && count == -1)) {
-                    var newCount = rows[0].likes + Number(count);
+                    let newCount = rows[0].likes + count;
                     console.log(newCount); // here the newCount is correct
-                    var updateString = `UPDATE ${table} SET likes = "${newCount} WHERE postid == "${postid}}"`;
+                    let updateString = `UPDATE ${table} SET likes = ${newCount} WHERE postid = "${postid}"`;
                     this.db.run(updateString, (err) => {
+                        if (err) throw err;
                         likeInfo['postid'] = postid;
                         likeInfo['newCount'] = newCount;
                         callback(likeInfo);
@@ -150,8 +153,8 @@ class QueryDatabase {
         });
     }
 
-    closeDatabase() {
-        this.db.close((err) => {
+    async closeDatabase() {
+        await this.db.close((err) => {
             if (err) {
                 return console.error(err.message);
             }
