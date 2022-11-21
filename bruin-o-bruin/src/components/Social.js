@@ -7,7 +7,7 @@ import 'reactjs-popup/dist/index.css';
 import logo from "./assets/joe_bruin.png";
 import Posts from "./LoadPosts";
 import { AiFillEdit } from "react-icons/ai";
-
+import { v4 as uuidv4 } from 'uuid';
 import styles from "./SocialStyle.css";
 
 function Social() {
@@ -33,17 +33,46 @@ function Social() {
 
     async function handleSubmitPost(event) {
         event.preventDefault()
-        const params = new URLSearchParams();
-        params.append('title', event.currentTarget.elements.title.value);
-        params.append('body', event.currentTarget.elements.body.value);
-        params.append('img', image.data);
-        params.append('author_name', sessionStorage.getItem("userName"));
-        params.append('author_id', sessionStorage.getItem("userID"));
-        const response = await axios.post('http://localhost:8080/compose', params);
-        if (response.data[0].valid) {
-            closeTooltip();
+        if (image.data !== '') {
+            let formData = new FormData()
+            formData.append('title', event.currentTarget.elements.title.value);
+            formData.append('body', event.currentTarget.elements.body.value);
+            formData.append('author_name', sessionStorage.getItem("userName"));
+            formData.append('author_id', sessionStorage.getItem("userID"));
+            var post_id = uuidv4();
+            formData.append('post_id', post_id);
+            formData.append('file', image.data);
+            const response = await fetch('http://localhost:8080/compose_pic', {
+                method: 'POST',
+                body: formData,
+            });
+            const msgFromResponse = await response.text();
+            console.log(msgFromResponse);
+            if (msgFromResponse == "successfully posted") {
+                closeTooltip();
+                setImage({ preview: '', data: '' });
+            }
+            alert(msgFromResponse);
         }
-        alert(response.data[1].message);
+        else {
+            const params = new URLSearchParams();
+            params.append('title', event.currentTarget.elements.title.value);
+            params.append('body', event.currentTarget.elements.body.value);
+            params.append('author_name', sessionStorage.getItem("userName"));
+            params.append('author_id', sessionStorage.getItem("userID"));
+            var post_id = uuidv4();
+            params.append('post_id', post_id);
+            const response = await fetch('http://localhost:8080/compose_text', {
+                method: 'POST',
+                body: params,
+            });
+            const msgFromResponse = await response.text();
+            console.log(msgFromResponse);
+            if (msgFromResponse == "successfully posted") {
+                closeTooltip();
+            }
+            alert(msgFromResponse);
+        }
     }
 
     return (
@@ -90,7 +119,7 @@ function Social() {
                                                     </div>
 
                                                     <div className="file-upload">
-                                                        <input type="file" id="image" name="image" onChange={handleFileChange} capture="environment" accept="image/png, image/jpeg" />
+                                                        <input type="file" id="image" name="file" onChange={handleFileChange} capture="environment" accept="image/png, image/jpeg" />
                                                     </div>
 
                                                     {image.preview && <img src={image.preview} width='30%' height='30%' />}
