@@ -87,7 +87,7 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-app.post('/compose', upload.single('file'), function (req, res) {
+app.post('/compose_pic', upload.single('file'), function (req, res) {
   var table = "posts";
   var post_title = req.body.title;
   var author_name = req.body.author_name;
@@ -97,6 +97,23 @@ app.post('/compose', upload.single('file'), function (req, res) {
   var post_likes = 0;
   const url = req.protocol + '://' + req.get('host')
   var post_img = url+'/images/'+req.file.filename;
+  var post_time = new Date().toLocaleString('en-US', {timeZone: 'America/Los_Angeles'});
+  db.connectDatabase();
+  db.addNewPost(table, post_title, author_name, author_id, post_body, post_likes, post_id, post_img, post_time, function (postInfo) {
+  });
+  res.send("successfully posted");
+  db.closeDatabase();
+});
+
+app.post('/compose_text', function (req, res) {
+  var table = "posts";
+  var post_title = req.body.title;
+  var author_name = req.body.author_name;
+  var author_id = req.body.author_id;
+  var post_body = req.body.body;
+  var post_id = req.body.post_id;
+  var post_likes = 0;
+  var post_img = '';
   var post_time = new Date().toLocaleString('en-US', {timeZone: 'America/Los_Angeles'});
   db.connectDatabase();
   db.addNewPost(table, post_title, author_name, author_id, post_body, post_likes, post_id, post_img, post_time, function (postInfo) {

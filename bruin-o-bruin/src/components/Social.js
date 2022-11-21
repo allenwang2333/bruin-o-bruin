@@ -33,25 +33,46 @@ function Social() {
 
     async function handleSubmitPost(event) {
         event.preventDefault()
-        let formData = new FormData()
-        formData.append('file', image.data)
-        formData.append('title', event.currentTarget.elements.title.value);
-        formData.append('body', event.currentTarget.elements.body.value);
-        formData.append('author_name', sessionStorage.getItem("userName"));
-        formData.append('author_id', sessionStorage.getItem("userID"));
-        var post_id = uuidv4();
-        formData.append('post_id', post_id);
-        const response = await fetch('http://localhost:8080/compose', {
-            method: 'POST',
-            body: formData,
-        });
-        const msgFromResponse = await response.text();
-        console.log(msgFromResponse);
-        if (msgFromResponse=="successfully posted") {
-            closeTooltip();
-            setImage({ preview: '', data: '' });
+        if (image.data !== '') {
+            let formData = new FormData()
+            formData.append('title', event.currentTarget.elements.title.value);
+            formData.append('body', event.currentTarget.elements.body.value);
+            formData.append('author_name', sessionStorage.getItem("userName"));
+            formData.append('author_id', sessionStorage.getItem("userID"));
+            var post_id = uuidv4();
+            formData.append('post_id', post_id);
+            formData.append('file', image.data);
+            const response = await fetch('http://localhost:8080/compose_pic', {
+                method: 'POST',
+                body: formData,
+            });
+            const msgFromResponse = await response.text();
+            console.log(msgFromResponse);
+            if (msgFromResponse == "successfully posted") {
+                closeTooltip();
+                setImage({ preview: '', data: '' });
+            }
+            alert(msgFromResponse);
         }
-        alert(msgFromResponse);
+        else {
+            const params = new URLSearchParams();
+            params.append('title', event.currentTarget.elements.title.value);
+            params.append('body', event.currentTarget.elements.body.value);
+            params.append('author_name', sessionStorage.getItem("userName"));
+            params.append('author_id', sessionStorage.getItem("userID"));
+            var post_id = uuidv4();
+            params.append('post_id', post_id);
+            const response = await fetch('http://localhost:8080/compose_text', {
+                method: 'POST',
+                body: params,
+            });
+            const msgFromResponse = await response.text();
+            console.log(msgFromResponse);
+            if (msgFromResponse == "successfully posted") {
+                closeTooltip();
+            }
+            alert(msgFromResponse);
+        }
     }
 
     return (

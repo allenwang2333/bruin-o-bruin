@@ -31,6 +31,19 @@ imgUrl, author, time, like }, index }) => {
       alert(response.data[1].message);
     }
   }
+  if (imgUrl === '') {
+    return (  
+      <div className="post-container">
+        <h1 className="heading">{title}</h1>
+        <p>{body}</p>
+        <div className="info">      
+          <h4>Written by: {author} at {time.toString()}</h4>
+        </div>
+        <div><button id="like" class="btn btn-light" onClick={changeLike}>{icon}{like}</button></div>
+      </div>
+    );
+  }
+
   return (  
     <div className="post-container">
       <h1 className="heading">{title}</h1>
