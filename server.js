@@ -5,7 +5,6 @@ const { nextTick } = require('process');
 var sqlite_db = require('./sqlite.js');
 const schema = require('./sqlite.js');
 const { v4: uuidv4 } = require('uuid');
-const { stringify : uuidStringify } = require('uuid');
 const { userInfo } = require('os');
 const multer  = require('multer')
 var fs = require('fs');
@@ -83,8 +82,8 @@ const storage = multer.diskStorage({
     cb(null, 'images/')
   },
   filename: (req, file, cb) => {
-    cb(null, file.originalname)
-  },
+    cb(null,  uuidv4() + file.originalname)
+  }
 });
 
 const upload = multer({ storage: storage });
@@ -101,9 +100,8 @@ app.post('/compose', upload.single('file'), function (req, res) {
   var post_time = new Date().toLocaleString('en-US', {timeZone: 'America/Los_Angeles'});
   db.connectDatabase();
   db.addNewPost(table, post_title, author_name, author_id, post_body, post_likes, post_id, post_img, post_time, function (postInfo) {
-    //console.log(postInfo);
   });
-  res.send([{"valid": true}, {"message": "successfully posted"}]);
+  res.send("successfully posted");
   db.closeDatabase();
 });
 

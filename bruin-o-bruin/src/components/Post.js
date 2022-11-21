@@ -5,7 +5,6 @@ import {AiOutlineLike ,AiTwotoneLike} from "react-icons/ai";
 
 const Post = ({ post: { postID, title, body,
 imgUrl, author, time, like }, index }) => {
-  console.log(postID);
   let [icon, setIcon] = useState(<AiOutlineLike/>);
   let [liked, setLiked] = useState(false);
 

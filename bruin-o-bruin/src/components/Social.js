@@ -33,14 +33,6 @@ function Social() {
 
     async function handleSubmitPost(event) {
         event.preventDefault()
-        /*let formData = new FormData()
-        formData.append('file', image.data)
-        
-        const response = await axios({method: 'post', url: 'http://localhost:8080/compose', data: formData,});
-        if (response.data[0].valid) {
-            closeTooltip();
-        }
-        alert(response.data[1].message);*/
         let formData = new FormData()
         formData.append('file', image.data)
         formData.append('title', event.currentTarget.elements.title.value);
@@ -52,7 +44,14 @@ function Social() {
         const response = await fetch('http://localhost:8080/compose', {
             method: 'POST',
             body: formData,
-        })
+        });
+        const msgFromResponse = await response.text();
+        console.log(msgFromResponse);
+        if (msgFromResponse=="successfully posted") {
+            closeTooltip();
+            setImage({ preview: '', data: '' });
+        }
+        alert(msgFromResponse);
     }
 
     return (
