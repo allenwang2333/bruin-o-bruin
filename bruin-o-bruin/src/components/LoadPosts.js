@@ -18,9 +18,9 @@ const Posts = () => {
       alert(response.data[1].message);
     }
   }
-  getPosts();
 
   useEffect(() => {
+    getPosts();
     const interval = setInterval(() => {getPosts();}, 10000);//refreshes every 10 second
     return () => clearInterval(interval);
   }, []);
