@@ -128,6 +128,24 @@ app.get('/posts', function (req, res) {
   db.closeDatabase();
 });
 
+app.get('/scoreboard', function (req, res) {
+  res.send([{"valid": true}, {
+    name: 'Joe Bruin',
+    location: 'Los Angeles, CA',
+    score: 100,
+    img: 'https://i.imgur.com/8Km9tLL.png',
+    post_time: '2022-11-20'
+},
+
+{
+    name: 'Joe 2',
+    location: 'Los Angeles, CA',
+    score: 101,
+    img: 'https://i.imgur.com/8Km9tLL.png',
+    post_time: '2022-11-20'
+}]);
+});
+
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../bruin-o-bruin/bruin-o-bruin/build', 'index.html'));
 });
