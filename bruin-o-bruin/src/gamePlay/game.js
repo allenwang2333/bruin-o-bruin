@@ -3,15 +3,18 @@ import Hand from "./hand.js"
 import React from "react"
 import "./gamePlay.css"
 import randomPlaceBlock from "./randomPlace.js"
+import Shuffle from "./buff.js"
 
 class Game extends React.Component{
     constructor(){
         super();
+        const category_kind_count = 5
         const cLayout = require("./layout.json")
         var board = cLayout.board;
         const coor = cLayout["board-coor"]
         board = randomPlaceBlock(board, [1,2,3,4,5], cLayout.count)
         const seen = this.initSeen(board);
+        const remain_category = this.initCategory(category_kind_count, cLayout.count)
         this.state = {
             board: board,
             seen: seen,
@@ -20,8 +23,19 @@ class Game extends React.Component{
             category: {1: 0, 2: 0, 3: 0, 4: 0, 5: 0},
             coor: coor,
             remain: cLayout.count,
+            remain_category: remain_category
         }
     }
+
+    initCategory(category_kind_count, total_count){
+        const each_kind_count = Math.floor(total_count / category_kind_count)
+        var remain_category = {}
+        for (let i = 1; i <= category_kind_count; i++){
+            remain_category[i] = each_kind_count
+        }
+        return remain_category
+    }
+
 
     initSeen(board){
         var seen = [];
@@ -131,11 +145,20 @@ class Game extends React.Component{
         })
     }
 
+    handleShuffleClick(){
+
+        var category = this.state.category
+        var board = this.state.board
+        var count = this.state.count
+        
+    }
+
     render(){
         return (
             <div className="gameBody">
                 <Board board={this.state.board} coor={this.state.coor} onClick={(i, r, c) => this.handleClick(i, r, c)}/>
                 <Hand hand={this.state.hand}/>
+                <Shuffle onClick={() => this.handleShuffleClick()}/>
             </div>
         )
     }
