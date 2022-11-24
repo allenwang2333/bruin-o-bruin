@@ -12,7 +12,8 @@ class LooseDisplay extends React.Component {
 
     render() {
         return (
-            <Popup open={this.props.loose} position="center" closeOnDocumentClick={false} closeOnEscape={false} className='popup'>
+            <Popup open={this.props.loose} position="center" 
+                   closeOnDocumentClick={false} closeOnEscape={false} className='popup'>
                 <div className='message'>
                     <p>
                         Your hand is full.
