@@ -1,9 +1,16 @@
-import React from "react";
+import React ,{useEffect} from "react";
 import './style.css';
 
 var username = sessionStorage.getItem("userName");
 
 const Home = () => {
+
+  useEffect(() => {
+    //redirecting if user is not logged in
+    if(!sessionStorage.getItem("userName")){
+      window.location.href = "/";
+    }
+  });
 
   function logout(){
     sessionStorage.clear();

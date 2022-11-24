@@ -1,8 +1,9 @@
 import Board from "./board.js"
 import Hand from "./hand.js"
-import React from "react"
+import React, {useEffect}from "react"
 import "./gamePlay.css"
 import randomPlaceBlock from "./randomPlace.js"
+
 
 class Game extends React.Component{
     constructor(){

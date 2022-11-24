@@ -15,6 +15,14 @@ import styles from "./homepage.css";
 import psnLogo from "./assets/joe_bruin.png";
 
 function DashBoard() {
+
+  useEffect(() => {
+    //redirecting if user is logged in
+    if(sessionStorage.getItem("userName")){
+      window.location.href = "/home";
+    }
+  });
+
   return (
     <Container fluid>
       <Row className={styles.container}>

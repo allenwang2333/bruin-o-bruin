@@ -1,9 +1,16 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import axios from "axios";
 import {hashString} from 'react-hash-string'
 import './style.css';
 
 export default function (props) {
+  useEffect(() => {
+    //stop redirecting if user is logged in
+    if(sessionStorage.getItem("userName")){
+      window.location.href = "/home";
+    }
+  });
+
   let [authMode, setAuthMode] = useState("signin")
   const changeAuthMode = () => {
     if (authMode === "reset") {

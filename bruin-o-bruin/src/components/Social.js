@@ -1,7 +1,5 @@
-import React, { useRef, useState } from "react";
-import axios from "axios";
-import { Link, Outlet, useNavigate } from "react-router-dom";
-import { Button, Col, Container, Nav, Navbar, Row } from "react-bootstrap";
+import React, { useRef, useState, useEffect } from "react";
+import {Col, Container, Nav, Row } from "react-bootstrap";
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import logo from "./assets/joe_bruin.png";
@@ -11,12 +9,12 @@ import { v4 as uuidv4 } from 'uuid';
 import styles from "./SocialStyle.css";
 
 function Social() {
-    let navigate = useNavigate();
-    /*useEffect(() => {
-      if (localStorage.getItem("psnToken") === null) {
-          navigate("/unauthorized");
+    useEffect(() => {
+        //stop redirecting if user is not logged in
+        if(!sessionStorage.getItem("userName")){
+          window.location.href = "/";
         }
-      });*/
+      });
     const ref = useRef();
     const closeTooltip = () => ref.current.close();
 
