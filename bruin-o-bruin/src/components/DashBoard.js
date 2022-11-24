@@ -7,7 +7,7 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
 import {BsFillPersonPlusFill} from "react-icons/bs";
-
+import {IoGameControllerOutline} from "react-icons/io5";
 import {RiLoginBoxLine} from "react-icons/ri";
 
 import styles from "./homepage.css";
@@ -39,6 +39,9 @@ function DashBoard() {
             <br />
             <Row>
               <Link to="/auth" className={styles.linkTextFormat}><Button variant="success" className={`${styles.btnHomePage} mb-3`}>Sign In <RiLoginBoxLine /><BsFillPersonPlusFill /></Button></Link>
+            </Row>
+            <Row>
+              <Link to="/game" className={styles.linkTextFormat}><Button variant="success" className={`${styles.btnHomePage} mb-3`}>play game as guest <IoGameControllerOutline /> </Button></Link>
             </Row>
           </div>
         </Col>
