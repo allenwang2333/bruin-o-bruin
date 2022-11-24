@@ -1,5 +1,4 @@
 import React from 'react'
-import randomPlaceBlock from "./randomPlace.js"
 import "./gamePlay.css"
 
 

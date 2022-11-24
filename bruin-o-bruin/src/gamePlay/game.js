@@ -111,7 +111,7 @@ class Game extends React.Component{
             this.setState({
                 board: board,
                 remain: remain,
-                remain_category: remain_category
+                remain_category: remain_category  // new
             });
         }
     }
@@ -148,12 +148,30 @@ class Game extends React.Component{
         })
     }
 
-    handleShuffleClick(){
-
-        var category = this.state.category
+    handleShuffleClick(remain_category){ // new
         var board = this.state.board
-        var count = this.state.count
-        
+        var copy_remain_category = {...remain_category}
+        var category_list = Object.keys(copy_remain_category)
+        var category_count_list = Object.values(copy_remain_category)
+        for(const layer in board){
+            for(const row in board[layer]){
+                for(const col in board[layer][row]){
+                    if(board[layer][row][col].fill){
+                        let curr;
+                        do {
+                            curr = Math.floor(Math.random() * category_list.length);
+                        }while(category_count_list[curr] === 0);
+                        board[layer][row][col].category = category_list[curr];
+                        category_count_list[curr]--;
+                    }
+                }
+            }
+        }
+        this.setState(
+            {
+                board: board
+            }
+        )
     }
 
     render(){
@@ -161,7 +179,7 @@ class Game extends React.Component{
             <div className="gameBody">
                 <Board board={this.state.board} coor={this.state.coor} onClick={(i, r, c) => this.handleClick(i, r, c)}/>
                 <Hand hand={this.state.hand}/>
-                <Shuffle onClick={() => this.handleShuffleClick()}/>
+                <Shuffle onClick={() => this.handleShuffleClick(this.state.remain_category)}/>
             </div>
         )
     }
