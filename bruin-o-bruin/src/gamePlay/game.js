@@ -15,6 +15,7 @@ class Game extends React.Component {
         const coor = cLayout["board-coor"]
         board = randomPlaceBlock(board, [1, 2, 3, 4, 5], cLayout.count)
         const seen = this.initSeen(board);
+        const off = cLayout["offset"]
         this.state = {
             board: board,
             seen: seen,
@@ -22,6 +23,7 @@ class Game extends React.Component {
             handSize: 0,
             category: {1: 0, 2: 0, 3: 0, 4: 0, 5: 0},
             coor: coor,
+            off: off,
             remain: cLayout.count,
             loose: false,
             win: false,
@@ -144,7 +146,7 @@ class Game extends React.Component {
     render(){
         return (
             <div className="gameBody">
-                <Board board={this.state.board} coor={this.state.coor}
+                <Board board={this.state.board} coor={this.state.coor} off={this.state.off}
                        onClick={(i, r, c) => this.handleClick(i, r, c)}/>
                 <Hand hand={this.state.hand}/>
                 <LooseDisplay loose={this.state.loose}/>

@@ -3,17 +3,24 @@
     border: 2px solid black;
     height: 500px;
     border-radius: 9px;
+    
 }
 
-.Board {
-    width: 100%;
-    height: 80px;
-    border: 2px solid black;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
+.at-hand {
+    top: 85%;
+    left: 50%;
+    position: fixed;
+    display: inline-block;
+    transform: translateX(-50%);
+}
+
+.board {
+    top: 40%;
+    left: 50%;
+    position: fixed;
+    display: inline-block;
+    transform: translateX(-50%);
+
 }
 
 .block {
@@ -38,6 +45,7 @@
     width: 64px;
     height: 64px;
     text-align: center;
+    vertical-align: middle;
     font-size: 25px;
     color: crimson;
     line-height: 50px;

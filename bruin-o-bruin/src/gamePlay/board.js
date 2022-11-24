@@ -10,7 +10,9 @@ class Board extends React.Component{
             //     {board.map((layer, index) => <Layer layer={layer} key={index} zIndex={1000 - index} onClick={(l, r, c) => this.props.onClick(l, r, c)}/>)}
             // </div>
             <div className="board"> 
-                {board.map((layer) => layer.map((row) => row.map((element, index) => <Block block={element} key={index} coor={this.props.coor} onClick={(l, r, c) => this.props.onClick(l, r, c)}/>)))}
+                {board.map((layer) => layer.map((row) => row.map((element, index) => 
+                    <Block block={element} key={index} coor={this.props.coor} off={this.props.off} 
+                            onClick={(l, r, c) => this.props.onClick(l, r, c)}/>)))}
             </div>
         )
     }

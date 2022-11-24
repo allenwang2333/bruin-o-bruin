@@ -7,8 +7,8 @@ class Block extends React.Component{
         const row = this.props.block.row;
         const col = this.props.block.col;
         const category = this.props.block.category;
-        const left = (34 * (this.props.coor[layer][0] + col * 2)) + window.innerWidth / 4
-        const top = (34 * (this.props.coor[layer][1] + row * 2)) + window.innerHeight / 4
+        const left = (34 * (this.props.coor[layer][0] - this.props.off[0] + col * 2))
+        const top = (34 * (this.props.coor[layer][1] - this.props.off[1] + row * 2))
         const style = this.props.block.fill ? {visibility: "visible", zIndex: 100 - layer, left: left, top: top} 
                         : {visibility: "hidden", zIndex: 0, left: left, top: top};
         return (
