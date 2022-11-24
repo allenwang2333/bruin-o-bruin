@@ -5,7 +5,6 @@ import randomPlaceBlock from "./randomPlace.js"
 import LooseDisplay from "./loosePage.js"
 import WinDisplay from "./winPage.js"
 import handleSuccess from "./handleSuccess.js";
-import Shuffle from "./buff.js"
 import "./gamePlay.css"
 
 class Game extends React.Component {
@@ -212,7 +211,6 @@ class Game extends React.Component {
                     <Board board={this.state.board} coor={this.state.coor} off={this.state.off}
                            images={this.state.images} onClick={(i, r, c) => this.handleClick(i, r, c)}/>
                     <Hand hand={this.state.hand}/>
-                    <Shuffle onClick={() => this.handleShuffleClick(this.state.remain_category)}/>
                     <LooseDisplay loose={this.state.loose}/>
                     <WinDisplay win={this.state.win}/>
                 </div>
