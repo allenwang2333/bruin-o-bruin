@@ -1,29 +1,42 @@
 import Board from "./board.js"
 import Hand from "./hand.js"
 import React from "react"
-import "./gamePlay.css"
 import randomPlaceBlock from "./randomPlace.js"
 import Shuffle from "./buff.js"
+import LooseDisplay from "./loosePage.js"
+import WinDisplay from "./winPage.js"
+import handleSuccess from "./handleSuccess.js";
+import "./gamePlay.css"
 
-class Game extends React.Component{
-    constructor(){
+class Game extends React.Component {
+    constructor() {
         super();
         const category_kind_count = 5
         const cLayout = require("./layout.json")
         var board = cLayout.board;
         const coor = cLayout["board-coor"]
-        board = randomPlaceBlock(board, [1,2,3,4,5], cLayout.count)
+        board = randomPlaceBlock(board, [0, 1, 2, 3, 4, 5, 6], cLayout.count)
         const seen = this.initSeen(board);
         const remain_category = this.initCategory(category_kind_count, cLayout.count)
+        const off = cLayout["offset"]
+        function importAll(r) {
+            return r.keys().map(r);
+        }
+        const images = importAll(require.context('../../../images/blockImg', false, /\.(png|jpe?g|svg)$/));
         this.state = {
             board: board,
             seen: seen,
             hand: Array(7).fill(null),
             handSize: 0,
-            category: {1: 0, 2: 0, 3: 0, 4: 0, 5: 0},
+            category: {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0},
             coor: coor,
+            off: off,
+            images: images,
             remain: cLayout.count,
-            remain_category: remain_category
+            remain: cLayout.count,
+            remain_category: remain_category,
+            loose: false,
+            win: false,
         }
     }
 
@@ -36,14 +49,13 @@ class Game extends React.Component{
         return remain_category
     }
 
-
     initSeen(board){
         var seen = [];
-        for(const layer in board){
-            for(const row in board[layer]){
-                for(const col in board[layer][row]){
+        for (const layer in board) {
+            for (const row in board[layer]) {
+                for (const col in board[layer][row]) {
                     const curr = board[layer][row][col];
-                    if(curr.fill === 1 && curr.parent == null){
+                    if (curr.fill === 1 && curr.parent == null) {
                         seen.push([layer, row, col]);
                     }
                 }
@@ -52,26 +64,26 @@ class Game extends React.Component{
         return seen; //*TODO This is simply for testing purposes
     }
 
-    checkSeen(layer, row, col, i){
+    checkSeen(layer, row, col, i) {
         var board = this.state.board;
         var seen = this.state.seen;
         var curr = board[layer][row][col];
         var child = curr.child;
         seen.splice(i, 1);
-        if(child == null)
+        if (child == null)
             return
-        for(let j = 0; j < child.length; j++){
+        for (let j = 0; j < child.length; j++) {
             var index = child[j];
             var idx;
-            for(let i = 0; i < board[index[0]][index[1]][index[2]].parent.length; i++){
-                if(JSON.stringify(board[index[0]][index[1]][index[2]].parent[i])
-                    === JSON.stringify([layer, row, col])){
+            for (let i = 0; i < board[index[0]][index[1]][index[2]].parent.length; i++) {
+                if (JSON.stringify(board[index[0]][index[1]][index[2]].parent[i])
+                    === JSON.stringify([layer, row, col])) {
                     idx = i;
                     break;
                 }
             }
             board[index[0]][index[1]][index[2]].parent.splice(idx, 1);
-            if(board[index[0]][index[1]][index[2]].parent.length === 0){
+            if (board[index[0]][index[1]][index[2]].parent.length === 0) {
                 index = [index[0].toString(), index[1].toString(), index[2].toString()]
                 seen.push(index);
             }
@@ -83,27 +95,30 @@ class Game extends React.Component{
         })
     }
 
-    handleClick(layer, row, col){
+    handleClick(layer, row, col) {
         var board = this.state.board;
-        var remain_category = this.state.remain_category; // new
-        if(board[layer][row][col].fill === 0)
-            return;    
+        var remain_category = this.state.remain_category;
+        if (board[layer][row][col].fill === 0)
+            return;
         var seen = this.state.seen;
         var remain = this.state.remain;
         const coor = JSON.stringify([layer.toString(), row.toString(), col.toString()])
         var idx = -1;
-        for(let i = 0; i < seen.length; i++){
-            if(JSON.stringify(seen[i]) === coor){
+        for (let i = 0; i < seen.length; i++) {
+            if (JSON.stringify(seen[i]) === coor) {
                 idx = i;
                 break;
             }
         }
-        if(idx !== -1){
+        if (idx !== -1) {
             this.checkSeen(layer, row, col, idx);
             this.handleEliminate(board[layer][row][col].category);
             remain--;
             if(remain === 0){
-                console.log("You win")
+                handleSuccess()
+                this.setState({
+                    win: true,
+                })
             }
             remain_category[board[layer][row][col].category]--; // new
             board[layer][row][col].fill = 0;
@@ -127,18 +142,20 @@ class Game extends React.Component{
             handSize -= 3;
         }
         if(handSize === 7){
-            console.log("You loose");
+            this.setState({
+                loose: true,
+            })
         }
         var categoryCopy = {};
         Object.assign(categoryCopy, category);
         var handIdx = 0;
-        var categoryIdx = 1;
+        var categoryIdx = 0;
         while(handIdx < 7){
-            while(categoryIdx <= 5 && category[categoryIdx] === 0)
+            while(categoryIdx <= 6 && category[categoryIdx] === 0)
                 categoryIdx++;
-            if(categoryIdx === 6)
+            if(categoryIdx === 7)
                 break;
-            hand[handIdx++] = categoryIdx;
+            hand[handIdx++] = this.state.images[categoryIdx];
             category[categoryIdx]--;
         }
         this.setState({
@@ -177,9 +194,12 @@ class Game extends React.Component{
     render(){
         return (
             <div className="gameBody">
-                <Board board={this.state.board} coor={this.state.coor} onClick={(i, r, c) => this.handleClick(i, r, c)}/>
+                <Board board={this.state.board} coor={this.state.coor} off={this.state.off}
+                       images={this.state.images} onClick={(i, r, c) => this.handleClick(i, r, c)}/>
                 <Hand hand={this.state.hand}/>
                 <Shuffle onClick={() => this.handleShuffleClick(this.state.remain_category)}/>
+                <LooseDisplay loose={this.state.loose}/>
+                <WinDisplay win={this.state.win}/>
             </div>
         )
     }
