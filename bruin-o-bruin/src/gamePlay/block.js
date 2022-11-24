@@ -13,7 +13,7 @@ class Block extends React.Component{
                         : {visibility: "hidden", zIndex: 0, left: left, top: top};
         return (
             <button className="block" style={style} onClick={() => this.props.onClick(layer, row, col)}> 
-                <img src={image} alt="" className='button-img'/>
+                <img src={image} alt="" className='block-img'/>
             </button> 
             /* TODO: onClick should be lifted up to be handled */
             /* intended to move the block from board to hand or vice versa if case of the undo feature*/
