@@ -11,7 +11,7 @@ import "./gamePlay.css"
 class Game extends React.Component {
     constructor() {
         super();
-        const category_kind_count = 5
+        const category_kind_count = 7
         const cLayout = require("./layout.json")
         var board = cLayout.board;
         const coor = cLayout["board-coor"]
@@ -23,6 +23,8 @@ class Game extends React.Component {
             return r.keys().map(r);
         }
         const images = importAll(require.context('../../../images/blockImg', false, /\.(png|jpe?g|svg)$/));
+        const shuffleImg = importAll(require.context('../../../images', false, /shuffle-icon\.(png|jpe?g|svg)$/));
+        console.log(shuffleImg)
         this.state = {
             board: board,
             seen: seen,
@@ -32,6 +34,7 @@ class Game extends React.Component {
             coor: coor,
             off: off,
             images: images,
+            shuffleImg: shuffleImg,
             remain: cLayout.count,
             remain: cLayout.count,
             remain_category: remain_category,
@@ -193,13 +196,17 @@ class Game extends React.Component {
 
     render(){
         return (
-            <div className="gameBody">
-                <Board board={this.state.board} coor={this.state.coor} off={this.state.off}
-                       images={this.state.images} onClick={(i, r, c) => this.handleClick(i, r, c)}/>
-                <Hand hand={this.state.hand}/>
-                <Shuffle onClick={() => this.handleShuffleClick(this.state.remain_category)}/>
-                <LooseDisplay loose={this.state.loose}/>
-                <WinDisplay win={this.state.win}/>
+            <div>
+                <div className="tool-button">
+                    <Shuffle img={this.state.shuffleImg[0]} onClick={() => this.handleShuffleClick(this.state.remain_category)}/>
+                </div>
+                <div className="gameBody">
+                    <Board board={this.state.board} coor={this.state.coor} off={this.state.off}
+                           images={this.state.images} onClick={(i, r, c) => this.handleClick(i, r, c)}/>
+                    <Hand hand={this.state.hand}/>
+                    <LooseDisplay loose={this.state.loose}/>
+                    <WinDisplay win={this.state.win}/>
+                </div>
             </div>
         )
     }
