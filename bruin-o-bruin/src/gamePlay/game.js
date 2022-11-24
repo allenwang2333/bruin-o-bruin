@@ -43,7 +43,7 @@ class Game extends React.Component {
     }
 
     initCategory(category_kind_count, total_count){
-        const each_kind_count = Math.floor(total_count / category_kind_count)
+        const each_kind_count = Math.floor((Math.floor(total_count / 3)) /category_kind_count) * 3
         var remain_category = {}
         for (let i = 0; i < category_kind_count; i++){
             remain_category[i] = each_kind_count
