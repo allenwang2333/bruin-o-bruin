@@ -50,8 +50,9 @@
 .popup-content {
     margin: auto;
     background: rgb(255, 255, 255);
-    width: 100px;
+    width: 300px;
     padding: 5px;
+    border-radius: 10px;
 }
 
 .popup-arrow {
@@ -64,9 +65,40 @@
 }
 
 .popup-overlay {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.8);
 }
 
 [data-popup='tooltip'].popup-overlay {
     background: transparent;
+}
+
+.message {
+    font-size: x-large;
+    font-weight: 550;
+    text-align: center;
+    color: rgb(39, 116, 174)
+}
+
+.function-buttons {
+    text-align: center;
+}
+
+.popup-button {
+    display: inline-block;
+    text-align: center;
+    background-color: rgb(255, 209, 0);
+    border: 0;
+    border-radius: 5px;
+    margin: 10px;
+    transition: all .2s;
+}
+
+.popup-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+.popup-button:active {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
 }

@@ -39,7 +39,7 @@ class Game extends React.Component {
             coor: coor,
             remain: cLayout.count,
             loose: false,
-            win: true,
+            win: false,
         }
     }
 
@@ -108,6 +108,7 @@ class Game extends React.Component {
             this.handleEliminate(board[layer][row][col].category);
             remain--;
             if(remain === 0){
+                handleSuccess()
                 this.setState({
                     win: true,
                 })

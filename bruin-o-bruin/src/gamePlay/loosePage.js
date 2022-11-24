@@ -2,9 +2,17 @@ import React from 'react';
 import Popup from 'reactjs-popup';
 
 class LooseDisplay extends React.Component {
+    home(){
+        window.location.href = "/home";
+    }
+
+    restart(){
+        window.location.href = "/game";
+    }
+
     render() {
         return (
-            <Popup open={this.props.loose} position="center" className='popup'>
+            <Popup open={this.props.loose} position="center" closeOnDocumentClick={false} closeOnEscape={false} className='popup'>
                 <div className='message'>
                     <p>
                         Your hand is full.
@@ -13,9 +21,9 @@ class LooseDisplay extends React.Component {
                         You loose the game.
                     </p>
                 </div>
-                <div className='function-button'>
-                    <button className='popup-button'>Home</button>
-                    <button className='popup-button'>Restart</button>
+                <div className='function-buttons'>
+                    <button onClick={() => this.home()} className='popup-button'>Home</button>
+                    <button onClick={() => this.restart()} className='popup-button'>Restart</button>
                 </div>
             </Popup>
         )
