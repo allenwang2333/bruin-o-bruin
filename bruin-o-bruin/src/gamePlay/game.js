@@ -1,6 +1,7 @@
 import Board from "./board.js"
 import Hand from "./hand.js"
 import React from "react"
+import axios from "axios";
 import "./gamePlay.css"
 import randomPlaceBlock from "./randomPlace.js"
 
