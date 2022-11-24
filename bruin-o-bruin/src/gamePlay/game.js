@@ -13,17 +13,22 @@ class Game extends React.Component {
         const cLayout = require("./layout.json")
         var board = cLayout.board;
         const coor = cLayout["board-coor"]
-        board = randomPlaceBlock(board, [1, 2, 3, 4, 5], cLayout.count)
+        board = randomPlaceBlock(board, [0, 1, 2, 3, 4, 5, 6], cLayout.count)
         const seen = this.initSeen(board);
         const off = cLayout["offset"]
+        function importAll(r) {
+            return r.keys().map(r);
+        }
+        const images = importAll(require.context('../../../images/blockImg', false, /\.(png|jpe?g|svg)$/));
         this.state = {
             board: board,
             seen: seen,
             hand: Array(7).fill(null),
             handSize: 0,
-            category: {1: 0, 2: 0, 3: 0, 4: 0, 5: 0},
+            category: {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0},
             coor: coor,
             off: off,
+            images: images,
             remain: cLayout.count,
             loose: false,
             win: false,
@@ -127,13 +132,13 @@ class Game extends React.Component {
         var categoryCopy = {};
         Object.assign(categoryCopy, category);
         var handIdx = 0;
-        var categoryIdx = 1;
+        var categoryIdx = 0;
         while(handIdx < 7){
-            while(categoryIdx <= 5 && category[categoryIdx] === 0)
+            while(categoryIdx <= 6 && category[categoryIdx] === 0)
                 categoryIdx++;
-            if(categoryIdx === 6)
+            if(categoryIdx === 7)
                 break;
-            hand[handIdx++] = categoryIdx;
+            hand[handIdx++] = this.state.images[categoryIdx];
             category[categoryIdx]--;
         }
         this.setState({
@@ -147,7 +152,7 @@ class Game extends React.Component {
         return (
             <div className="gameBody">
                 <Board board={this.state.board} coor={this.state.coor} off={this.state.off}
-                       onClick={(i, r, c) => this.handleClick(i, r, c)}/>
+                       images={this.state.images} onClick={(i, r, c) => this.handleClick(i, r, c)}/>
                 <Hand hand={this.state.hand}/>
                 <LooseDisplay loose={this.state.loose}/>
                 <WinDisplay win={this.state.win}/>

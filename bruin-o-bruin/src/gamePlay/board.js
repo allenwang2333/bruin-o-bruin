@@ -12,7 +12,7 @@ class Board extends React.Component{
             <div className="board"> 
                 {board.map((layer) => layer.map((row) => row.map((element, index) => 
                     <Block block={element} key={index} coor={this.props.coor} off={this.props.off} 
-                            onClick={(l, r, c) => this.props.onClick(l, r, c)}/>)))}
+                            img={this.props.images[element.category]} onClick={(l, r, c) => this.props.onClick(l, r, c)}/>)))}
             </div>
         )
     }
