@@ -1,14 +1,19 @@
 import React from 'react';
 import Popup from 'reactjs-popup';
 
-class WinDisplay extends React.Component{
-    render(){
+class WinDisplay extends React.Component {
+    render() {
         return (
-            <div>
-                <Popup open={this.props.win} position="center">
-                    <div>Popup content here</div>
-                </Popup>
-            </div>
+            <Popup open={this.props.win} position="center" className='popup'>
+                <div className='message'>
+                    <p>
+                        You Win!
+                    </p>
+                    <p>
+                        The board is clear!
+                    </p>
+                </div>
+            </Popup>
         )
     }
 }

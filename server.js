@@ -138,6 +138,14 @@ app.post('/server_postLike', function (req, res) {
   db.closeDatabase();
 });
 
+app.post('/success', function (req, res) {
+  var user_name = req.body.author_name;
+  var user_id = req.body.author_id;
+  db.connectDatabase();
+  // TODO: record success for user
+  db.closeDatabase();
+});
+
 app.get('/posts', function (req, res) {
   db.connectDatabase();
   db.readTableAll("posts", function (posts) {

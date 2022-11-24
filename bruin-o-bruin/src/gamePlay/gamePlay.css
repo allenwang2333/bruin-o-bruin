@@ -1,11 +1,11 @@
-.Game{
+.Game {
     position: relative;
     border: 2px solid black;
     height: 500px;
     border-radius: 9px;
 }
 
-.Board{
+.Board {
     width: 100%;
     height: 80px;
     border: 2px solid black;
@@ -16,7 +16,7 @@
     margin-top: 10px;
 }
 
-.block{
+.block {
     pointer-events: auto;
     border-radius: 8px;
     width: 64px;
@@ -32,7 +32,7 @@
     margin: 5px 5px 5px 0;
 }
 
-.handBlock{
+.handBlock {
     pointer-events: none;
     border-radius: 8px;
     width: 64px;
@@ -45,4 +45,28 @@
     border: 1px solid #c2cbcbee;
     cursor: pointer;
     margin: 5px 5px 5px 0;
+}
+
+.popup-content {
+    margin: auto;
+    background: rgb(255, 255, 255);
+    width: 100px;
+    padding: 5px;
+}
+
+.popup-arrow {
+    color: rgb(255, 255, 255);
+}
+
+[role='tooltip'].popup-content {
+    width: 200px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 3px;
+}
+
+.popup-overlay {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+[data-popup='tooltip'].popup-overlay {
+    background: transparent;
 }

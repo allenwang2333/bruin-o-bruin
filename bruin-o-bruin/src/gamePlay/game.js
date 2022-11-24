@@ -1,18 +1,34 @@
 import Board from "./board.js"
 import Hand from "./hand.js"
 import React from "react"
+import axios from "axios";
 import "./gamePlay.css"
 import randomPlaceBlock from "./randomPlace.js"
 import LooseDisplay from "./loosePage.js"
 import WinDisplay from "./winPage.js"
 
-class Game extends React.Component{
-    constructor(){
+async function handleSuccess() {
+    const params = new URLSearchParams();
+    params.append('author_name', sessionStorage.getItem("userName"));
+    params.append('author_id', sessionStorage.getItem("userID"));
+    const response = await axios.post('http://localhost:8080/success', params);
+    if (response.data[0].valid) {
+        alert("You won!")
+        window.setTimeout(function () {
+            window.location.href = "/home";
+        }, 1500);
+    } else {
+        alert(response.data[1].message);
+    }
+}
+
+class Game extends React.Component {
+    constructor() {
         super();
         const cLayout = require("./layout.json")
         var board = cLayout.board;
         const coor = cLayout["board-coor"]
-        board = randomPlaceBlock(board, [1,2,3,4,5], cLayout.count)
+        board = randomPlaceBlock(board, [1, 2, 3, 4, 5], cLayout.count)
         const seen = this.initSeen(board);
         this.state = {
             board: board,
@@ -22,16 +38,18 @@ class Game extends React.Component{
             category: {1: 0, 2: 0, 3: 0, 4: 0, 5: 0},
             coor: coor,
             remain: cLayout.count,
+            loose: false,
+            win: true,
         }
     }
 
-    initSeen(board){
+    initSeen(board) {
         var seen = [];
-        for(const layer in board){
-            for(const row in board[layer]){
-                for(const col in board[layer][row]){
+        for (const layer in board) {
+            for (const row in board[layer]) {
+                for (const col in board[layer][row]) {
                     const curr = board[layer][row][col];
-                    if(curr.fill === 1 && curr.parent == null){
+                    if (curr.fill === 1 && curr.parent == null) {
                         seen.push([layer, row, col]);
                     }
                 }
@@ -40,26 +58,26 @@ class Game extends React.Component{
         return seen; //*TODO This is simply for testing purposes
     }
 
-    checkSeen(layer, row, col, i){
+    checkSeen(layer, row, col, i) {
         var board = this.state.board;
         var seen = this.state.seen;
         var curr = board[layer][row][col];
         var child = curr.child;
         seen.splice(i, 1);
-        if(child == null)
+        if (child == null)
             return
-        for(let j = 0; j < child.length; j++){
+        for (let j = 0; j < child.length; j++) {
             var index = child[j];
             var idx;
-            for(let i = 0; i < board[index[0]][index[1]][index[2]].parent.length; i++){
-                if(JSON.stringify(board[index[0]][index[1]][index[2]].parent[i])
-                    === JSON.stringify([layer, row, col])){
+            for (let i = 0; i < board[index[0]][index[1]][index[2]].parent.length; i++) {
+                if (JSON.stringify(board[index[0]][index[1]][index[2]].parent[i])
+                    === JSON.stringify([layer, row, col])) {
                     idx = i;
                     break;
                 }
             }
             board[index[0]][index[1]][index[2]].parent.splice(idx, 1);
-            if(board[index[0]][index[1]][index[2]].parent.length === 0){
+            if (board[index[0]][index[1]][index[2]].parent.length === 0) {
                 index = [index[0].toString(), index[1].toString(), index[2].toString()]
                 seen.push(index);
             }
@@ -71,26 +89,28 @@ class Game extends React.Component{
         })
     }
 
-    handleClick(layer, row, col){
+    handleClick(layer, row, col) {
         var board = this.state.board;
-        if(board[layer][row][col].fill === 0)
-            return;    
+        if (board[layer][row][col].fill === 0)
+            return;
         var seen = this.state.seen;
         var remain = this.state.remain;
         const coor = JSON.stringify([layer.toString(), row.toString(), col.toString()])
         var idx = -1;
-        for(let i = 0; i < seen.length; i++){
-            if(JSON.stringify(seen[i]) === coor){
+        for (let i = 0; i < seen.length; i++) {
+            if (JSON.stringify(seen[i]) === coor) {
                 idx = i;
                 break;
             }
         }
-        if(idx !== -1){
+        if (idx !== -1) {
             this.checkSeen(layer, row, col, idx);
             this.handleEliminate(board[layer][row][col].category);
             remain--;
             if(remain === 0){
-                console.log("You win")
+                this.setState({
+                    win: true,
+                })
             }
             board[layer][row][col].fill = 0;
             board[layer][row][col].category = null;
@@ -112,7 +132,9 @@ class Game extends React.Component{
             handSize -= 3;
         }
         if(handSize === 7){
-            console.log("You loose");
+            this.setState({
+                loose: true,
+            })
         }
         var categoryCopy = {};
         Object.assign(categoryCopy, category);

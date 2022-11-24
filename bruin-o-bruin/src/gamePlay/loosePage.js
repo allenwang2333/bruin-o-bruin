@@ -1,14 +1,23 @@
 import React from 'react';
 import Popup from 'reactjs-popup';
 
-class LooseDisplay extends React.Component{
-    render(){
+class LooseDisplay extends React.Component {
+    render() {
         return (
-            <div>
-                <Popup open={this.props.loose} position="right center">
-                    <div>Popup content here !!</div>
-                </Popup>
-            </div>
+            <Popup open={this.props.loose} position="center" className='popup'>
+                <div className='message'>
+                    <p>
+                        Your hand is full.
+                    </p>
+                    <p>
+                        You loose the game.
+                    </p>
+                </div>
+                <div className='function-button'>
+                    <button className='popup-button'>Home</button>
+                    <button className='popup-button'>Restart</button>
+                </div>
+            </Popup>
         )
     }
 }
