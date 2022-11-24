@@ -18,7 +18,9 @@ class Game extends React.Component{
             seen: seen,
             hand: Array(7).fill(null),
             handSize: 0,
+            category: {1: 0, 2: 0, 3: 0, 4: 0, 5: 0},
             coor: coor,
+            remain: cLayout.count,
         }
     }
 
@@ -73,8 +75,7 @@ class Game extends React.Component{
         if(board[layer][row][col].fill === 0)
             return;    
         var seen = this.state.seen;
-        var hand = this.state.hand;
-        var handSize = this.state.handSize;
+        var remain = this.state.remain;
         const coor = JSON.stringify([layer.toString(), row.toString(), col.toString()])
         var idx = -1;
         for(let i = 0; i < seen.length; i++){
@@ -85,19 +86,50 @@ class Game extends React.Component{
         }
         if(idx !== -1){
             this.checkSeen(layer, row, col, idx);
-            if(handSize === 7){
-                console.log("You Loose") //TODO How end game is shown
-            }else{
-                hand[handSize++] = board[layer][row][col].category;
+            this.handleEliminate(board[layer][row][col].category);
+            remain--;
+            if(remain === 0){
+                console.log("You win")
             }
             board[layer][row][col].fill = 0;
             board[layer][row][col].category = null;
             this.setState({
                 board: board,
-                hand: hand,
-                handSize: handSize,
+                remain: remain,
             });
         }
+    }
+
+    handleEliminate(newHand){
+        var hand = Array(7).fill(null);
+        var handSize = this.state.handSize;
+        var category = this.state.category;
+        category[newHand]++;
+        handSize++;
+        if(category[newHand] === 3){
+            category[newHand] = 0;
+            handSize -= 3;
+        }
+        if(handSize === 7){
+            console.log("You loose");
+        }
+        var categoryCopy = {};
+        Object.assign(categoryCopy, category);
+        var handIdx = 0;
+        var categoryIdx = 1;
+        while(handIdx < 7){
+            while(categoryIdx <= 5 && category[categoryIdx] === 0)
+                categoryIdx++;
+            if(categoryIdx === 6)
+                break;
+            hand[handIdx++] = categoryIdx;
+            category[categoryIdx]--;
+        }
+        this.setState({
+            hand: hand,
+            category: categoryCopy,
+            handSize: handSize,
+        })
     }
 
     render(){
