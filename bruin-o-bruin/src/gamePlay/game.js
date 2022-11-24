@@ -1,27 +1,13 @@
 import Board from "./board.js"
 import Hand from "./hand.js"
 import React from "react"
-import axios from "axios";
-import "./gamePlay.css"
 import randomPlaceBlock from "./randomPlace.js"
-
-async function handleSuccess() {
-    const params = new URLSearchParams();
-    params.append('author_name', sessionStorage.getItem("userName"));
-    params.append('author_id', sessionStorage.getItem("userID"));
-    const response = await axios.post('http://localhost:8080/success', params);
-    if (response.data[0].valid) {
-        alert("You won!")
-        window.setTimeout(function () {
-            window.location.href = "/home";
-        }, 1500);
-    } else {
-        alert(response.data[1].message);
-    }
-}
+import LooseDisplay from "./loosePage.js"
+import WinDisplay from "./winPage.js"
+import handleSuccess from "./handleSuccess.js";
+import "./gamePlay.css"
 
 class Game extends React.Component {
-
     constructor() {
         super();
         const cLayout = require("./layout.json")
@@ -37,6 +23,8 @@ class Game extends React.Component {
             category: {1: 0, 2: 0, 3: 0, 4: 0, 5: 0},
             coor: coor,
             remain: cLayout.count,
+            loose: false,
+            win: false,
         }
     }
 
@@ -105,7 +93,10 @@ class Game extends React.Component {
             this.handleEliminate(board[layer][row][col].category);
             remain--;
             if(remain === 0){
-                console.log("You win")
+                handleSuccess()
+                this.setState({
+                    win: true,
+                })
             }
             board[layer][row][col].fill = 0;
             board[layer][row][col].category = null;
@@ -127,7 +118,9 @@ class Game extends React.Component {
             handSize -= 3;
         }
         if(handSize === 7){
-            console.log("You loose");
+            this.setState({
+                loose: true,
+            })
         }
         var categoryCopy = {};
         Object.assign(categoryCopy, category);
@@ -151,8 +144,11 @@ class Game extends React.Component {
     render(){
         return (
             <div className="gameBody">
-                <Board board={this.state.board} coor={this.state.coor} onClick={(i, r, c) => this.handleClick(i, r, c)} />
-                <Hand hand={this.state.hand} />
+                <Board board={this.state.board} coor={this.state.coor}
+                       onClick={(i, r, c) => this.handleClick(i, r, c)}/>
+                <Hand hand={this.state.hand}/>
+                <LooseDisplay loose={this.state.loose}/>
+                <WinDisplay win={this.state.win}/>
             </div>
         )
     }

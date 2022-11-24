@@ -9,7 +9,7 @@ class Block extends React.Component{
         const category = this.props.block.category;
         const left = (34 * (this.props.coor[layer][0] + col * 2)) + window.innerWidth / 4
         const top = (34 * (this.props.coor[layer][1] + row * 2)) + window.innerHeight / 4
-        const style = this.props.block.fill ? {visibility: "visible", zIndex: 1000 - layer, left: left, top: top} 
+        const style = this.props.block.fill ? {visibility: "visible", zIndex: 100 - layer, left: left, top: top} 
                         : {visibility: "hidden", zIndex: 0, left: left, top: top};
         return (
             <button className="block" style={style} onClick={() => this.props.onClick(layer, row, col)}> 
