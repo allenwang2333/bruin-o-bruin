@@ -3,6 +3,8 @@ import Hand from "./hand.js"
 import React from "react"
 import "./gamePlay.css"
 import randomPlaceBlock from "./randomPlace.js"
+import LooseDisplay from "./loosePage.js"
+import WinDisplay from "./winPage.js"
 
 class Game extends React.Component{
     constructor(){
@@ -136,6 +138,8 @@ class Game extends React.Component{
             <div className="gameBody">
                 <Board board={this.state.board} coor={this.state.coor} onClick={(i, r, c) => this.handleClick(i, r, c)}/>
                 <Hand hand={this.state.hand}/>
+                <LooseDisplay loose={this.state.loose}/>
+                <WinDisplay win={this.state.win}/>
             </div>
         )
     }
