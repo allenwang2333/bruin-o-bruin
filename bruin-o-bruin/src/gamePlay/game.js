@@ -85,6 +85,7 @@ class Game extends React.Component{
 
     handleClick(layer, row, col){
         var board = this.state.board;
+        var remain_category = this.state.remain_category; // new
         if(board[layer][row][col].fill === 0)
             return;    
         var seen = this.state.seen;
@@ -104,11 +105,13 @@ class Game extends React.Component{
             if(remain === 0){
                 console.log("You win")
             }
+            remain_category[board[layer][row][col].category]--; // new
             board[layer][row][col].fill = 0;
             board[layer][row][col].category = null;
             this.setState({
                 board: board,
                 remain: remain,
+                remain_category: remain_category
             });
         }
     }
