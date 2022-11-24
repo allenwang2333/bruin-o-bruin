@@ -144,7 +144,8 @@ class Game extends React.Component {
     render(){
         return (
             <div className="gameBody">
-                <Board board={this.state.board} coor={this.state.coor} onClick={(i, r, c) => this.handleClick(i, r, c)}/>
+                <Board board={this.state.board} coor={this.state.coor}
+                       onClick={(i, r, c) => this.handleClick(i, r, c)}/>
                 <Hand hand={this.state.hand}/>
                 <LooseDisplay loose={this.state.loose}/>
                 <WinDisplay win={this.state.win}/>
