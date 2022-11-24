@@ -2,7 +2,6 @@ import Board from "./board.js"
 import Hand from "./hand.js"
 import React from "react"
 import randomPlaceBlock from "./randomPlace.js"
-import Shuffle from "./buff.js"
 import LooseDisplay from "./loosePage.js"
 import WinDisplay from "./winPage.js"
 import handleSuccess from "./handleSuccess.js";
@@ -198,7 +197,9 @@ class Game extends React.Component {
         return (
             <div>
                 <div className="tool-button">
-                    <Shuffle img={this.state.shuffleImg[0]} onClick={() => this.handleShuffleClick(this.state.remain_category)}/>
+                    <button className="shuffle"> 
+                        <img className="shuffle-icon" src={this.state.shuffleImg[0]} alt="shuffle icon" onClick={() => this.handleShuffleClick(this.state.remain_category)} />
+                    </button> 
                 </div>
                 <div className="gameBody">
                     <Board board={this.state.board} coor={this.state.coor} off={this.state.off}
