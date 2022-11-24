@@ -10,8 +10,6 @@
     "bootstrap": "^5.2.2",
     "express": "^4.18.2",
     "http-proxy-middleware": "^2.0.6",
-    "list-files": "^1.1.4",
-    "list-react-files": "^0.2.0",
     "multer": "^1.4.5-lts.1",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.20",
