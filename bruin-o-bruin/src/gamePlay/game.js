@@ -23,6 +23,8 @@ class Game extends React.Component {
         }
         const images = importAll(require.context('../../../images/blockImg', false, /\.(png|jpe?g|svg)$/));
         const shuffleImg = importAll(require.context('../../../images', false, /shuffle-icon\.(png|jpe?g|svg)$/));
+        const homeImg = importAll(require.context('../../../images', false, /home-icon\.(png|jpe?g|svg)$/));
+        const restartImg = importAll(require.context('../../../images', false, /restart-icon\.(png|jpe?g|svg)$/));
         console.log(shuffleImg)
         this.state = {
             board: board,
@@ -34,6 +36,8 @@ class Game extends React.Component {
             off: off,
             images: images,
             shuffleImg: shuffleImg,
+            homeImg: homeImg,
+            restartImg: restartImg,
             remain: cLayout.count,
             remain: cLayout.count,
             remain_category: remain_category,
@@ -196,10 +200,16 @@ class Game extends React.Component {
     render(){
         return (
             <div>
-                <div className="tool-button">
-                    <button className="shuffle"> 
+                <div className="tool">
+                    <button className="tool-button"> 
                         <img className="shuffle-icon" src={this.state.shuffleImg[0]} alt="shuffle icon" onClick={() => this.handleShuffleClick(this.state.remain_category)} />
                     </button> 
+                    <button className="tool-button">
+                        <img className="home-icon" src={this.state.homeImg[0]} alt="home icon" onClick={() => window.location.href = "/home"}/>
+                    </button>
+                    <button className="tool-button">
+                        <img className="home-icon" src={this.state.restartImg[0]} alt="restart icon" onClick={() => window.location.href = "/game"}/>
+                    </button>
                 </div>
                 <div className="gameBody">
                     <Board board={this.state.board} coor={this.state.coor} off={this.state.off}
