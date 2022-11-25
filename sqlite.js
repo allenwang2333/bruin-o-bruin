@@ -8,7 +8,8 @@ const sqlite3 = require('sqlite3').verbose();
 
 var schema = {
     "users": ["id", "email", "username", "userid" ,"passwd"],
-    "posts": ["id", "title", "author", "authorid" ,"content", "likes", "postid", "image", "time"]
+    "posts": ["id", "title", "author", "authorid" ,"content", "likes", "postid", "image", "time"],
+    "scoreboard": ["id", "username", "userid", "score", "time"]
 };
 
 class QueryDatabase {
@@ -17,7 +18,7 @@ class QueryDatabase {
         this.schema = schema;
     }  
 
-    async connectDatabase() {
+    connectDatabase() {
         this.db = new sqlite3.Database(this.filePath, (err) => {
             if (err) {
                 return console.error(err.message);
@@ -126,7 +127,7 @@ class QueryDatabase {
     }
 
     async likeOrUnlikePost(table, postid, count, callback) {
-        var queryString = `SELECT * FROM ${table} WHERE postid = "${postid}"`;
+        var queryString = `SELECT ${postid} FROM ${table} WHERE postid == "${postid}"`;
         await this.db.all(queryString, (err, rows) => {
             if (err) throw err;
             if (rows.length > 0) {
@@ -137,7 +138,7 @@ class QueryDatabase {
                 if (!(rows[0].likes == 0 && count == -1)) {
                     let newCount = rows[0].likes + count;
                     console.log(newCount); // here the newCount is correct
-                    let updateString = `UPDATE ${table} SET likes = ${newCount} WHERE postid = "${postid}"`;
+                    let updateString = `UPDATE ${table} SET likes = ${newCount} WHERE postid == "${postid}"`;
                     this.db.run(updateString, (err) => {
                         if (err) throw err;
                         likeInfo['postid'] = postid;
@@ -153,8 +154,39 @@ class QueryDatabase {
         });
     }
 
-    async closeDatabase() {
-        await this.db.close((err) => {
+    addUserOrUpdateScoreboard(table, username, userid, score, time, callback) {
+        var table = 'scoreboard';
+        var queryString = `SELECT "${userid}" FROM ${table} where userid == "${userid}"`;
+        var insertString = `INSERT INTO ${table} (username, userid, score, time) VALUES ("${username}", "${userid}", "${score}", "${time}")`;
+        var updateString = `UPDATE ${table} SET score = "${score}", time = "${time}" WHERE userid == "${userid}"`;
+        this.db.all(queryString, (err, rows) => {
+            if (err) throw err;
+            var scoreInfo = {};
+            if (rows.length == 0) {
+                this.db.run(insertString, (err) => {
+                    if (err) throw err;
+                    scoreInfo[schema[table][1]] = username;
+                    scoreInfo[schema[table][2]] = userid;
+                    scoreInfo[schema[table][3]] = score;
+                    scoreInfo[schema[table][4]] = time;
+                    callback(scoreInfo);
+                });
+            }
+            else {
+                this.db.run(updateString, (err, rows)=> {
+                    if (err) throw err;
+                    scoreInfo[schema[table][1]] = username;
+                    scoreInfo[schema[table][2]] = userid;
+                    scoreInfo[schema[table][3]] = score;
+                    scoreInfo[schema[table][4]] = time;
+                    callback(scoreInfo);
+                });
+            }
+        });
+    }
+
+    closeDatabase() {
+        this.db.close((err) => {
             if (err) {
                 return console.error(err.message);
             }
@@ -178,9 +210,14 @@ function print(data) {
 
 // postDatabase = new QueryDatabase("./db/db.sqlite", schema);
 // postDatabase.connectDatabase();
-// //postDatabase.readTableAll("posts", print);
+//postDatabase.readTableAll("posts", print);
 // postDatabase.addNewPost("posts", "test post 2", "allen", "test content 2", "test imageurl 2", "test image 2", print);
 // postDatabase.readTableAll("posts", print);
 
+scoreboardDatabase = new QueryDatabase("./db/db.sqlite", schema);
+scoreboardDatabase.connectDatabase();
+scoreboardDatabase.addUserOrUpdateScoreboard("scoreboard", "allen", "1234", "120", "2020", print);
+scoreboardDatabase.readTableAll("scoreboard", print);
+scoreboardDatabase.closeDatabase();
 module.exports.QueryDatabase = QueryDatabase;
 module.exports.schema = schema;
