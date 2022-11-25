@@ -42,7 +42,7 @@ function Social() {
             var post_id = uuidv4();
             formData.append('post_id', post_id);
             formData.append('file', image.data);
-            const response = await fetch('http://localhost:8080/compose_pic', {
+            const response = await fetch('/compose_pic', {
                 method: 'POST',
                 body: formData,
             });
@@ -62,7 +62,7 @@ function Social() {
             params.append('author_id', sessionStorage.getItem("userID"));
             var post_id = uuidv4();
             params.append('post_id', post_id);
-            const response = await fetch('http://localhost:8080/compose_text', {
+            const response = await fetch('/compose_text', {
                 method: 'POST',
                 body: params,
             });

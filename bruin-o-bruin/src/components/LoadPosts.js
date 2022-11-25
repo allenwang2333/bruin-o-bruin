@@ -11,7 +11,7 @@ const Posts = () => {
   async function getPosts() {
     const params = new Headers();
     params.append('username', username);
-    const response = await axios.get('http://localhost:8080/posts', params);
+    const response = await axios.get('/posts', params);
     if(response.data[0].valid){
       setPosts(response.data.slice(1));
     } else {

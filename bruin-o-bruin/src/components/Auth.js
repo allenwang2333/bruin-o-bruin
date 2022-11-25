@@ -23,7 +23,7 @@ export default function (props) {
     const params = new URLSearchParams();
     params.append('email', event.currentTarget.elements.email.value);
     params.append('password', hashString(event.currentTarget.elements.password.value).toString());
-    const response = await axios.post('http://localhost:8080/server_auth_signin', params);
+    const response = await axios.post('/server_auth_signin', params);
     if(response.data[0].valid){
       setAuthMode("success");
       sessionStorage.setItem("userName", response.data[1].username);
@@ -42,7 +42,7 @@ export default function (props) {
     params.append('email', event.currentTarget.elements.email.value);
     params.append('password', hashString(event.currentTarget.elements.password.value).toString());
     params.append('fullname', event.currentTarget.elements.fullname.value);
-    const response = await axios.post('http://localhost:8080/server_auth_signup', params);
+    const response = await axios.post('/server_auth_signup', params);
     if(response.data[0].valid){
       setAuthMode("success");
       sessionStorage.setItem("userName", response.data[1].username);
@@ -62,7 +62,7 @@ export default function (props) {
     params.append('password', hashString(event.currentTarget.elements.password.value).toString());
     params.append('password_confirm', hashString(event.currentTarget.elements.password_confirm.value).toString());
     params.append('fullname', event.currentTarget.elements.fullname.value);
-    const response = await axios.post('http://localhost:8080/reset_passwd', params);
+    const response = await axios.post('/reset_passwd', params);
     if(response.data[0].valid){
       setAuthMode("success");
       sessionStorage.setItem("userName", response.data[1].username);
