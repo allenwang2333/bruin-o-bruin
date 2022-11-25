@@ -3,7 +3,7 @@
     border: 2px solid black;
     height: 500px;
     border-radius: 9px;
-    
+
 }
 
 .at-hand {
@@ -129,8 +129,24 @@
     margin: 5px 5px 5px 0;
 }
 
-.shuffle-icon, .home-icon, .restart-icon {
+.shuffle-icon,
+.home-icon,
+.restart-icon {
     width: 40px;
     height: 40px;
     text-align: center;
+}
+
+.score-display {
+    position: absolute;
+    left: calc(100% - 190px);
+    top: 0px;
+    width: 190px;
+    height: 64px;
+    padding-top: 5px;
+}
+
+.score {
+    font-size: xx-large;
+    font-weight: 600;
 }
