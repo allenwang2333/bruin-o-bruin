@@ -25,6 +25,7 @@ class Game extends React.Component {
             remain: cLayout.count,
             loose: false,
             win: false,
+            score: 0,
         }
     }
 
@@ -111,10 +112,12 @@ class Game extends React.Component {
         var hand = Array(7).fill(null);
         var handSize = this.state.handSize;
         var category = this.state.category;
+        var score = this.state.score;
         category[newHand]++;
         handSize++;
         if(category[newHand] === 3){
             category[newHand] = 0;
+            score += 100;
             handSize -= 3;
         }
         if(handSize === 7){
@@ -138,6 +141,7 @@ class Game extends React.Component {
             hand: hand,
             category: categoryCopy,
             handSize: handSize,
+            score: score,
         })
     }
 
