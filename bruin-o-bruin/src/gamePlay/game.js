@@ -126,7 +126,7 @@ class Game extends React.Component {
             this.handleEliminate(board[layer][row][col].category);
             remain--;
             if (remain === 0) {
-                handleSuccess()
+                handleSuccess(this.state.score)
                 this.setState({
                     win: true,
                 })

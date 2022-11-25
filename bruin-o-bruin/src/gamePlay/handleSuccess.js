@@ -1,7 +1,8 @@
 import axios from "axios";
 
-async function handleSuccess() {
+async function handleSuccess(score) {
     const params = new URLSearchParams();
+    params.append("score", score);
     params.append('author_name', sessionStorage.getItem("userName"));
     params.append('author_id', sessionStorage.getItem("userID"));
     const response = await axios.post('http://localhost:8080/success', params);
