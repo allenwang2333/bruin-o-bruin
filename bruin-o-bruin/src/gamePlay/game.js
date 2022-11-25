@@ -47,10 +47,16 @@ class Game extends React.Component {
     }
 
     initCategory(category_kind_count, total_count){
-        const each_kind_count = Math.floor(total_count / category_kind_count)
+        const each_kind_count = Math.floor((Math.floor(total_count / 3)) /category_kind_count) * 3
         var remain_category = {}
-        for (let i = 1; i <= category_kind_count; i++){
+        for (let i = 0; i < category_kind_count; i++){
             remain_category[i] = each_kind_count
+        }
+        // remain block count should be multiple of 3
+        const remain_block_count = total_count - each_kind_count * category_kind_count 
+        const remain_kind_count = remain_block_count / 3 
+        for (let i = 0; i < remain_kind_count; i++){
+            remain_category[Math.floor(Math.random() * category_kind_count)] += 3;
         }
         return remain_category
     }
