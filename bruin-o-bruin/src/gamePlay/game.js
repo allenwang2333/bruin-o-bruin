@@ -25,7 +25,6 @@ class Game extends React.Component {
         const shuffleImg = importAll(require.context('../../../images', false, /shuffle-icon\.(png|jpe?g|svg)$/));
         const homeImg = importAll(require.context('../../../images', false, /home-icon\.(png|jpe?g|svg)$/));
         const restartImg = importAll(require.context('../../../images', false, /restart-icon\.(png|jpe?g|svg)$/));
-        console.log(shuffleImg)
         this.state = {
             board: board,
             seen: seen,
@@ -214,7 +213,7 @@ class Game extends React.Component {
                         <img className="home-icon" src={this.state.homeImg[0]} alt="home icon" onClick={() => window.location.href = "/home"}/>
                     </button>
                     <button className="tool-button">
-                        <img className="home-icon" src={this.state.restartImg[0]} alt="restart icon" onClick={() => window.location.href = "/game"}/>
+                        <img className="restart-icon" src={this.state.restartImg[0]} alt="restart icon" onClick={() => window.location.reload()}/>
                     </button>
                 </div>
                 <div className="gameBody">
