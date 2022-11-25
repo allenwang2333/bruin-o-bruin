@@ -10,16 +10,20 @@ import "./gamePlay.css"
 class Game extends React.Component {
     constructor() {
         super();
+        const category_kind_count = 7
         const cLayout = require("./layout.json")
         var board = cLayout.board;
         const coor = cLayout["board-coor"]
         board = randomPlaceBlock(board, [0, 1, 2, 3, 4, 5, 6], cLayout.count)
         const seen = this.initSeen(board);
+        const remain_category = this.initCategory(category_kind_count, cLayout.count)
         const off = cLayout["offset"]
         function importAll(r) {
             return r.keys().map(r);
         }
         const images = importAll(require.context('../../../images/blockImg', false, /\.(png|jpe?g|svg)$/));
+        const shuffleImg = importAll(require.context('../../../images', false, /shuffle-icon\.(png|jpe?g|svg)$/));
+        console.log(shuffleImg)
         this.state = {
             board: board,
             seen: seen,
@@ -29,13 +33,31 @@ class Game extends React.Component {
             coor: coor,
             off: off,
             images: images,
+            shuffleImg: shuffleImg,
             remain: cLayout.count,
+            remain: cLayout.count,
+            remain_category: remain_category,
             loose: false,
             win: false,
         }
     }
 
-    initSeen(board) {
+    initCategory(category_kind_count, total_count){
+        const each_kind_count = Math.floor((Math.floor(total_count / 3)) /category_kind_count) * 3
+        var remain_category = {}
+        for (let i = 0; i < category_kind_count; i++){
+            remain_category[i] = each_kind_count
+        }
+        // remain block count should be multiple of 3
+        const remain_block_count = total_count - each_kind_count * category_kind_count 
+        const remain_kind_count = remain_block_count / 3 
+        for (let i = 0; i < remain_kind_count; i++){
+            remain_category[Math.floor(Math.random() * category_kind_count)] += 3;
+        }
+        return remain_category
+    }
+
+    initSeen(board){
         var seen = [];
         for (const layer in board) {
             for (const row in board[layer]) {
@@ -83,6 +105,7 @@ class Game extends React.Component {
 
     handleClick(layer, row, col) {
         var board = this.state.board;
+        var remain_category = this.state.remain_category;
         if (board[layer][row][col].fill === 0)
             return;
         var seen = this.state.seen;
@@ -105,11 +128,13 @@ class Game extends React.Component {
                     win: true,
                 })
             }
+            remain_category[board[layer][row][col].category]--; // new
             board[layer][row][col].fill = 0;
             board[layer][row][col].category = null;
             this.setState({
                 board: board,
                 remain: remain,
+                remain_category: remain_category  // new
             });
         }
     }
@@ -148,14 +173,47 @@ class Game extends React.Component {
         })
     }
 
+    handleShuffleClick(remain_category){ // new
+        var board = this.state.board
+        var copy_remain_category = {...remain_category}
+        var category_list = Object.keys(copy_remain_category)
+        var category_count_list = Object.values(copy_remain_category)
+        for(const layer in board){
+            for(const row in board[layer]){
+                for(const col in board[layer][row]){
+                    if(board[layer][row][col].fill){
+                        let curr;
+                        do {
+                            curr = Math.floor(Math.random() * category_list.length);
+                        }while(category_count_list[curr] === 0);
+                        board[layer][row][col].category = category_list[curr];
+                        category_count_list[curr]--;
+                    }
+                }
+            }
+        }
+        this.setState(
+            {
+                board: board
+            }
+        )
+    }
+
     render(){
         return (
-            <div className="gameBody">
-                <Board board={this.state.board} coor={this.state.coor} off={this.state.off}
-                       images={this.state.images} onClick={(i, r, c) => this.handleClick(i, r, c)}/>
-                <Hand hand={this.state.hand}/>
-                <LooseDisplay loose={this.state.loose}/>
-                <WinDisplay win={this.state.win}/>
+            <div>
+                <div className="tool-button">
+                    <button className="shuffle"> 
+                        <img className="shuffle-icon" src={this.state.shuffleImg[0]} alt="shuffle icon" onClick={() => this.handleShuffleClick(this.state.remain_category)} />
+                    </button> 
+                </div>
+                <div className="gameBody">
+                    <Board board={this.state.board} coor={this.state.coor} off={this.state.off}
+                           images={this.state.images} onClick={(i, r, c) => this.handleClick(i, r, c)}/>
+                    <Hand hand={this.state.hand}/>
+                    <LooseDisplay loose={this.state.loose}/>
+                    <WinDisplay win={this.state.win}/>
+                </div>
             </div>
         )
     }
