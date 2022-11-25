@@ -139,9 +139,9 @@
 
 .score-display {
     position: absolute;
-    left: calc(100% - 190px);
+    left: calc(100% - 200px);
     top: 0px;
-    width: 190px;
+    width: 200px;
     height: 64px;
     padding-top: 5px;
 }
