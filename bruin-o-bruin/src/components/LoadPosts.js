@@ -21,7 +21,7 @@ const Posts = () => {
 
   useEffect(() => {
     getPosts();
-    const interval = setInterval(() => {getPosts();}, 10000);//refreshes every 10 second
+    const interval = setInterval(() => {getPosts();}, 1000);//refreshes every 10 second
     return () => clearInterval(interval);
   }, []);
 
