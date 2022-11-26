@@ -10,13 +10,15 @@ import "./gamePlay.css"
 class Game extends React.Component {
     constructor() {
         super();
-        const category_kind_count = 7
+        //const category_kind_count = 7
         const cLayout = require("./layout.json")
         var board = cLayout.board;
         const coor = cLayout["board-coor"]
-        board = randomPlaceBlock(board, [0, 1, 2, 3, 4, 5, 6], cLayout.count)
+        var placeResult = randomPlaceBlock(board, [0, 1, 2, 3, 4, 5, 6], cLayout.count)
+        board = placeResult[0]
+        const remain_category = placeResult[1]
         const seen = this.initSeen(board);
-        const remain_category = this.initCategory(category_kind_count, cLayout.count)
+        //const remain_category = this.initCategory(category_kind_count, cLayout.count)
         const off = cLayout["offset"]
         function importAll(r) {
             return r.keys().map(r);
@@ -44,22 +46,7 @@ class Game extends React.Component {
             score: 0,
         }
     }
-
-    initCategory(category_kind_count, total_count) {
-        const each_kind_count = Math.floor((Math.floor(total_count / 3)) / category_kind_count) * 3
-        var remain_category = {}
-        for (let i = 0; i < category_kind_count; i++) {
-            remain_category[i] = each_kind_count
-        }
-        // remain block count should be multiple of 3
-        const remain_block_count = total_count - each_kind_count * category_kind_count
-        const remain_kind_count = remain_block_count / 3
-        for (let i = 0; i < remain_kind_count; i++) {
-            remain_category[Math.floor(Math.random() * category_kind_count)] += 3;
-        }
-        return remain_category
-    }
-
+    
     initSeen(board) {
         var seen = [];
         for (const layer in board) {
