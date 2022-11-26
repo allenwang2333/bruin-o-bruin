@@ -13,16 +13,19 @@ import {RiLoginBoxLine} from "react-icons/ri";
 import styles from "./homepage.css";
 
 import Logo from "./assets/joe_bruin.png";
+import sheep from "./assets/sheep.png";
 
 function DashBoard() {
   return (
-    <Container fluid>
+    <div className="container-fluid">
         <Col className={styles.colContainer}>
           <div className={styles.colWithButtons}>
-            <img src={Logo} alt="PSN logo" width={120} className="mb-3" />
+          <div class="positionedContainer">
+            <img src={Logo} alt="PSN logo" width={200} className={"bruinLOGO"} />
+          </div>
             <br />
             <Row>
-              <h3 className="text-primary mb-3">Join Bruin O' Bruin today</h3>
+              <h2 className="text-info mb-3">Join Bruin O' Bruin today</h2>
             </Row>{" "}
             <br />
             <Col>
@@ -33,7 +36,7 @@ function DashBoard() {
             </Col>
           </div>
         </Col>
-    </Container>
+    </div>
   );
 }
 
