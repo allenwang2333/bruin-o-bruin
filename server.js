@@ -141,9 +141,12 @@ app.post('/server_postLike', function (req, res) {
 app.post('/success', function (req, res) {
   var user_name = req.body.author_name;
   var user_id = req.body.author_id;
+  time = new Date().toLocaleString('en-US', {timeZone: 'America/Los_Angeles'});
   db.connectDatabase();
-  // TODO: record success for user
-  db.closeDatabase();
+  db.addUserOrUpdateScoreboard("scoreboard", user_name, user_id, score= 100, time, (scoreInfo) => {
+    console.log(scoreInfo);
+    db.closeDatabase();
+  });
 });
 
 app.get('/posts', function (req, res) {
@@ -171,21 +174,21 @@ app.get('/posts', function (req, res) {
 });
 
 app.get('/scoreboard', function (req, res) {
-  res.send([{"valid": true}, {
-    name: 'Joe Bruin',
-    location: 'Los Angeles, CA',
-    score: 100,
-    img: 'https://i.imgur.com/8Km9tLL.png',
-    post_time: '2022-11-20'
-},
-
-{
-    name: 'Joe 2',
-    location: 'Los Angeles, CA',
-    score: 101,
-    img: 'https://i.imgur.com/8Km9tLL.png',
-    post_time: '2022-11-20'
-}]);
+  var scores = [{"valid": true}];
+  db.connectDatabase();
+  db.readTableAll("scoreboard", (scoreInfo) => {
+    var userStatus = {};
+    for (var i = 0; i < scoreInfo.length; i++) {
+      userStatus["username"] = scoreInfo[i].username;
+      userStatus["userid"] = scoreInfo[i].userid;
+      userStatus["score"] = scoreInfo[i].score;
+      userStatus["time"] = scoreInfo[i].time;
+      scores.push(userStatus);
+    }
+    console.log(scores);
+    res.send(scores);
+    db.closeDatabase();
+  });
 });
 
 app.get('*', (req, res) => {

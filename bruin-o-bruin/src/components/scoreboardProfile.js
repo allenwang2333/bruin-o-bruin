@@ -18,7 +18,7 @@ function Item(data){
                                 <img src={value.img} alt="" />
 
                                 <div className="info">
-                                    <h3 className='name text-dark'>{value.name}</h3>
+                                    <h3 className='name text-dark'>{value.username}</h3>
                                     <span>{value.location}</span>
                                 </div>
                             </div>

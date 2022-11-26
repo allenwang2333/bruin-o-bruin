@@ -214,10 +214,10 @@ function print(data) {
 // postDatabase.addNewPost("posts", "test post 2", "allen", "test content 2", "test imageurl 2", "test image 2", print);
 // postDatabase.readTableAll("posts", print);
 
-scoreboardDatabase = new QueryDatabase("./db/db.sqlite", schema);
-scoreboardDatabase.connectDatabase();
-scoreboardDatabase.addUserOrUpdateScoreboard("scoreboard", "allen", "1234", "120", "2020", print);
-scoreboardDatabase.readTableAll("scoreboard", print);
-scoreboardDatabase.closeDatabase();
+// scoreboardDatabase = new QueryDatabase("./db/db.sqlite", schema);
+// scoreboardDatabase.connectDatabase();
+// scoreboardDatabase.addUserOrUpdateScoreboard("scoreboard", "allen", "1234", "120", "2020", print);
+// scoreboardDatabase.readTableAll("scoreboard", print);
+// scoreboardDatabase.closeDatabase();
 module.exports.QueryDatabase = QueryDatabase;
 module.exports.schema = schema;
