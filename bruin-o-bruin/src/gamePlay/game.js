@@ -149,20 +149,11 @@ class Game extends React.Component {
         var score = this.state.score;
         category[newHand]++;
         handSize++;
-        if (category[newHand] === 3) {
-            category[newHand] = 0;
-            score += 100;
-            handSize -= 3;
-        }
-        if (handSize === 7) {
-            this.setState({
-                loose: true,
-            })
-        }
-        var categoryCopy = {};
-        Object.assign(categoryCopy, category);
+
         var handIdx = 0;
         var categoryIdx = 0;
+        var categoryCopy = {};
+        Object.assign(categoryCopy, category);
         while (handIdx < 7) {
             while (categoryIdx <= 6 && category[categoryIdx] === 0)
                 categoryIdx++;
@@ -173,10 +164,38 @@ class Game extends React.Component {
         }
         this.setState({
             hand: hand,
+        })
+        
+        
+        hand = Array(7).fill(null)
+        if (categoryCopy[newHand] === 3) {
+            categoryCopy[newHand] = 0;
+            score += 100;
+            handSize -= 3;
+        }
+        if (handSize === 7) {
+            this.setState({
+                loose: true,
+            })
+        }
+        Object.assign(category, categoryCopy);
+
+        handIdx = 0;
+        categoryIdx = 0;
+        while (handIdx < 7) {
+            while (categoryIdx <= 6 && category[categoryIdx] === 0)
+                categoryIdx++;
+            if (categoryIdx === 7)
+                break;
+            hand[handIdx++] = this.state.images[categoryIdx];
+            category[categoryIdx]--;
+        }
+        setTimeout(() => this.setState({
+            hand: hand,
             category: categoryCopy,
             handSize: handSize,
             score: score,
-        })
+        }), 150)
     }
 
     handleShuffleClick(remain_category) {
