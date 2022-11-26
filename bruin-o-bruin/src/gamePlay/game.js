@@ -11,13 +11,13 @@ import "./gamePlay.css"
 class Game extends React.Component {
     constructor() {
         super();
-        const category_kind_count = 7
+        const category_kind_count = 9
         const cLayout = require("./layout.json")
         var board = cLayout.board;
         const coor = cLayout["board-coor"]
-        board = randomPlaceBlock(board, [0, 1, 2, 3, 4, 5, 6], cLayout.count)
+        board = randomPlaceBlock(board, [0, 1, 2, 3, 4, 5, 6, 7, 8], cLayout.count)
         const seen = this.initSeen(board);
-        const remain_category = this.initCategory(category_kind_count, cLayout.count)
+        const remain_category = this.initCategory(category_kind_count, board)
         const off = cLayout["offset"]
         function importAll(r) {
             return r.keys().map(r);
@@ -32,7 +32,7 @@ class Game extends React.Component {
             seen: seen,
             hand: Array(7).fill(null),
             handSize: 0,
-            category: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 },
+            category: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 },
             coor: coor,
             off: off,
             images: images,
@@ -49,19 +49,24 @@ class Game extends React.Component {
         }
     }
 
-    initCategory(category_kind_count, total_count) {
-        const each_kind_count = Math.floor((Math.floor(total_count / 3)) / category_kind_count) * 3
-        var remain_category = {}
-        for (let i = 0; i < category_kind_count; i++) {
-            remain_category[i] = each_kind_count
+    initCategory(category_kind_count, board) {
+        let i = 0;
+        var category = {}
+        while(i < category_kind_count){
+            category[i] = 0
+            i++;
         }
-        // remain block count should be multiple of 3
-        const remain_block_count = total_count - each_kind_count * category_kind_count
-        const remain_kind_count = remain_block_count / 3
-        for (let i = 0; i < remain_kind_count; i++) {
-            remain_category[Math.floor(Math.random() * category_kind_count)] += 3;
+        for (const layer in board) {
+            for (const row in board[layer]) {
+                for (const col in board[layer][row]) {
+                    const curr = board[layer][row][col];
+                    if (curr.fill === 1) {
+                        category[curr.category]++;
+                    }
+                }
+            }
         }
-        return remain_category
+        return category;
     }
 
     initSeen(board) {
@@ -159,9 +164,9 @@ class Game extends React.Component {
         var categoryCopy = {};
         Object.assign(categoryCopy, category);
         while (handIdx < 7) {
-            while (categoryIdx <= 6 && category[categoryIdx] === 0)
+            while (categoryIdx <= 8 && category[categoryIdx] === 0)
                 categoryIdx++;
-            if (categoryIdx === 7)
+            if (categoryIdx === 9)
                 break;
             hand[handIdx++] = this.state.images[categoryIdx];
             category[categoryIdx]--;
@@ -187,9 +192,9 @@ class Game extends React.Component {
         handIdx = 0;
         categoryIdx = 0;
         while (handIdx < 7) {
-            while (categoryIdx <= 6 && category[categoryIdx] === 0)
+            while (categoryIdx <= 8 && category[categoryIdx] === 0)
                 categoryIdx++;
-            if (categoryIdx === 7)
+            if (categoryIdx === 9)
                 break;
             hand[handIdx++] = this.state.images[categoryIdx];
             category[categoryIdx]--;
@@ -237,7 +242,7 @@ class Game extends React.Component {
 
     helpClick() {
         this.setState({ help: true });
-        setTimeout(() => this.setState({help: false}), 500)
+        setTimeout(() => this.setState({ help: false }), 500)
     }
 
     render() {
