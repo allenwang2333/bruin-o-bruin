@@ -19,7 +19,7 @@ class App extends React.Component{
         <Route path="/game" element={<Game/>} />
         <Route path="/home" element={<Home/>} />
         <Route path="/social" element={<Social/>} />
-        <Route path="/scoreboard" element={<Board/>} />
+        <Route path="/ranking" element={<Board/>} />
       </Routes>
     </BrowserRouter>
   );
