@@ -5,6 +5,7 @@ import randomPlaceBlock from "./randomPlace.js"
 import LooseDisplay from "./loosePage.js"
 import WinDisplay from "./winPage.js"
 import handleSuccess from "./handleSuccess.js";
+import HelpMessage from "./helpPopup.js"
 import "./gamePlay.css"
 
 class Game extends React.Component {
@@ -44,6 +45,7 @@ class Game extends React.Component {
             loose: false,
             win: false,
             score: 0,
+            help: false,
         }
     }
 
@@ -167,8 +169,8 @@ class Game extends React.Component {
         this.setState({
             hand: hand,
         })
-        
-        
+
+
         hand = Array(7).fill(null)
         if (categoryCopy[newHand] === 3) {
             categoryCopy[newHand] = 0;
@@ -233,6 +235,11 @@ class Game extends React.Component {
         )
     }
 
+    helpClick() {
+        this.setState({ help: true });
+        setTimeout(() => this.setState({help: false}), 500)
+    }
+
     render() {
         return (
             <div className="body">
@@ -246,9 +253,7 @@ class Game extends React.Component {
                     <button className="tool-button">
                         <img className="restart-icon" src={this.state.restartImg} alt="restart icon" onClick={() => window.location.reload()} />
                     </button>
-                    <button className="tool-button">
-                        <img className="help-icon" src={this.state.helpImg} alt="help icon" onClick={() => window.location.reload()} />
-                    </button>
+                    <HelpMessage helpImg={this.state.helpImg} />
                 </div>
                 <div className="score-display">
                     <p className="score">

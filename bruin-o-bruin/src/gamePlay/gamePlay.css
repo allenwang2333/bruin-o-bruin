@@ -114,6 +114,16 @@
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
 }
 
+[role='tooltip'].help-popup-content {
+    width: 550px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 3px;
+    text-align: center;
+}
+
+.help-text {
+    padding-top: 10px;
+}
+
 .block-img {
     max-width: 64px;
     max-height: 64px;
