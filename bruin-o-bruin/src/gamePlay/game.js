@@ -233,7 +233,7 @@ class Game extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="body">
                 <div className="tool">
                     <button className="tool-button">
                         <img className="shuffle-icon" src={this.state.shuffleImg[0]} alt="shuffle icon" onClick={() => this.handleShuffleClick(this.state.remain_category)} />

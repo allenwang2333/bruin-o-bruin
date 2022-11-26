@@ -1,9 +1,10 @@
-.Game {
-    position: relative;
-    border: 2px solid black;
-    height: 500px;
-    border-radius: 9px;
-
+.body {
+    height: 100vh;
+    width: 100vw;
+    background-image: linear-gradient(90deg, rgb(39, 116, 174) 10%, white 30%, white 70%, rgb(259, 209, 0) 90%);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    margin: 0px;
 }
 
 .at-hand {
@@ -37,6 +38,7 @@
     border: 1px solid #c2cbcbee;
     cursor: pointer;
     margin: 5px 5px 5px 0;
+    padding: 0;
 }
 
 .handBlock {
@@ -53,6 +55,7 @@
     border: 1px solid #c2cbcbee;
     cursor: pointer;
     margin: 5px 5px 5px 0;
+    padding: 0;
 }
 
 .popup-content {
@@ -112,8 +115,9 @@
 }
 
 .block-img {
-    max-width: 54px;
-    max-height: 60px;
+    max-width: 64px;
+    max-height: 64px;
+    border-radius: 8px;
 }
 
 .tool-button {
@@ -121,12 +125,12 @@
     border-radius: 8px;
     width: 48px;
     height: 48px;
-    text-align: center;
     position: static;
     box-shadow: 2px 2px 4px #000;
     border: 1px solid #c2cbcbee;
     cursor: pointer;
     margin: 5px 5px 5px 0;
+    padding: 0;
 }
 
 .shuffle-icon,
@@ -134,7 +138,6 @@
 .restart-icon {
     width: 40px;
     height: 40px;
-    text-align: center;
 }
 
 .score-display {
