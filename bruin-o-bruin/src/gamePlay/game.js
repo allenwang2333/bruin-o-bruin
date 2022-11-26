@@ -11,13 +11,13 @@ import "./gamePlay.css"
 class Game extends React.Component {
     constructor() {
         super();
-        const category_kind_count = 9
         const cLayout = require("./layout.json")
         var board = cLayout.board;
         const coor = cLayout["board-coor"]
-        board = randomPlaceBlock(board, [0, 1, 2, 3, 4, 5, 6, 7, 8], cLayout.count)
+        var placeResult = randomPlaceBlock(board, [0, 1, 2, 3, 4, 5, 6, 7, 8], cLayout.count)
+        board = placeResult[0]
+        const remain_category = placeResult[1]
         const seen = this.initSeen(board);
-        const remain_category = this.initCategory(category_kind_count, board)
         const off = cLayout["offset"]
         function importAll(r) {
             return r.keys().map(r);
@@ -47,26 +47,6 @@ class Game extends React.Component {
             score: 0,
             help: false,
         }
-    }
-
-    initCategory(category_kind_count, board) {
-        let i = 0;
-        var category = {}
-        while(i < category_kind_count){
-            category[i] = 0
-            i++;
-        }
-        for (const layer in board) {
-            for (const row in board[layer]) {
-                for (const col in board[layer][row]) {
-                    const curr = board[layer][row][col];
-                    if (curr.fill === 1) {
-                        category[curr.category]++;
-                    }
-                }
-            }
-        }
-        return category;
     }
 
     initSeen(board) {
@@ -135,7 +115,7 @@ class Game extends React.Component {
             this.handleEliminate(board[layer][row][col].category);
             remain--;
             if (remain === 0) {
-                handleSuccess()
+                handleSuccess(this.state.score)
                 this.setState({
                     win: true,
                 })
