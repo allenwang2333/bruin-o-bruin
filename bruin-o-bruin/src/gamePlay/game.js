@@ -22,9 +22,9 @@ class Game extends React.Component {
             return r.keys().map(r);
         }
         const images = importAll(require.context('../../../images/blockImg', false, /\.(png|jpe?g|svg)$/));
-        const shuffleImg = importAll(require.context('../../../images', false, /shuffle-icon\.(png|jpe?g|svg)$/));
-        const homeImg = importAll(require.context('../../../images', false, /home-icon\.(png|jpe?g|svg)$/));
-        const restartImg = importAll(require.context('../../../images', false, /restart-icon\.(png|jpe?g|svg)$/));
+        const shuffleImg = importAll(require.context('../../../images/icon', false, /shuffle-icon\.(png|jpe?g|svg)$/));
+        const homeImg = importAll(require.context('../../../images/icon', false, /home-icon\.(png|jpe?g|svg)$/));
+        const restartImg = importAll(require.context('../../../images/icon', false, /restart-icon\.(png|jpe?g|svg)$/));
         this.state = {
             board: board,
             seen: seen,

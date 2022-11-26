@@ -1,13 +1,18 @@
 import React from 'react';
 
-class HandBlock extends React.Component{
+class HandBlock extends React.Component {
+    renderBlock() {
+        if (this.props.block === null)
+            return (<button className="handBlock"></button>)
+        else
+            return (<button className="handBlock">
+                <img src={this.props.block} alt="" className='block-img' />
+            </button>)
+    }
+
     render() {
         return (
-            <button className="handBlock"> 
-                <img src={this.props.block} alt="" className='block-img'/>
-            </button> 
-            /* TODO: onClick should be lifted up to be handled */
-            /* intended to move the block from board to hand or vice versa if case of the undo feature*/
+            this.renderBlock()
         )
     }
 }
