@@ -1,4 +1,0 @@
-{
-    "appService.defaultWebAppToDeploy": "/subscriptions/6a243d35-8e4e-490b-aec5-e8c5deaa7197/AppServices/subscriptions/6a243d35-8e4e-490b-aec5-e8c5deaa7197/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/BruinOBruin",
-    "appService.deploySubpath": "."
-}
