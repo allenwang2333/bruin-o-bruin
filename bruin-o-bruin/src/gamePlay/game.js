@@ -22,9 +22,10 @@ class Game extends React.Component {
             return r.keys().map(r);
         }
         const images = importAll(require.context('../../../images/blockImg', false, /\.(png|jpe?g|svg)$/));
-        const shuffleImg = importAll(require.context('../../../images/icon', false, /shuffle-icon\.(png|jpe?g|svg)$/));
-        const homeImg = importAll(require.context('../../../images/icon', false, /home-icon\.(png|jpe?g|svg)$/));
-        const restartImg = importAll(require.context('../../../images/icon', false, /restart-icon\.(png|jpe?g|svg)$/));
+        const shuffleImg = importAll(require.context('../../../images/icon', false, /shuffle-icon\.(png|jpe?g|svg)$/))[0];
+        const homeImg = importAll(require.context('../../../images/icon', false, /home-icon\.(png|jpe?g|svg)$/))[0];
+        const restartImg = importAll(require.context('../../../images/icon', false, /restart-icon\.(png|jpe?g|svg)$/))[0];
+        const helpImg = importAll(require.context('../../../images/icon', false, /help-icon\.(png|jpe?g|svg)$/))[0];
         this.state = {
             board: board,
             seen: seen,
@@ -37,6 +38,7 @@ class Game extends React.Component {
             shuffleImg: shuffleImg,
             homeImg: homeImg,
             restartImg: restartImg,
+            helpImg: helpImg,
             remain: cLayout.count,
             remain_category: remain_category,
             loose: false,
@@ -236,13 +238,16 @@ class Game extends React.Component {
             <div className="body">
                 <div className="tool">
                     <button className="tool-button">
-                        <img className="shuffle-icon" src={this.state.shuffleImg[0]} alt="shuffle icon" onClick={() => this.handleShuffleClick(this.state.remain_category)} />
+                        <img className="shuffle-icon" src={this.state.shuffleImg} alt="shuffle icon" onClick={() => this.handleShuffleClick(this.state.remain_category)} />
                     </button>
                     <button className="tool-button">
-                        <img className="home-icon" src={this.state.homeImg[0]} alt="home icon" onClick={() => window.location.href = "/home"} />
+                        <img className="home-icon" src={this.state.homeImg} alt="home icon" onClick={() => window.location.href = "/home"} />
                     </button>
                     <button className="tool-button">
-                        <img className="restart-icon" src={this.state.restartImg[0]} alt="restart icon" onClick={() => window.location.reload()} />
+                        <img className="restart-icon" src={this.state.restartImg} alt="restart icon" onClick={() => window.location.reload()} />
+                    </button>
+                    <button className="tool-button">
+                        <img className="help-icon" src={this.state.helpImg} alt="help icon" onClick={() => window.location.reload()} />
                     </button>
                 </div>
                 <div className="score-display">

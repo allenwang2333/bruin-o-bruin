@@ -1,7 +1,7 @@
 .body {
     height: 100vh;
     width: 100vw;
-    background-image: linear-gradient(90deg, rgb(39, 116, 174) 10%, white 30%, white 70%, rgb(259, 209, 0) 90%);
+    background-image: linear-gradient(90deg, rgb(39, 116, 174) 15%, rgb(259, 209, 0) 85%);
     background-size: 100% 100%;
     background-repeat: no-repeat;
     margin: 0px;
@@ -120,6 +120,12 @@
     border-radius: 8px;
 }
 
+.tool {
+    position: absolute;
+    left: 8px;
+    top: 5px;
+}
+
 .tool-button {
     pointer-events: auto;
     border-radius: 8px;
@@ -140,13 +146,18 @@
     height: 40px;
 }
 
+.help-icon {
+    width: 35px;
+    height: 35px;
+}
+
 .score-display {
     position: absolute;
     left: calc(100% - 200px);
     top: 0px;
     width: 200px;
-    height: 64px;
-    padding-top: 5px;
+    height: 58px;
+    top: 5px;
 }
 
 .score {
