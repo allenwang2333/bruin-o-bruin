@@ -7,44 +7,34 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
 import {BsFillPersonPlusFill} from "react-icons/bs";
-
+import {IoGameControllerOutline} from "react-icons/io5";
 import {RiLoginBoxLine} from "react-icons/ri";
 
 import styles from "./homepage.css";
 
-import psnLogo from "./assets/joe_bruin.png";
+import Logo from "./assets/joe_bruin.png";
 
 function DashBoard() {
   return (
     <Container fluid>
-      <Row className={styles.container}>
         <Col className={styles.colContainer}>
           <div className={styles.colWithButtons}>
-            <img src={psnLogo} alt="PSN logo" width={120} className="mb-3" />
-            <Row>
-              <h1 className="text-primary mb-3">See what is happening in the world right now</h1>
-            </Row>
+            <img src={Logo} alt="PSN logo" width={120} className="mb-3" />
             <br />
             <Row>
               <h3 className="text-primary mb-3">Join Bruin O' Bruin today</h3>
             </Row>{" "}
             <br />
-            <Row>
+            <Col>
               <Link to="/auth" className={styles.linkTextFormat}><Button variant="success" className={`${styles.btnHomePage} mb-3`}>Sign In <RiLoginBoxLine /><BsFillPersonPlusFill /></Button></Link>
-            </Row>
+            </Col>
+            <Col>
+              <Link to="/game" className={styles.linkTextFormat}><Button variant="success" className={`${styles.btnHomePage} mb-3`}>play as guest <IoGameControllerOutline /></Button></Link>
+            </Col>
           </div>
         </Col>
-      </Row>
     </Container>
   );
 }
-//react social post page
-/*const Social = () => {
-    return (
-        <div>
-        <h1>Social Page for {username}</h1>
-        </div>
-    );
-};*/
 
 export default DashBoard;
