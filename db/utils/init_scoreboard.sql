@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS scoreboard (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL,
+    userid TEXT NOT NULL,
+    score INTEGER NOT NULL,
+    time TEXT NOT NULL
+);

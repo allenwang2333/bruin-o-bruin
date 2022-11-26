@@ -25,14 +25,25 @@ imgUrl, author, time, like }, index }) => {
     const params = new URLSearchParams();
     params.append('postID', postID);
     params.append('count', count);
+    console.log(like);
     const response = await axios.post('http://localhost:8080/server_postLike', params);
-    if(response.data[0].valid){
-      like=like+1;
-    }
-    else {
+    if(!response.data[0].valid){
       alert(response.data[1].message);
     }
   }
+  if (imgUrl === '') {
+    return (  
+      <div className="post-container">
+        <h1 className="heading">{title}</h1>
+        <p>{body}</p>
+        <div className="info">      
+          <h4>Written by: {author} at {time.toString()}</h4>
+        </div>
+        <div><button id="like" class="btn btn-light" onClick={changeLike}>{icon}{like}</button></div>
+      </div>
+    );
+  }
+
   return (  
     <div className="post-container">
       <h1 className="heading">{title}</h1>
@@ -41,7 +52,7 @@ imgUrl, author, time, like }, index }) => {
       <div className="info">      
         <h4>Written by: {author} at {time.toString()}</h4>
       </div>
-      <div><button id="like" class="btn btn-light" onClick={changeLike}>{icon}{like+liked}</button></div>
+      <div><button id="like" class="btn btn-light" onClick={changeLike}>{icon}{like}</button></div>
     </div>
   );
 };
