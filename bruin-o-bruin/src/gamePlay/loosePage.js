@@ -7,7 +7,7 @@ class LooseDisplay extends React.Component {
     }
 
     restart(){
-        window.location.href = "/game";
+        window.location.reload();
     }
 
     render() {
