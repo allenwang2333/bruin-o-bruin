@@ -1,13 +1,10 @@
 var express = require('express');
 var app = express();
 var path = require('path');
-const { nextTick } = require('process');
 var sqlite_db = require('./sqlite.js');
 const schema = require('./sqlite.js');
 const { v4: uuidv4 } = require('uuid');
-const { userInfo } = require('os');
 const multer  = require('multer')
-var fs = require('fs');
 
 console.log(schema.schema);
 const db = new sqlite_db.QueryDatabase('./db/db.sqlite', schema.schema);
