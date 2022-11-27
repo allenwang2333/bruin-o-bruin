@@ -36,8 +36,8 @@ export default function Board() {
             <div className="rankings">
                 <Profiles Leaderboard={between(Leaderboard, period)}></Profiles>
             </div>
-            <img className="ranking-image ranking-image-left" src={trophyImg} alt="A trophy image" />
-            <img className="ranking-image ranking-image-right" src={trophyImg} alt="A trophy image" />
+            <img className="ranking-image ranking-image-left" src={trophyImg} alt="" />
+            <img className="ranking-image ranking-image-right" src={trophyImg} alt="" />
             <div className='ranking-background'></div>
             <div className='ranking-home'>
                 <button className="ranking-home-button">
