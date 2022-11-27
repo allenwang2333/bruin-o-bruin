@@ -49,7 +49,7 @@ class Game extends React.Component {
             win: false,
             score: 0,
             help: false,
-            time: { hr: 0, min: 0, sec: 0 },
+            time: { min: 0, sec: 0 },
             intervalId: null
         }
     }
@@ -234,16 +234,8 @@ class Game extends React.Component {
         var copy_timer = {...this.state.time}
         if (copy_timer.sec === 59)
         {
-            if (copy_timer.min === 59)
-            {
-                copy_timer.min = 0;
-                copy_timer.hr++;
-            }
-            else
-            {
-                copy_timer.min++;
-            }
             copy_timer.sec = 0;
+            copy_timer.min++;
         }
         else
         {
@@ -282,7 +274,7 @@ class Game extends React.Component {
                     </p>
                 </div>
                 <div className="timer">
-                    {this.state.time.hr} h {this.state.time.min} m {this.state.time.sec} s
+                    Time: {this.state.time.min} m {this.state.time.sec} s
                 </div>
                 <div className="gameBody">
                     <Board board={this.state.board} coor={this.state.coor} off={this.state.off}
