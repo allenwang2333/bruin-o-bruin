@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./Posts.css";
 import Post from "./Post";
 import axios from "axios";
-var ReactDOM = require('react-dom');
 
 var username = sessionStorage.getItem("userName");
 
