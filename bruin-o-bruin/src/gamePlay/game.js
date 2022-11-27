@@ -71,7 +71,7 @@ class Game extends React.Component {
             time: { min: 0, sec: 0 },
             second: 0,
             intervalId: null,
-            started: false,
+            //started: false,
         }
     }
 
@@ -139,6 +139,7 @@ class Game extends React.Component {
         if (idx !== -1) {
             this.checkSeen(layer, row, col, idx);
             this.handleEliminate(board[layer][row][col].category);
+            this.startTimer();
             remain--;
             if (remain === 0) {
                 handleSuccess(this.state.score)
@@ -153,7 +154,7 @@ class Game extends React.Component {
                 board: board,
                 remain: remain,
                 remain_category: remain_category,  // new
-                started: true
+                //started: true
             });
         }
     }
@@ -252,29 +253,34 @@ class Game extends React.Component {
         setTimeout(() => this.setState({ help: false }), 500)
     }
 
+    parseSecond(sec){
+        const min = Math.floor(sec / 60)
+        const remain_sec = sec - min * 60
+        const remain_time = {min: min, sec: remain_sec}
+        return remain_time
+    }
+
     updateTimer() {
-        if (!this.state.started)
-            return
-        var copy_timer = {...this.state.time}
         const new_second = this.state.second + 1
-        if (copy_timer.sec === 59) {
-            copy_timer.sec = 0;
-            copy_timer.min++;
-        }
-        else {
-            copy_timer.sec++
-        }
         this.setState(
             {
-                time: copy_timer,
+                time: this.parseSecond(new_second),
                 second: new_second
             }
         )
     }
 
     componentDidMount() {
-        var intervalId = setInterval(this.updateTimer, 1000);
-        this.setState({ intervalId: intervalId })
+        const remain_time = this.parseSecond(this.state.second)
+        this.setState({time: remain_time})
+    }
+
+    startTimer() {
+        if (!this.state.intervalId)
+        {
+            const intervalId = setInterval(this.updateTimer, 1000)
+            this.setState({intervalId: intervalId})
+        }
     }
 
     render() {
