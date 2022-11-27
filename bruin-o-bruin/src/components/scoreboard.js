@@ -5,7 +5,7 @@ import "./scoreboard.css";
 
 export default function Board() {
     const [period, setPeriod] = useState(0);
-    const [Leaderboard, setBoard] = useState([{"username": "test1", "userid": "test1", "score": 10, "time": "100"},{"username": "test1", "userid": "test1", "score": 10, "time": "100"},{"username": "test1", "userid": "test1", "score": 10, "time": "100"},{"username": "test1", "userid": "test1", "score": 10, "time": "100"},{"username": "test1", "userid": "test1", "score": 10, "time": "100"}]);
+    const [Leaderboard, setBoard] = useState([{"username": "cvefjsebfsefwsgsgrsgfaef", "userid": "test1", "score": 10, "time": "100"},{"username": "test1", "userid": "test1", "score": 10, "time": "100"},{"username": "test1", "userid": "test1", "score": 10, "time": "100"},{"username": "test1", "userid": "test1", "score": 10, "time": "100"},{"username": "test1", "userid": "test1", "score": 10, "time": "100"}]);
     /*async function getBoard() {
         const params = new Headers();
         const response = await axios.get('/scoreboard', params);

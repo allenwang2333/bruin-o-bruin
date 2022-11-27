@@ -1,4 +1,5 @@
 import React from 'react'
+import "./scoreboard.css";
 
 export default function profiles({ Leaderboard }) {
     return (
@@ -8,24 +9,19 @@ export default function profiles({ Leaderboard }) {
     )
 }
 //  TODO: Need to add score item
-function Item(data){
+function Item(data) {
     return (
         <>
             {
                 data.map((value, index) => (
-                        <div className="flex" key={index}>
-                            <div className="item">
-                                <div className="info">
-                                    <h3 className='name text-dark'>{value.username}</h3>
-                                </div>
-                            </div>
-                            <div className="item">
-                                <span>score: {value.score}</span>
-                                <br></br>
-                                <span>time: {value.time}</span>
-                            </div>
+                    <div className="rank_item" key={index}>
+                        <div className="rank_item__rank">{index + 1}</div>
+                        <div className="rank_item__item">
+                            <span className='name text-dark'><b>{value.username} </b>
+                                score: {value.score} time: {value.time}</span>
                         </div>
-                    )
+                    </div>
+                )
                 )
             }
         </>
