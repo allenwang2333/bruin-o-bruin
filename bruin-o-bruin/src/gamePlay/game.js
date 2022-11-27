@@ -10,7 +10,7 @@ import "./gamePlay.css"
 
 async function handleSuccess(score) {
     console.log("success");
-    if(!sessionStorage.getItem("userName")){
+    if (!sessionStorage.getItem("userName")) {
         window.setTimeout(function () {
             window.location.href = "/home";
         }, 2000);
@@ -251,15 +251,13 @@ class Game extends React.Component {
     }
 
     updateTimer() {
-        var copy_timer = {...this.state.time}
+        var copy_timer = { ...this.state.time }
         const new_second = this.state.second + 1
-        if (copy_timer.sec === 59)
-        {
+        if (copy_timer.sec === 59) {
             copy_timer.sec = 0;
             copy_timer.min++;
         }
-        else
-        {
+        else {
             copy_timer.sec++
         }
         this.setState(
@@ -272,7 +270,7 @@ class Game extends React.Component {
 
     componentDidMount() {
         var intervalId = setInterval(this.updateTimer, 1000);
-        this.setState({intervalId: intervalId})
+        this.setState({ intervalId: intervalId })
     }
 
     render() {
@@ -297,9 +295,9 @@ class Game extends React.Component {
                     <p className="score">
                         Score: {this.state.score}
                     </p>
-                </div>
-                <div className="timer">
-                    Time: {this.state.time.min} m {sec} s
+                    <div className="timer">
+                        Time: {this.state.time.min} m {sec} s
+                    </div>
                 </div>
                 <div className="gameBody">
                     <Board board={this.state.board} coor={this.state.coor} off={this.state.off}
