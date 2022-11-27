@@ -170,8 +170,8 @@ class QueryDatabase {
                     callback(scoreInfo);
                 });
             }
-            else {
-                this.db.run(updateString, (err, rows)=> {
+            else if (Number(rows[0].score) < score) {
+                this.db.run(updateString, (err)=> {
                     if (err) throw err;
                     scoreInfo[schema[table][1]] = username;
                     scoreInfo[schema[table][2]] = userid;
@@ -179,6 +179,9 @@ class QueryDatabase {
                     scoreInfo[schema[table][4]] = time;
                     callback(scoreInfo);
                 });
+            }
+            else {
+                callback(scoreInfo);
             }
         });
     }
