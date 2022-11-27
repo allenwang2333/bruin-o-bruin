@@ -1,25 +1,44 @@
 import Board from "./board.js"
 import Hand from "./hand.js"
 import React from "react"
+import axios from "axios";
 import randomPlaceBlock from "./randomPlace.js"
 import LooseDisplay from "./loosePage.js"
 import WinDisplay from "./winPage.js"
-import handleSuccess from "./handleSuccess.js";
 import HelpMessage from "./helpPopup.js"
 import "./gamePlay.css"
+
+async function handleSuccess(score) {
+    console.log("success");
+    if (!sessionStorage.getItem("userName")) {
+        window.setTimeout(function () {
+            window.location.href = "/home";
+        }, 2000);
+    }
+    const params = new URLSearchParams();
+    params.append("score", score);
+    params.append('author_name', sessionStorage.getItem("userName"));
+    params.append('author_id', sessionStorage.getItem("userID"));
+    const response = await axios.post('/success', params);
+    if (response.data[0].valid) {
+        window.setTimeout(function () {
+            window.location.href = "/home";
+        }, 1500);
+    } else {
+        alert(response.data[1].message);
+    }
+}
 
 class Game extends React.Component {
     constructor() {
         super();
-        //const category_kind_count = 7
         const cLayout = require("./layout.json")
         var board = cLayout.board;
         const coor = cLayout["board-coor"]
-        var placeResult = randomPlaceBlock(board, [0, 1, 2, 3, 4, 5, 6], cLayout.count)
+        var placeResult = randomPlaceBlock(board, [0, 1, 2, 3, 4, 5, 6, 7, 8], cLayout.count)
         board = placeResult[0]
         const remain_category = placeResult[1]
         const seen = this.initSeen(board);
-        //const remain_category = this.initCategory(category_kind_count, cLayout.count)
         const off = cLayout["offset"]
         function importAll(r) {
             return r.keys().map(r);
@@ -35,7 +54,7 @@ class Game extends React.Component {
             seen: seen,
             hand: Array(7).fill(null),
             handSize: 0,
-            category: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 },
+            category: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 },
             coor: coor,
             off: off,
             images: images,
@@ -55,7 +74,7 @@ class Game extends React.Component {
             started: false,
         }
     }
-    
+
     initSeen(board) {
         var seen = [];
         for (const layer in board) {
@@ -152,9 +171,9 @@ class Game extends React.Component {
         var categoryCopy = {};
         Object.assign(categoryCopy, category);
         while (handIdx < 7) {
-            while (categoryIdx <= 6 && category[categoryIdx] === 0)
+            while (categoryIdx <= 8 && category[categoryIdx] === 0)
                 categoryIdx++;
-            if (categoryIdx === 7)
+            if (categoryIdx === 9)
                 break;
             hand[handIdx++] = this.state.images[categoryIdx];
             category[categoryIdx]--;
@@ -180,9 +199,9 @@ class Game extends React.Component {
         handIdx = 0;
         categoryIdx = 0;
         while (handIdx < 7) {
-            while (categoryIdx <= 6 && category[categoryIdx] === 0)
+            while (categoryIdx <= 8 && category[categoryIdx] === 0)
                 categoryIdx++;
-            if (categoryIdx === 7)
+            if (categoryIdx === 9)
                 break;
             hand[handIdx++] = this.state.images[categoryIdx];
             category[categoryIdx]--;
@@ -230,21 +249,23 @@ class Game extends React.Component {
 
     helpClick() {
         this.setState({ help: true });
-        setTimeout(() => this.setState({help: false}), 500)
+        setTimeout(() => this.setState({ help: false }), 500)
     }
 
     updateTimer() {
+<<<<<<< HEAD
         if (!this.state.started)
             return
         var copy_timer = {...this.state.time}
+=======
+        var copy_timer = { ...this.state.time }
+>>>>>>> 2b1d0eea5da29cfe9640ec099a5438486d44b206
         const new_second = this.state.second + 1
-        if (copy_timer.sec === 59)
-        {
+        if (copy_timer.sec === 59) {
             copy_timer.sec = 0;
             copy_timer.min++;
         }
-        else
-        {
+        else {
             copy_timer.sec++
         }
         this.setState(
@@ -257,7 +278,7 @@ class Game extends React.Component {
 
     componentDidMount() {
         var intervalId = setInterval(this.updateTimer, 1000);
-        this.setState({intervalId: intervalId})
+        this.setState({ intervalId: intervalId })
     }
 
     render() {
@@ -282,9 +303,9 @@ class Game extends React.Component {
                     <p className="score">
                         Score: {this.state.score}
                     </p>
-                </div>
-                <div className="timer">
-                    Time: {this.state.time.min} m {sec} s
+                    <div className="timer">
+                        Time: {this.state.time.min} m {sec} s
+                    </div>
                 </div>
                 <div className="gameBody">
                     <Board board={this.state.board} coor={this.state.coor} off={this.state.off}
