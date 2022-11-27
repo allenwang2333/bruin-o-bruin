@@ -8,7 +8,7 @@ import WinDisplay from "./winPage.js"
 import HelpMessage from "./helpPopup.js"
 import "./gamePlay.css"
 
-async function handleSuccess(score) {
+async function handleSuccess(score, time) {
     console.log("success");
     if(!sessionStorage.getItem("userName")){
         window.setTimeout(function () {
@@ -17,6 +17,7 @@ async function handleSuccess(score) {
     }
     const params = new URLSearchParams();
     params.append("score", score);
+    params.append("time", time);
     params.append('author_name', sessionStorage.getItem("userName"));
     params.append('author_id', sessionStorage.getItem("userID"));
     const response = await axios.post('/success', params);
