@@ -174,3 +174,11 @@
     font-size: xx-large;
     font-weight: 600;
 }
+
+.timer {
+    position: absolute;
+    top: 50px;
+    left: calc(100% - 200px);
+    font-size: x-large;
+    font-weight: 500;
+}

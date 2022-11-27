@@ -48,6 +48,7 @@ class Game extends React.Component {
             win: false,
             score: 0,
             help: false,
+            time: { hr: 0, min: 0, sec: 0 }
         }
     }
     
@@ -246,6 +247,9 @@ class Game extends React.Component {
                     <p className="score">
                         Score: {this.state.score}
                     </p>
+                </div>
+                <div className="timer">
+                    {this.state.time.hr} h {this.state.time.min} m {this.state.time.sec} s
                 </div>
                 <div className="gameBody">
                     <Board board={this.state.board} coor={this.state.coor} off={this.state.off}
