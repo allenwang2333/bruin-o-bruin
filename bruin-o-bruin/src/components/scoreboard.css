@@ -1,0 +1,127 @@
+@import url(https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&display=swap);
+
+.leaderboard {
+    display: inline-block;
+    color: #846116;
+    transform: translate(0%, -0%);
+    justify-content: center;
+    align-items: center;
+    font-family: 'Montserrat', cursive;
+    text-shadow: 2px 2px 0px #f0d89c;
+
+}
+
+.ranking-background{
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: #f9de96;
+    position: fixed;
+    z-index: -1;
+}
+
+.cnmboard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: #333;
+}
+
+.cnmboard__header {
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    top: 0;
+    padding-top: 10px;
+    width: 100%;
+    color: #333;
+}
+
+.rankings {
+    position: relative;
+    top: 70px;
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: #333;
+}
+
+.rank_item {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    width: 300px;
+    height: 50px;
+    background-color: #DAEBFE;
+    color: #333;
+    padding: 1ch;
+    margin-top: 1ch;
+    border-radius: 1ch;
+    border-color: rgb(43, 200, 148);
+    border-style: solid;
+}
+
+.rank_item__rank {
+    justify-content: left;
+    align-items: center;
+    color: #333;
+    width: 10%;
+    border-color: rgb(43, 200, 148);
+}
+
+.rank_item__item {
+    justify-content: center;
+    align-items: center;
+    color: #333;
+    width: 100%;
+    text-align: center;
+    border-color: rgb(43, 200, 148);
+}
+
+.ranking-image {
+    top: 200px;
+    width: 200px;
+    position: fixed;
+}
+
+.ranking-image-left {
+    left: 5%;
+}
+
+.ranking-image-right {
+    right: 5%;
+}
+
+.ranking-home {
+    top: 10px;
+    left: 10px;
+    position: fixed;
+}
+
+.ranking-home-button {
+    pointer-events: auto;
+    border-radius: 8px;
+    width: 48px;
+    height: 48px;
+    text-align: center;
+    font-size: 25px;
+    line-height: 50px;
+    box-shadow: 2px 2px 4px #000;
+    border: 1px solid #c2cbcbee;
+    cursor: pointer;
+    padding: 0;
+}
+
+.ranking-home-img {
+    position: relative;
+    top: -3px;
+    left: 0.5px;
+    height: 46px;
+    width: 46px;
+}

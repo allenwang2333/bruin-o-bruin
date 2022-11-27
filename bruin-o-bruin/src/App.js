@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css"
 import './App.css';
 import React from 'react';  
-import { BrowserRouter, Routes, Route, Link} from "react-router-dom"
+import { BrowserRouter, Routes, Route} from "react-router-dom"
 import Home from "./components/Home";
 import Social from "./components/Social";
 import DashBoard from "./components/DashBoard";

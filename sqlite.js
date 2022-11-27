@@ -18,19 +18,20 @@ class QueryDatabase {
         this.schema = schema;
     }  
 
-    connectDatabase() {
+    connectDatabase(callback) {
         this.db = new sqlite3.Database(this.filePath, (err) => {
             if (err) {
                 return console.error(err.message);
             }
             //console.log("-------- Connected to " + this.filePath + " database --------");
         });
+        callback();
     }
 
-    async readTableAll(table, callback) {
+    readTableAll(table, callback) {
         var queryString = `SELECT * FROM ${table}`;
         let data = {};
-        await this.db.all(queryString, (err, rows) => {
+        this.db.all(queryString, (err, rows) => {
             if (err) throw err;
             data = [];
             rows.forEach((row) => {
@@ -44,12 +45,12 @@ class QueryDatabase {
         });
     }
 
-    async readTableByEmail(table, email, callback) {
+    readTableByEmail(table, email, callback) {
         var queryString = `SELECT * FROM ${table} WHERE email == "${email}"`;
         let userInfo = {}; 
-        await this.db.all(queryString, (err, rows) => {
+        this.db.all(queryString, (err, rows) => {
             if (err) throw err;
-            rows.forEach(function (row) {
+            rows.forEach((row) => {
                 userInfo[schema[table][1]] = row[schema[table][1]];
                 userInfo[schema[table][2]] = row[schema[table][2]];
                 userInfo[schema[table][3]] = row[schema[table][3]];
@@ -59,12 +60,12 @@ class QueryDatabase {
         });
     }
 
-    async addUser(table, email, username, userid, passwd, callback) {
+    addUser(table, email, username, userid, passwd, callback) {
         var testExist = `SELECT * FROM ${table} WHERE email == "${email}"`;
         var queryString = 
         `INSERT INTO ${table} (email, username, userid, passwd) ` + 
         `VALUES ("${email}", "${username}", "${userid}", "${passwd}")`;
-        await this.db.all(testExist, (err, rows) => {
+        this.db.all(testExist, (err, rows) => {
             let userInfo = {};
             if (err) throw err;
             if (rows.length > 0) {
@@ -85,10 +86,10 @@ class QueryDatabase {
         });        
     }
 
-    async updatePassword(table, email, username, passwd, callback) {
+    updatePassword(table, email, username, passwd, callback) {
         var testExist = `SELECT * FROM ${table} WHERE email == "${email}"`;
         var updateString = `UPDATE ${table} SET passwd = "${passwd}" WHERE email == "${email}"`;
-        await this.db.all(testExist, (err, rows) => {
+        this.db.all(testExist, (err, rows) => {
             let userInfo = {};
             if (err) throw err;
             if (rows.length > 0 && rows[0].username == username) {
@@ -108,11 +109,11 @@ class QueryDatabase {
         });
     }
 
-    async addNewPost(table, title, author, authorid, content, likes, postid , image, time, callback) {
+    addNewPost(table, title, author, authorid, content, likes, postid , image, time, callback) {
         var queryString = `INSERT INTO ${table} (title, author, authorid, content, likes, postid, image, time) ` + 
         `VALUES ("${title}", "${author}", "${authorid}", "${content}", "${likes}", "${postid}", "${image}", "${time}")`
         let postInfo = {};
-        await this.db.run(queryString, (err) => {
+        this.db.run(queryString, (err) => {
             if (err) throw err;
             postInfo[schema[table][1]] = title;
             postInfo[schema[table][2]] = author;
@@ -126,15 +127,12 @@ class QueryDatabase {
         });
     }
 
-    async likeOrUnlikePost(table, postid, count, callback) {
-        var queryString = `SELECT ${postid} FROM ${table} WHERE postid == "${postid}"`;
-        await this.db.all(queryString, (err, rows) => {
+    likeOrUnlikePost(table, postid, count, callback) {
+        var queryString = `SELECT * FROM ${table} WHERE postid == "${postid}"`;
+        this.db.all(queryString, (err, rows) => {
             if (err) throw err;
             if (rows.length > 0) {
                 var likeInfo = {};
-                //console.log(rows[0].likes);
-                console.log(count);
-                console.log(rows[0].likes);
                 if (!(rows[0].likes == 0 && count == -1)) {
                     let newCount = rows[0].likes + count;
                     console.log(newCount); // here the newCount is correct
@@ -156,7 +154,7 @@ class QueryDatabase {
 
     addUserOrUpdateScoreboard(table, username, userid, score, time, callback) {
         var table = 'scoreboard';
-        var queryString = `SELECT "${userid}" FROM ${table} where userid == "${userid}"`;
+        var queryString = `SELECT * FROM ${table} where userid == "${userid}"`;
         var insertString = `INSERT INTO ${table} (username, userid, score, time) VALUES ("${username}", "${userid}", "${score}", "${time}")`;
         var updateString = `UPDATE ${table} SET score = "${score}", time = "${time}" WHERE userid == "${userid}"`;
         this.db.all(queryString, (err, rows) => {
@@ -172,8 +170,8 @@ class QueryDatabase {
                     callback(scoreInfo);
                 });
             }
-            else {
-                this.db.run(updateString, (err, rows)=> {
+            else if (Number(rows[0].score) < score) {
+                this.db.run(updateString, (err)=> {
                     if (err) throw err;
                     scoreInfo[schema[table][1]] = username;
                     scoreInfo[schema[table][2]] = userid;
@@ -181,6 +179,9 @@ class QueryDatabase {
                     scoreInfo[schema[table][4]] = time;
                     callback(scoreInfo);
                 });
+            }
+            else {
+                callback(scoreInfo);
             }
         });
     }
@@ -214,10 +215,10 @@ function print(data) {
 // postDatabase.addNewPost("posts", "test post 2", "allen", "test content 2", "test imageurl 2", "test image 2", print);
 // postDatabase.readTableAll("posts", print);
 
-scoreboardDatabase = new QueryDatabase("./db/db.sqlite", schema);
-scoreboardDatabase.connectDatabase();
-scoreboardDatabase.addUserOrUpdateScoreboard("scoreboard", "allen", "1234", "120", "2020", print);
-scoreboardDatabase.readTableAll("scoreboard", print);
-scoreboardDatabase.closeDatabase();
+// scoreboardDatabase = new QueryDatabase("./db/db.sqlite", schema);
+// scoreboardDatabase.connectDatabase();
+// scoreboardDatabase.addUserOrUpdateScoreboard("scoreboard", "allen", "1234", "120", "2020", print);
+// scoreboardDatabase.readTableAll("scoreboard", print);
+// scoreboardDatabase.closeDatabase();
 module.exports.QueryDatabase = QueryDatabase;
 module.exports.schema = schema;

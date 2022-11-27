@@ -15,3 +15,85 @@
 .btn-primary {
     margin-right: 15px;
 }
+
+.social-header {
+    z-index: 2;
+    display: block;
+    position: fixed;
+    width: 100%;
+    top: 0px;
+    height: 150px;
+    background-color: rgb(218, 235, 254);
+    border-bottom: 1px solid black;
+}
+
+.logo {
+    top: 0px;
+    position: fixed;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+.logo-img {
+    height: 125px;
+}
+
+.title {
+    top: 0px;
+    left: 16%;
+    position: fixed;
+    padding-top: 25px;
+}
+
+.title-content {
+    color: rgb(39, 116, 174);
+    font-size: 64px;
+    font-weight: 800;
+}
+
+.home-button {
+    position: fixed;
+    top: 0px;
+    right: 64px;
+    padding-top: 35px;
+    padding-right: 35px;
+}
+
+.button {
+    pointer-events: auto;
+    border-radius: 8px;
+    width: 64px;
+    height: 64px;
+    text-align: center;
+    font-size: 25px;
+    line-height: 50px;
+    box-shadow: 2px 2px 4px #000;
+    border: 1px solid #c2cbcbee;
+    cursor: pointer;
+    padding: 0;
+}
+
+.home-img {
+    height: 62px;
+    width: 62px;
+}
+
+.social-body {
+    width: 100%;
+    top: 150px;
+    position: absolute;
+}
+
+.main-container {
+    z-index: 1;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    width: 80%;
+}
+
+.sidebar {
+    position: fixed;
+    top: 160px;
+    right: 40px;
+}

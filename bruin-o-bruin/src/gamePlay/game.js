@@ -1,63 +1,75 @@
 import Board from "./board.js"
 import Hand from "./hand.js"
 import React from "react"
+import axios from "axios";
 import randomPlaceBlock from "./randomPlace.js"
 import LooseDisplay from "./loosePage.js"
 import WinDisplay from "./winPage.js"
-import handleSuccess from "./handleSuccess.js";
+import HelpMessage from "./helpPopup.js"
+import NegativeDisplay from "./negativeScorePage.js";
 import "./gamePlay.css"
+
+async function handleSuccess(score, time) {
+    console.log("success");
+    if(!sessionStorage.getItem("userName")){
+        window.setTimeout(function () {
+            window.location.href = "/home";
+        }, 2000);
+    }
+    const params = new URLSearchParams();
+    params.append("score", score);
+    params.append("time", time);
+    params.append('author_name', sessionStorage.getItem("userName"));
+    params.append('author_id', sessionStorage.getItem("userID"));
+    const response = await axios.post('/success', params);
+    if (response.data[0].valid) {
+        window.setTimeout(function () {
+            window.location.href = "/home";
+        }, 1500);
+    } else {
+        alert(response.data[1].message);
+    }
+}
 
 class Game extends React.Component {
     constructor() {
         super();
-        const category_kind_count = 7
         const cLayout = require("./layout.json")
         var board = cLayout.board;
         const coor = cLayout["board-coor"]
-        board = randomPlaceBlock(board, [0, 1, 2, 3, 4, 5, 6], cLayout.count)
+        var placeResult = randomPlaceBlock(board, [0, 1, 2, 3, 4, 5, 6, 7, 8], cLayout.count)
+        board = placeResult[0]
+        const remain_category = placeResult[1]
         const seen = this.initSeen(board);
-        const remain_category = this.initCategory(category_kind_count, cLayout.count)
         const off = cLayout["offset"]
         function importAll(r) {
             return r.keys().map(r);
         }
         const images = importAll(require.context('../../../images/blockImg', false, /\.(png|jpe?g|svg)$/));
-        const shuffleImg = importAll(require.context('../../../images', false, /shuffle-icon\.(png|jpe?g|svg)$/));
-        const homeImg = importAll(require.context('../../../images', false, /home-icon\.(png|jpe?g|svg)$/));
-        const restartImg = importAll(require.context('../../../images', false, /restart-icon\.(png|jpe?g|svg)$/));
+        const shuffleImg = importAll(require.context('../../../images/icon', false, /shuffle-icon\.(png|jpe?g|svg)$/))[0];
+        const homeImg = importAll(require.context('../../../images/icon', false, /home-icon\.(png|jpe?g|svg)$/))[0];
+        const restartImg = importAll(require.context('../../../images/icon', false, /restart-icon\.(png|jpe?g|svg)$/))[0];
+        const helpImg = importAll(require.context('../../../images/icon', false, /help-icon\.(png|jpe?g|svg)$/))[0];
         this.state = {
             board: board,
             seen: seen,
             hand: Array(7).fill(null),
             handSize: 0,
-            category: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 },
+            category: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 },
             coor: coor,
             off: off,
             images: images,
             shuffleImg: shuffleImg,
             homeImg: homeImg,
             restartImg: restartImg,
+            helpImg: helpImg,
             remain: cLayout.count,
             remain_category: remain_category,
             loose: false,
             win: false,
             score: 0,
+            help: false,
         }
-    }
-
-    initCategory(category_kind_count, total_count) {
-        const each_kind_count = Math.floor((Math.floor(total_count / 3)) / category_kind_count) * 3
-        var remain_category = {}
-        for (let i = 0; i < category_kind_count; i++) {
-            remain_category[i] = each_kind_count
-        }
-        // remain block count should be multiple of 3
-        const remain_block_count = total_count - each_kind_count * category_kind_count
-        const remain_kind_count = remain_block_count / 3
-        for (let i = 0; i < remain_kind_count; i++) {
-            remain_category[Math.floor(Math.random() * category_kind_count)] += 3;
-        }
-        return remain_category
     }
 
     initSeen(board) {
@@ -149,8 +161,27 @@ class Game extends React.Component {
         var score = this.state.score;
         category[newHand]++;
         handSize++;
-        if (category[newHand] === 3) {
-            category[newHand] = 0;
+
+        var handIdx = 0;
+        var categoryIdx = 0;
+        var categoryCopy = {};
+        Object.assign(categoryCopy, category);
+        while (handIdx < 7) {
+            while (categoryIdx <= 8 && category[categoryIdx] === 0)
+                categoryIdx++;
+            if (categoryIdx === 9)
+                break;
+            hand[handIdx++] = this.state.images[categoryIdx];
+            category[categoryIdx]--;
+        }
+        this.setState({
+            hand: hand,
+        })
+
+
+        hand = Array(7).fill(null)
+        if (categoryCopy[newHand] === 3) {
+            categoryCopy[newHand] = 0;
             score += 100;
             handSize -= 3;
         }
@@ -159,33 +190,28 @@ class Game extends React.Component {
                 loose: true,
             })
         }
-        var categoryCopy = {};
-        Object.assign(categoryCopy, category);
-        var handIdx = 0;
-        var categoryIdx = 0;
+        Object.assign(category, categoryCopy);
+
+        handIdx = 0;
+        categoryIdx = 0;
         while (handIdx < 7) {
-            while (categoryIdx <= 6 && category[categoryIdx] === 0)
+            while (categoryIdx <= 8 && category[categoryIdx] === 0)
                 categoryIdx++;
-            if (categoryIdx === 7)
+            if (categoryIdx === 9)
                 break;
             hand[handIdx++] = this.state.images[categoryIdx];
             category[categoryIdx]--;
         }
-        this.setState({
+        setTimeout(() => this.setState({
             hand: hand,
             category: categoryCopy,
             handSize: handSize,
             score: score,
-        })
+        }), 150)
     }
 
     handleShuffleClick(remain_category) {
         const score = this.state.score - 1000;
-        if (score < 0) {
-            this.setState({
-                loose: true,
-            });
-        }
         var board = this.state.board
         var copy_remain_category = { ...remain_category }
         var category_list = Object.keys(copy_remain_category)
@@ -212,19 +238,25 @@ class Game extends React.Component {
         )
     }
 
+    helpClick() {
+        this.setState({ help: true });
+        setTimeout(() => this.setState({ help: false }), 500)
+    }
+
     render() {
         return (
-            <div>
+            <div className="body">
                 <div className="tool">
                     <button className="tool-button">
-                        <img className="shuffle-icon" src={this.state.shuffleImg[0]} alt="shuffle icon" onClick={() => this.handleShuffleClick(this.state.remain_category)} />
+                        <img className="shuffle-icon" src={this.state.shuffleImg} alt="shuffle icon" onClick={() => this.handleShuffleClick(this.state.remain_category)} />
                     </button>
                     <button className="tool-button">
-                        <img className="home-icon" src={this.state.homeImg[0]} alt="home icon" onClick={() => window.location.href = "/home"} />
+                        <img className="home-icon" src={this.state.homeImg} alt="home icon" onClick={() => window.location.href = "/home"} />
                     </button>
                     <button className="tool-button">
-                        <img className="restart-icon" src={this.state.restartImg[0]} alt="restart icon" onClick={() => window.location.reload()} />
+                        <img className="restart-icon" src={this.state.restartImg} alt="restart icon" onClick={() => window.location.reload()} />
                     </button>
+                    <HelpMessage helpImg={this.state.helpImg} />
                 </div>
                 <div className="score-display">
                     <p className="score">
@@ -237,6 +269,7 @@ class Game extends React.Component {
                     <Hand hand={this.state.hand} />
                     <LooseDisplay loose={this.state.loose} />
                     <WinDisplay win={this.state.win} />
+                    <NegativeDisplay loose={this.state.score < 0}/>
                 </div>
             </div>
         )
