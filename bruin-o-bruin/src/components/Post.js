@@ -1,21 +1,21 @@
-import React , {useState} from "react";
+import React, { useState } from "react";
 import "./Posts.css";
 import axios from "axios";
-import {AiOutlineLike ,AiTwotoneLike} from "react-icons/ai";
+import { AiOutlineLike, AiTwotoneLike } from "react-icons/ai";
 
 const Post = ({ post: { postID, title, body,
-imgUrl, author, time, like }, index }) => {
-  let [icon, setIcon] = useState(<AiOutlineLike/>);
+  imgUrl, author, time, like }, index }) => {
+  let [icon, setIcon] = useState(<AiOutlineLike />);
   let [liked, setLiked] = useState(false);
 
   const changeLike = () => {
     if (liked) { //unlike
-      setIcon(<AiOutlineLike/>);
+      setIcon(<AiOutlineLike />);
       setLiked(false);
       handleLike(-1);
     }
     else { //unlike
-      setIcon(<AiTwotoneLike/>);
+      setIcon(<AiTwotoneLike />);
       setLiked(true);
       handleLike(1);
     }
@@ -27,34 +27,42 @@ imgUrl, author, time, like }, index }) => {
     params.append('count', count);
     console.log(like);
     const response = await axios.post('http://localhost:8080/server_postLike', params);
-    if(!response.data[0].valid){
+    if (!response.data[0].valid) {
       alert(response.data[1].message);
     }
   }
   if (imgUrl === '') {
-    return (  
+    return (
       <div className="post-container">
-        <h1 className="heading">{title}</h1>
-        <p>{body}</p>
-        <div className="info">      
-          <h4>Written by: {author} at {time.toString()}</h4>
+        <h1 className="post-heading">{title}</h1>
+        <p className="post-content">{body}</p>
+        <div className="post-footer">
+          <div className="post-info">
+            <p className="post-info-content">Written by: {author} at {time.toString()}</p>
+          </div>
+          <div className="post-like">
+            <button id="like" class="btn btn-light" onClick={changeLike}>{icon}{like}</button>
+          </div>
         </div>
-        <div><button id="like" class="btn btn-light" onClick={changeLike}>{icon}{like}</button></div>
       </div>
     );
   }
 
-  return (  
+  return (
     <div className="post-container">
-      <h1 className="heading">{title}</h1>
-      <img className="image" src={imgUrl} alt="post" />
-      <p>{body}</p>
-      <div className="info">      
-        <h4>Written by: {author} at {time.toString()}</h4>
+      <h1 className="post-heading">{title}</h1>
+      <img className="post-image" src={imgUrl} alt="a post image" />
+      <p className="post-content">{body}</p>
+      <div className="post-footer">
+        <div className="post-info">
+          <p className="post-info-content">Written by: {author} at {time.toString()}</p>
+        </div>
+        <div className="post-like">
+          <button id="like" class="btn btn-light" onClick={changeLike}>{icon}{like}</button>
+        </div>
       </div>
-      <div><button id="like" class="btn btn-light" onClick={changeLike}>{icon}{like}</button></div>
     </div>
   );
 };
-  
+
 export default Post;

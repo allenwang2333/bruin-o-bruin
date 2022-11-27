@@ -16,16 +16,20 @@
     margin-right: 15px;
 }
 
-.header {
+.social-header {
+    z-index: 2;
     display: block;
+    position: fixed;
     width: 100%;
+    top: 0px;
     height: 150px;
+    background-color: rgb(218, 235, 254);
     border-bottom: 1px solid black;
 }
 
 .logo {
     top: 0px;
-    position: absolute;
+    position: fixed;
     padding-top: 10px;
     padding-left: 10px;
 }
@@ -37,7 +41,7 @@
 .title {
     top: 0px;
     left: 16%;
-    position: absolute;
+    position: fixed;
     padding-top: 25px;
 }
 
@@ -48,7 +52,7 @@
 }
 
 .home-button {
-    position: absolute;
+    position: fixed;
     top: 0px;
     right: 64px;
     padding-top: 35px;
@@ -76,13 +80,13 @@
 }
 
 .social-body {
-    height: calc(100% - 150px);
     width: 100%;
     top: 150px;
     position: absolute;
 }
 
 .main-container {
+    z-index: 1;
     position: absolute;
     left: 10px;
     top: 10px;
@@ -90,11 +94,7 @@
 }
 
 .sidebar {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-}
-
-.post-button {
-    right: 100px;
+    position: fixed;
+    top: 160px;
+    right: 40px;
 }

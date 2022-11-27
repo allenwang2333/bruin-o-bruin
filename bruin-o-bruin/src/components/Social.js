@@ -81,8 +81,8 @@ function Social() {
     }
 
     return (
-        <Container fluid>
-            <div className="header">
+        <div className="social">
+            <div className="social-header">
                 <div className="logo">
                     <img className="logo-img" src={logo} alt="logo" />
                 </div>
@@ -97,10 +97,7 @@ function Social() {
             </div>
             <div className="social-body">
                 <div className="main-container">
-                    <h1 className="main-heading">
-                        Posts
-                    </h1>
-                    {/* <Posts /> */}
+                    <Posts />
                 </div>
 
                 <div className="sidebar">
@@ -113,7 +110,7 @@ function Social() {
                                             <div className="form-area">
                                                 <form onSubmit={handleSubmitPost}>
                                                     <br styles="clear:both" />
-                                                    <div className>
+                                                    <div>
                                                         <input type="text" className="form-control" id="title" name="title" placeholder="Title" required />
                                                     </div>
 
@@ -129,7 +126,7 @@ function Social() {
                                                     <hr></hr>
                                                     {status && <h4>{status}</h4>}
                                                     <button type="submit" id="submit" name="submit" className="btn btn-primary pull-right">Add Post</button>
-                                                    <button type="reset" value="reset" onClick={setImage} className="btn btn-secondary pull-right">Cancel</button>
+                                                    <button type="reset" value="reset" onClick={setImage} className="btn btn-secondary pull-right">Clear</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -140,7 +137,7 @@ function Social() {
                     </Nav>
                 </div>
             </div>
-        </Container>
+        </div>
     );
 }
 

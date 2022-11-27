@@ -1,9 +1,14 @@
 .posts-container {
-    background-color: #1c4de2;
+    background-color: rgb(39, 116, 174);
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+}
+
+.posts-heading {
+    top: 10px;
+    position: relative;
 }
 
 .post-container {
@@ -11,15 +16,42 @@
     display: flex;
     flex-direction: column;
     padding: 3%;
-    margin: 3em 3em 3em 3em;
+    margin: 3em;
 }
-.heading {
-    height: 126px;
+
+.post-heading {
+    height: 120px;
     text-align: center;
     display: flex;
+    font-weight: 700;
     align-items: center;
 }
-.image {
+
+.post-image {
     width: 100%;
-    height: 210px;
+}
+
+.post-content {
+    font-size: larger;
+    font-weight: 500;
+}
+
+.post-button {
+    right: 100px;
+}
+
+.post-footer {
+    display: flex;
+}
+
+
+.post-info {
+    position: relative;
+    top: 6px;
+    margin-right: 5px;
+}
+
+.post-info-content {
+    font-size: large;
+    font-weight: 500;
 }
