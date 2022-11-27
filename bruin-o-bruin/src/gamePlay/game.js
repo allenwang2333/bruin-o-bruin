@@ -18,8 +18,8 @@ async function handleSuccess(score, time) {
     const params = new URLSearchParams();
     params.append("score", score);
     params.append("time", time);
-    params.append('author_name', sessionStorage.getItem("userName"));
-    params.append('author_id', sessionStorage.getItem("userID"));
+    params.append('username', sessionStorage.getItem("userName"));
+    params.append('userid', sessionStorage.getItem("userID"));
     const response = await axios.post('/success', params);
     if (response.data[0].valid) {
         window.setTimeout(function () {
