@@ -27,7 +27,7 @@ const Posts = () => {
 
   return (
     <div className="posts-container">
-      <h1>Posts</h1>
+      <h1 className="posts-heading">Posts</h1>
       {blogPosts.map((post, index) => (
         <Post key={index} index={index} post={post} />
       ))}

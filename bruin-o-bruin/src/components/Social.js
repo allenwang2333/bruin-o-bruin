@@ -23,6 +23,11 @@ function Social() {
     const [image, setImage] = useState({ preview: '', data: '' })
     const [status, setStatus] = useState('')
 
+    function importAll(r) {
+        return r.keys().map(r);
+    }
+    const homeIcon = importAll(require.context('../../../images/icon', false, /home-icon\.(png|jpe?g|svg)$/))[0];
+
     const handleFileChange = (e) => {
         const img = {
             preview: URL.createObjectURL(e.target.files[0]),
@@ -76,31 +81,26 @@ function Social() {
     }
 
     return (
-        <Container fluid>
-            <Row>
-                <Col md={4}>
-                    <Row className="justify-content-center align-items-center">
-                        <Col md="auto" className="text-sm-start text-center mb-sm-0 mb-3">
-                            <img src={logo} width="125" alt="logo" />
-                        </Col>
-                        <Col className="text-sm-start text-center text-success mb-sm-0 mb-3">
-                            <h1>Bruin O' Bruin Social</h1>
-                        </Col>
-                    </Row>
-                </Col>
-            </Row>
-            <Row>
-                <Col md={8}>
-                    <div className="main-container">
-                        <br></br>
-                        <h1 className="main-heading">
-                            Posts
-                        </h1>
-                        <Posts />
-                    </div>
-                </Col>
+        <div className="social">
+            <div className="social-header">
+                <div className="logo">
+                    <img className="logo-img" src={logo} alt="logo" />
+                </div>
+                <div className="title">
+                    <h1 className="title-content">Bruin O' Bruin Social</h1>
+                </div>
+                <div className="home-button">
+                    <button className="button">
+                        <img className="home-img" src={homeIcon} alt="home icon" onClick={() => window.location.href = "/home"} />
+                    </button>
+                </div>
+            </div>
+            <div className="social-body">
+                <div className="main-container">
+                    <Posts />
+                </div>
 
-                <Col md={2}>
+                <div className="sidebar">
                     <Nav className={styles.navContainer}>
                         <ul className="list-group">
                             <li className="list-group-item fs-5 py-3 text-success shadow">
@@ -110,7 +110,7 @@ function Social() {
                                             <div className="form-area">
                                                 <form onSubmit={handleSubmitPost}>
                                                     <br styles="clear:both" />
-                                                    <div className>
+                                                    <div>
                                                         <input type="text" className="form-control" id="title" name="title" placeholder="Title" required />
                                                     </div>
 
@@ -126,7 +126,7 @@ function Social() {
                                                     <hr></hr>
                                                     {status && <h4>{status}</h4>}
                                                     <button type="submit" id="submit" name="submit" className="btn btn-primary pull-right">Add Post</button>
-                                                    <button type="reset" value="reset" onClick={setImage} className="btn btn-secondary pull-right">Cancel</button>
+                                                    <button type="reset" value="reset" onClick={setImage} className="btn btn-secondary pull-right">Clear</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -135,9 +135,9 @@ function Social() {
                             </li>
                         </ul>
                     </Nav>
-                </Col>
-            </Row>
-        </Container>
+                </div>
+            </div>
+        </div>
     );
 }
 
