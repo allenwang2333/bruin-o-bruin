@@ -73,7 +73,6 @@ class Game extends React.Component {
             time: { min: 0, sec: 0 },
             second: 0,
             intervalId: null,
-            //started: false,
         }
     }
 
@@ -89,7 +88,7 @@ class Game extends React.Component {
                 }
             }
         }
-        return seen; //*TODO This is simply for testing purposes
+        return seen;
     }
 
     checkSeen(layer, row, col, i) {
@@ -144,19 +143,19 @@ class Game extends React.Component {
             this.startTimer();
             remain--;
             if (remain === 0) {
-                handleSuccess(this.state.score)
+                handleSuccess(this.state.score, this.state.second);
+                clearInterval(this.state.intervalId);
                 this.setState({
                     win: true,
-                })
+                });
             }
-            remain_category[board[layer][row][col].category]--; // new
+            remain_category[board[layer][row][col].category]--;
             board[layer][row][col].fill = 0;
             board[layer][row][col].category = null;
             this.setState({
                 board: board,
                 remain: remain,
-                remain_category: remain_category,  // new
-                //started: true
+                remain_category: remain_category,
             });
         }
     }
