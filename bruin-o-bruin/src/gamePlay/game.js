@@ -194,6 +194,7 @@ class Game extends React.Component {
 
         hand = Array(7).fill(null)
         if (handSize === 7) {
+            clearInterval(this.state.intervalId);
             this.setState({
                 loose: true,
             })
@@ -218,6 +219,9 @@ class Game extends React.Component {
 
     handleShuffleClick(remain_category) {
         const score = this.state.score - 1000;
+        if (score < 0){
+            clearInterval(this.state.intervalId);
+        }
         var board = this.state.board
         var copy_remain_category = { ...remain_category }
         var category_list = Object.keys(copy_remain_category)
