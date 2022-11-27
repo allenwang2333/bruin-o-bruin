@@ -267,11 +267,6 @@ class Game extends React.Component {
         )
     }
 
-    componentDidMount() {
-        const remain_time = this.parseSecond(this.state.second)
-        this.setState({time: remain_time})
-    }
-
     startTimer() {
         if (!this.state.intervalId)
         {
