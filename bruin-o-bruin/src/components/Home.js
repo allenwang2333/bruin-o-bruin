@@ -1,5 +1,5 @@
 import React from "react";
-import './style.css';
+import './Home.css';
 
 var username = sessionStorage.getItem("userName");
 
@@ -15,13 +15,16 @@ const Home = () => {
 
   return (
     <div>
-      <h1>Home Page</h1>
-      <p>Hi {username}</p> 
-      <a href="/game">Game</a> 
-      <br></br>
-      <a href="/social">Social Posts</a>
-      <br></br>
-      <a href="/ranking">scoreboard</a> 
+      <h1 class="home-page-title">Home Page</h1>
+      <div class="navbar">
+        <div class="navbar-centered"> 
+          <a class="game-link" href="/game">Game</a> 
+          <a class="social-link" href="/social">Social Posts</a>
+          <a class="ranking-link" href="/ranking">Scoreboard</a>
+        </div>
+      </div>
+      <p class="user-name-home-page">Hi {username}</p> 
+       
       <button class="logout-btn" onClick={() => logout()}> Log out </button>
     </div>
   );
