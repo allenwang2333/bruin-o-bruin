@@ -193,7 +193,6 @@ app.get('/scoreboard', (req, res) => {
         userStatus["userid"] = scoreInfo[i].userid;
         userStatus["score"] = scoreInfo[i].score;
         userStatus["time"] = scoreInfo[i].time;
-        console.log(scoreInfo[i].username);
         scores.push(userStatus);
       }
       res.send(scores);
