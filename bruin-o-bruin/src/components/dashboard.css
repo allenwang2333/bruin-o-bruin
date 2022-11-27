@@ -13,7 +13,7 @@
     max-height: 100%;
     position: absolute;
     left: 50%;
-    transform: translate(-80%, 0%);
+    transform: translate(-70%, 0%);
 }
 
 .center-button2 Button {
@@ -21,23 +21,7 @@
     max-height: 100%;
     position: absolute;
     left: 50%;
-    transform: translate(-70%, 100%);
-}
-
-.center-button3 Button {
-    max-width: 100%;
-    max-height: 100%;
-    position: absolute;
-    left: 50%;
-    transform: translate(-70%, 200%);
-}
-
-.center-button4 Button {
-    max-width: 100%;
-    max-height: 100%;
-    position: absolute;
-    left: 50%;
-    transform: translate(-75%, 300%);
+    transform: translate(-60%, 100%);
 }
 
 .footer {
