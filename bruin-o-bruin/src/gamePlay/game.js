@@ -238,11 +238,6 @@ class Game extends React.Component {
         )
     }
 
-    helpClick() {
-        this.setState({ help: true });
-        setTimeout(() => this.setState({ help: false }), 500)
-    }
-
     render() {
         return (
             <div className="body">
