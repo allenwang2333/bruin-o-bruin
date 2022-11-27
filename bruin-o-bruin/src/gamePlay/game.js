@@ -166,6 +166,11 @@ class Game extends React.Component {
         var categoryIdx = 0;
         var categoryCopy = {};
         Object.assign(categoryCopy, category);
+        if (categoryCopy[newHand] === 3) {
+            categoryCopy[newHand] = 0;
+            score += 100;
+            handSize -= 3;
+        }
         while (handIdx < 7) {
             while (categoryIdx <= 8 && category[categoryIdx] === 0)
                 categoryIdx++;
@@ -176,15 +181,12 @@ class Game extends React.Component {
         }
         this.setState({
             hand: hand,
+            category: categoryCopy,
+            handSize: handSize,
         })
 
 
         hand = Array(7).fill(null)
-        if (categoryCopy[newHand] === 3) {
-            categoryCopy[newHand] = 0;
-            score += 100;
-            handSize -= 3;
-        }
         if (handSize === 7) {
             this.setState({
                 loose: true,
@@ -204,8 +206,6 @@ class Game extends React.Component {
         }
         setTimeout(() => this.setState({
             hand: hand,
-            category: categoryCopy,
-            handSize: handSize,
             score: score,
         }), 150)
     }
