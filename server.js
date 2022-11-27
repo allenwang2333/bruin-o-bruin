@@ -10,7 +10,7 @@ console.log(schema.schema);
 const db = new sqlite_db.QueryDatabase('./db/db.sqlite', schema.schema);
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(express.static(path.resolve(__dirname, '../bruin-o-bruin/bruin-o-bruin/build')));
+app.use(express.static(path.resolve(__dirname, '../wwwroot/bruin-o-bruin/build')));
 app.use('/images', express.static('images'));
 
 app.post('/server_auth_signin', (req, res) => {
@@ -201,7 +201,7 @@ app.get('/scoreboard', (req, res) => {
 });
 
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../bruin-o-bruin/bruin-o-bruin/build', 'index.html'));
+  res.sendFile(path.resolve(__dirname, '../wwwroot/bruin-o-bruin/build', 'index.html'));
 });
 
 const PORT = process.env.PORT || 8080;
