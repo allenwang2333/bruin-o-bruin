@@ -30,7 +30,7 @@ function DashBoard() {
         </div>
       </div>
       <div class="footer">
-        <a href="https://github.com/allenwang2333/bruin-o-bruin" title="checkout our github repo">© 2022 FALL CS35L Team 47</a>
+        <a className="dashlink"href="https://github.com/allenwang2333/bruin-o-bruin" title="checkout our github repo">© 2022 FALL CS35L Team 47</a>
       </div>
     </div>
   );

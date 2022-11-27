@@ -1,13 +1,10 @@
 var express = require('express');
 var app = express();
 var path = require('path');
-const { nextTick } = require('process');
 var sqlite_db = require('./sqlite.js');
 const schema = require('./sqlite.js');
 const { v4: uuidv4 } = require('uuid');
-const { userInfo } = require('os');
 const multer  = require('multer')
-var fs = require('fs');
 
 console.log(schema.schema);
 const db = new sqlite_db.QueryDatabase('./db/db.sqlite', schema.schema);
@@ -152,7 +149,6 @@ app.post('/success', (req, res) => {
   var time = req.body.time;
   db.connectDatabase(() => {
     // TODO: detailed implementation needed
-    // TODO: another bug, guests user shouldn't show up in the scoreboard
     db.addUserOrUpdateScoreboard("scoreboard", user_name, user_id, score= 100, time, (scoreInfo) => {
       console.log(scoreInfo);
       db.closeDatabase();

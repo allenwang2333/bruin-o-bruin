@@ -86,19 +86,19 @@
     color: white;
 }
 
-a:link {
+a.dashlink:link {
     color: grey;
     background-color: transparent;
     text-decoration: none;
 }
 
-a:visited {
+a.dashlink:visited {
     color: grey;
     background-color: transparent;
     text-decoration: none;
 }
 
-a:hover {
+a.dashlink:hover {
     background-color: transparent;
     text-decoration: underline;
 }
