@@ -147,13 +147,11 @@ app.post('/success', (req, res) => {
   var userid = req.body.userid;
   var score = req.body.score;
   var time = req.body.time;
-  console.log(username, userid, score, time);
-  let winGame = [{ "valid": false }]
+  let winGame = [{ "valid": false }];
   db.connectDatabase(() => {
-    // TODO: detailed implementation needed
     db.addUserOrUpdateScoreboard("scoreboard", username, userid, score, time, (scoreInfo) => {
-      console.log(scoreInfo);
       winGame = [{"valid": true}];
+      console.log(scoreInfo)
       res.send(winGame)
       db.closeDatabase();
     });
@@ -194,14 +192,16 @@ app.get('/scoreboard', (req, res) => {
         userStatus["userid"] = scoreInfo[i].userid;
         userStatus["score"] = scoreInfo[i].score;
         userStatus["time"] = scoreInfo[i].time;
+        var time = Number(scoreInfo[i].time);
+        var minutes = Math.floor(time / 60);
+        var seconds = time - minutes * 60;
+        userStatus["timeString"] = `${minutes} m ${seconds} s`;
         scores.push(userStatus);
       }
       res.send(scores);
       db.closeDatabase();
     });
   });
-  
-  //res.send([{"valid": true}, {"username": "test1", "userid": "test1", "score": 10, "time": "100"}, {"username": "test2", "userid": "test2", "score": 100, "time": "90"}]);
 });
 
 app.get('*', (req, res) => {
