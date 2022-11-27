@@ -52,6 +52,7 @@
     font-size: 25px;
     color: crimson;
     line-height: 50px;
+    background-color: rgb(250, 250, 250);
     box-shadow: 2px 2px 4px #000;
     border: 0px;
     cursor: pointer;
