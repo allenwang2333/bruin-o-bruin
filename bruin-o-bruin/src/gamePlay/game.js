@@ -51,7 +51,8 @@ class Game extends React.Component {
             help: false,
             time: { min: 0, sec: 0 },
             second: 0,
-            intervalId: null
+            intervalId: null,
+            started: false,
         }
     }
     
@@ -132,7 +133,8 @@ class Game extends React.Component {
             this.setState({
                 board: board,
                 remain: remain,
-                remain_category: remain_category  // new
+                remain_category: remain_category,  // new
+                started: true
             });
         }
     }
@@ -232,6 +234,8 @@ class Game extends React.Component {
     }
 
     updateTimer() {
+        if (!this.state.started)
+            return
         var copy_timer = {...this.state.time}
         const new_second = this.state.second + 1
         if (copy_timer.sec === 59)
