@@ -245,11 +245,6 @@ class Game extends React.Component {
         )
     }
 
-    helpClick() {
-        this.setState({ help: true });
-        setTimeout(() => this.setState({ help: false }), 500)
-    }
-
     parseSecond(sec){
         const min = Math.floor(sec / 60)
         const remain_sec = sec - min * 60
