@@ -151,7 +151,6 @@ app.post('/success', (req, res) => {
   time = new Date().toLocaleString('en-US', {timeZone: 'America/Los_Angeles'});
   db.connectDatabase(() => {
     // TODO: detailed implementation needed
-    // TODO: another bug, guests user shouldn't show up in the scoreboard
     db.addUserOrUpdateScoreboard("scoreboard", user_name, user_id, score= 100, time, (scoreInfo) => {
       console.log(scoreInfo);
       db.closeDatabase();
