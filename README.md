@@ -17,3 +17,5 @@ run ```npm run build```
 
 then, check http://localhost:8080/ to see the web-app 
 
+checkout https://bruinobruin.azurewebsites.net/ for Azure website
+

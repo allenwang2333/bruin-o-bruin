@@ -10,6 +10,7 @@ export default function randomPlaceBlock (board, pieceSet, count) {
     for(var i = 0; i < remain; i++){
         pieces[Math.floor(Math.random() * length)] += 3;
     }
+    const initCategory = {...pieces}
     for(const layer in board){
         for(const row in board[layer]){
             for(const col in board[layer][row]){
@@ -21,11 +22,8 @@ export default function randomPlaceBlock (board, pieceSet, count) {
                     board[layer][row][col].category = pieceSet[curr];
                     pieces[curr]--;
                 }
-                // else {
-                //     board[layer][row][piece].category = null;
-                // }
             }
         }
     }
-    return board;
+    return [board, initCategory];
 }
