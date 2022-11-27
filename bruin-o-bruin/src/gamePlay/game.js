@@ -11,7 +11,7 @@ import "./gamePlay.css"
 
 async function handleSuccess(score, time) {
     console.log("success");
-    if(!sessionStorage.getItem("userName")){
+    if (!sessionStorage.getItem("userName")) {
         window.setTimeout(function () {
             window.location.href = "/home";
         }, 2000);
@@ -50,6 +50,7 @@ class Game extends React.Component {
         const homeImg = importAll(require.context('../../../images/icon', false, /home-icon\.(png|jpe?g|svg)$/))[0];
         const restartImg = importAll(require.context('../../../images/icon', false, /restart-icon\.(png|jpe?g|svg)$/))[0];
         const helpImg = importAll(require.context('../../../images/icon', false, /help-icon\.(png|jpe?g|svg)$/))[0];
+        this.updateTimer = this.updateTimer.bind(this);
         this.state = {
             board: board,
             seen: seen,
@@ -69,6 +70,10 @@ class Game extends React.Component {
             win: false,
             score: 0,
             help: false,
+            time: { min: 0, sec: 0 },
+            second: 0,
+            intervalId: null,
+            //started: false,
         }
     }
 
@@ -136,6 +141,7 @@ class Game extends React.Component {
         if (idx !== -1) {
             this.checkSeen(layer, row, col, idx);
             this.handleEliminate(board[layer][row][col].category);
+            this.startTimer();
             remain--;
             if (remain === 0) {
                 handleSuccess(this.state.score)
@@ -149,7 +155,8 @@ class Game extends React.Component {
             this.setState({
                 board: board,
                 remain: remain,
-                remain_category: remain_category  // new
+                remain_category: remain_category,  // new
+                //started: true
             });
         }
     }
@@ -243,7 +250,40 @@ class Game extends React.Component {
         setTimeout(() => this.setState({ help: false }), 500)
     }
 
+    parseSecond(sec){
+        const min = Math.floor(sec / 60)
+        const remain_sec = sec - min * 60
+        const remain_time = {min: min, sec: remain_sec}
+        return remain_time
+    }
+
+    updateTimer() {
+        const new_second = this.state.second + 1
+        this.setState(
+            {
+                time: this.parseSecond(new_second),
+                second: new_second
+            }
+        )
+    }
+
+    componentDidMount() {
+        const remain_time = this.parseSecond(this.state.second)
+        this.setState({time: remain_time})
+    }
+
+    startTimer() {
+        if (!this.state.intervalId)
+        {
+            const intervalId = setInterval(this.updateTimer, 1000)
+            this.setState({intervalId: intervalId})
+        }
+    }
+
     render() {
+        var sec = this.state.time.sec;
+        if (sec < 10)
+            sec = "0" + sec;
         return (
             <div className="body">
                 <div className="tool">
@@ -262,6 +302,9 @@ class Game extends React.Component {
                     <p className="score">
                         Score: {this.state.score}
                     </p>
+                    <div className="timer">
+                        Time: {this.state.time.min} m {sec} s
+                    </div>
                 </div>
                 <div className="gameBody">
                     <Board board={this.state.board} coor={this.state.coor} off={this.state.off}
