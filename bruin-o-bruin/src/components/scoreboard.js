@@ -30,6 +30,7 @@ export default function Board() {
         return r.keys().map(r);
     }
     const trophyImg = importAll(require.context('../../../images/icon', false, /trophy\.(png|jpe?g|svg)$/))[0];
+    const homeIcon = importAll(require.context('../../../images/icon', false, /home-icon\.(png|jpe?g|svg)$/))[0];
 
     return (
         <div className="cnmboard">
@@ -42,6 +43,9 @@ export default function Board() {
             <img className="ranking-image ranking-image-left" src={trophyImg} alt="A trophy image" />
             <img className="ranking-image ranking-image-right" src={trophyImg} alt="A trophy image" />
             <div className='ranking-background'></div>
+            <button className="button">
+                <img className="home-img" src={homeIcon} alt="home icon" onClick={() => window.location.href = "/home"} />
+            </button>
         </div>
     )
 }

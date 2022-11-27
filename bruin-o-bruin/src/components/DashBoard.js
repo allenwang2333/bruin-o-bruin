@@ -25,12 +25,12 @@ function DashBoard() {
           </div>
           <br />
           <div className="center-button2">
-          <Link to="/game" className={styles.linkTextFormat}><Button variant="success" className={` btn btn-primary pull-right`}>play as guest <IoGameControllerOutline /></Button></Link>
+            <Link to="/game" className={styles.linkTextFormat}><Button variant="success" className={` btn btn-primary pull-right`}>play as guest <IoGameControllerOutline /></Button></Link>
           </div>
         </div>
       </div>
-      <div className="footer">
-        <p>© 2022 FALL CS35L Team 47</p>
+      <div class="footer">
+        <a href="https://github.com/allenwang2333/bruin-o-bruin" title="checkout our github repo">© 2022 FALL CS35L Team 47</a>
       </div>
     </div>
   );
