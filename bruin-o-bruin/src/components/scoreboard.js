@@ -1,11 +1,12 @@
 import React, { useState, useEffect} from 'react'
 import Profiles from './scoreboardProfile';
 import axios from "axios";
+import "./scoreboard.css";
 
 export default function Board() {
     const [period, setPeriod] = useState(0);
-    const [Leaderboard, setBoard] = useState([]);
-    async function getBoard() {
+    const [Leaderboard, setBoard] = useState([{"username": "test1", "userid": "test1", "score": 10, "time": "100"},{"username": "test1", "userid": "test1", "score": 10, "time": "100"},{"username": "test1", "userid": "test1", "score": 10, "time": "100"},{"username": "test1", "userid": "test1", "score": 10, "time": "100"},{"username": "test1", "userid": "test1", "score": 10, "time": "100"}]);
+    /*async function getBoard() {
         const params = new Headers();
         const response = await axios.get('/scoreboard', params);
         if (response.data[0].valid) {
@@ -19,16 +20,20 @@ export default function Board() {
     useEffect(() => {
         const interval = setInterval(() => { getBoard(); }, 10000);//refreshes every 10 second
         return () => clearInterval(interval);
-    }, []);
+    }, []);*/
 
     const handleClick = (e) => {
         setPeriod(e.target.dataset.id)
     }
 
     return (
-        <div className="board">
-            <h1 className='leaderboard'>Leaderboard</h1>
-            <Profiles Leaderboard={between(Leaderboard, period)}></Profiles>
+        <div className="cnmboard">
+            <div className="cnmboard__header">
+                <h1 className='leaderboard'>Leaderboard</h1>
+            </div>
+            <div className="rankings">
+                <Profiles Leaderboard={between(Leaderboard, period)}></Profiles>
+            </div>
         </div>
     )
 }
