@@ -50,7 +50,7 @@ class QueryDatabase {
         let userInfo = {}; 
         this.db.all(queryString, (err, rows) => {
             if (err) throw err;
-            rows.forEach(function (row) {
+            rows.forEach((row) => {
                 userInfo[schema[table][1]] = row[schema[table][1]];
                 userInfo[schema[table][2]] = row[schema[table][2]];
                 userInfo[schema[table][3]] = row[schema[table][3]];
@@ -170,8 +170,8 @@ class QueryDatabase {
                     callback(scoreInfo);
                 });
             }
-            else {
-                this.db.run(updateString, (err, rows)=> {
+            else if (Number(rows[0].score) < score) {
+                this.db.run(updateString, (err)=> {
                     if (err) throw err;
                     scoreInfo[schema[table][1]] = username;
                     scoreInfo[schema[table][2]] = userid;
@@ -179,6 +179,9 @@ class QueryDatabase {
                     scoreInfo[schema[table][4]] = time;
                     callback(scoreInfo);
                 });
+            }
+            else {
+                callback(scoreInfo);
             }
         });
     }
