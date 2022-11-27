@@ -22,9 +22,6 @@ export default function randomPlaceBlock (board, pieceSet, count) {
                     board[layer][row][col].category = pieceSet[curr];
                     pieces[curr]--;
                 }
-                // else {
-                //     board[layer][row][piece].category = null;
-                // }
             }
         }
     }

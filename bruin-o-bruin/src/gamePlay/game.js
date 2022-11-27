@@ -11,15 +11,13 @@ import "./gamePlay.css"
 class Game extends React.Component {
     constructor() {
         super();
-        //const category_kind_count = 7
         const cLayout = require("./layout.json")
         var board = cLayout.board;
         const coor = cLayout["board-coor"]
-        var placeResult = randomPlaceBlock(board, [0, 1, 2, 3, 4, 5, 6], cLayout.count)
+        var placeResult = randomPlaceBlock(board, [0, 1, 2, 3, 4, 5, 6, 7, 8], cLayout.count)
         board = placeResult[0]
         const remain_category = placeResult[1]
         const seen = this.initSeen(board);
-        //const remain_category = this.initCategory(category_kind_count, cLayout.count)
         const off = cLayout["offset"]
         function importAll(r) {
             return r.keys().map(r);
@@ -34,7 +32,7 @@ class Game extends React.Component {
             seen: seen,
             hand: Array(7).fill(null),
             handSize: 0,
-            category: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 },
+            category: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 },
             coor: coor,
             off: off,
             images: images,
@@ -50,7 +48,7 @@ class Game extends React.Component {
             help: false,
         }
     }
-    
+
     initSeen(board) {
         var seen = [];
         for (const layer in board) {
@@ -146,9 +144,9 @@ class Game extends React.Component {
         var categoryCopy = {};
         Object.assign(categoryCopy, category);
         while (handIdx < 7) {
-            while (categoryIdx <= 6 && category[categoryIdx] === 0)
+            while (categoryIdx <= 8 && category[categoryIdx] === 0)
                 categoryIdx++;
-            if (categoryIdx === 7)
+            if (categoryIdx === 9)
                 break;
             hand[handIdx++] = this.state.images[categoryIdx];
             category[categoryIdx]--;
@@ -174,9 +172,9 @@ class Game extends React.Component {
         handIdx = 0;
         categoryIdx = 0;
         while (handIdx < 7) {
-            while (categoryIdx <= 6 && category[categoryIdx] === 0)
+            while (categoryIdx <= 8 && category[categoryIdx] === 0)
                 categoryIdx++;
-            if (categoryIdx === 7)
+            if (categoryIdx === 9)
                 break;
             hand[handIdx++] = this.state.images[categoryIdx];
             category[categoryIdx]--;
@@ -224,7 +222,7 @@ class Game extends React.Component {
 
     helpClick() {
         this.setState({ help: true });
-        setTimeout(() => this.setState({help: false}), 500)
+        setTimeout(() => this.setState({ help: false }), 500)
     }
 
     render() {
