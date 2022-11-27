@@ -8,6 +8,7 @@ export default function profiles({ Leaderboard }) {
         </div>
     )
 }
+
 //  TODO: Need to add score item
 function Item(data) {
     return (
@@ -17,7 +18,7 @@ function Item(data) {
                     <div className="rank_item" key={index}>
                         <div className="rank_item__rank">{index + 1}</div>
                         <div className="rank_item__item">
-                            <span className='name text-dark'><b>{value.username} </b>
+                            <span className='name text-dark'><b>{truncateName(value.username)} </b>
                                 score: {value.score} time: {value.time}</span>
                         </div>
                     </div>
@@ -28,4 +29,11 @@ function Item(data) {
 
 
     )
+}
+
+function truncateName (name) {
+    if (name.length > 10){
+        return name.substring(0, 7) + "...";
+    }
+    return name
 }

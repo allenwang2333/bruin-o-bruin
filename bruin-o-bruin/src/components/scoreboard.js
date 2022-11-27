@@ -1,11 +1,11 @@
-import React, { useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import Profiles from './scoreboardProfile';
 import axios from "axios";
 import "./scoreboard.css";
 
 export default function Board() {
     const [period, setPeriod] = useState(0);
-    const [Leaderboard, setBoard] = useState([{"username": "cvefjsebfsefwsgsgrsgfaef", "userid": "test1", "score": 10, "time": "100"},{"username": "test1", "userid": "test1", "score": 10, "time": "100"},{"username": "test1", "userid": "test1", "score": 10, "time": "100"},{"username": "test1", "userid": "test1", "score": 10, "time": "100"},{"username": "test1", "userid": "test1", "score": 10, "time": "100"}]);
+    const [Leaderboard, setBoard] = useState([{ "username": "cvefjsebfsefwsgsgrsgfaef", "userid": "test1", "score": 10, "time": "100" }, { "username": "test1", "userid": "test1", "score": 10, "time": "100" }, { "username": "test1", "userid": "test1", "score": 10, "time": "100" }, { "username": "test1", "userid": "test1", "score": 10, "time": "100" }, { "username": "test1", "userid": "test1", "score": 10, "time": "100" }]);
     /*async function getBoard() {
         const params = new Headers();
         const response = await axios.get('/scoreboard', params);
@@ -26,6 +26,11 @@ export default function Board() {
         setPeriod(e.target.dataset.id)
     }
 
+    function importAll(r) {
+        return r.keys().map(r);
+    }
+    const trophyImg = importAll(require.context('../../../images/icon', false, /trophy\.(png|jpe?g|svg)$/))[0];
+
     return (
         <div className="cnmboard">
             <div className="cnmboard__header">
@@ -34,6 +39,9 @@ export default function Board() {
             <div className="rankings">
                 <Profiles Leaderboard={between(Leaderboard, period)}></Profiles>
             </div>
+            <img className="ranking-image ranking-image-left" src={trophyImg} alt="A trophy image" />
+            <img className="ranking-image ranking-image-right" src={trophyImg} alt="A trophy image" />
+            <div className='ranking-background'></div>
         </div>
     )
 }
