@@ -84,3 +84,31 @@
 .ranking-image-right {
     right: 5%;
 }
+
+.ranking-home {
+    top: 10px;
+    left: 10px;
+    position: fixed;
+}
+
+.ranking-home-button {
+    pointer-events: auto;
+    border-radius: 8px;
+    width: 48px;
+    height: 48px;
+    text-align: center;
+    font-size: 25px;
+    line-height: 50px;
+    box-shadow: 2px 2px 4px #000;
+    border: 1px solid #c2cbcbee;
+    cursor: pointer;
+    padding: 0;
+}
+
+.ranking-home-img {
+    position: relative;
+    top: -3px;
+    left: 0.5px;
+    height: 46px;
+    width: 46px;
+}

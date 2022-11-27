@@ -43,9 +43,11 @@ export default function Board() {
             <img className="ranking-image ranking-image-left" src={trophyImg} alt="A trophy image" />
             <img className="ranking-image ranking-image-right" src={trophyImg} alt="A trophy image" />
             <div className='ranking-background'></div>
-            <button className="button">
-                <img className="home-img" src={homeIcon} alt="home icon" onClick={() => window.location.href = "/home"} />
-            </button>
+            <div className='ranking-home'>
+                <button className="ranking-home-button">
+                    <img className="ranking-home-img" src={homeIcon} alt="home icon" onClick={() => window.location.href = "/home"} />
+                </button>
+            </div>
         </div>
     )
 }
