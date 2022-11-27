@@ -8,7 +8,6 @@ export default function Board() {
     async function getBoard() {
         const params = new Headers();
         const response = await axios.get('/scoreboard', params);
-        console.log(response.data);
         if (response.data[0].valid) {
             setBoard(response.data.slice(1));
         } else {
@@ -50,7 +49,11 @@ function between(data, between) {
     // sort in ascending order
     return filter.sort((a, b) => {
         if (a.score === b.score) {
-            return b.score - a.score;
+            if (a.time === b.time) {
+                return b.score - a.score;
+            } else {
+                return a.time - b.time;
+            }
         } else {
             return b.score - a.score;
         }

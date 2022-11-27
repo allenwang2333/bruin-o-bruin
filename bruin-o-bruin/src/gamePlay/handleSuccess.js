@@ -1,11 +1,12 @@
 import axios from "axios";
 
-async function handleSuccess(score) {
+async function handleSuccess(score, time) {
     const params = new URLSearchParams();
     params.append("score", score);
-    params.append('author_name', sessionStorage.getItem("userName"));
-    params.append('author_id', sessionStorage.getItem("userID"));
-    const response = await axios.post('http://localhost:8080/success', params);
+    params.append('time', time);
+    params.append('user_name', sessionStorage.getItem("userName"));
+    params.append('user_id', sessionStorage.getItem("userID"));
+    const response = await axios.post('success', params);
     if (response.data[0].valid) {
         alert("You won!")
         window.setTimeout(function () {

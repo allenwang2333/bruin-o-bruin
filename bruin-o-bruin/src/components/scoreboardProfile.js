@@ -15,17 +15,14 @@ function Item(data){
                 data.map((value, index) => (
                         <div className="flex" key={index}>
                             <div className="item">
-                                <img src={value.img} alt="" />
-
                                 <div className="info">
                                     <h3 className='name text-dark'>{value.username}</h3>
-                                    <span>{value.location}</span>
                                 </div>
                             </div>
                             <div className="item">
-
-                                <span>{value.score}</span>
-
+                                <span>score: {value.score}</span>
+                                <br></br>
+                                <span>time: {value.time}</span>
                             </div>
                         </div>
                     )
