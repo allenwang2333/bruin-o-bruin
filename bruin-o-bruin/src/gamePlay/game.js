@@ -254,6 +254,9 @@ class Game extends React.Component {
     }
 
     render() {
+        var sec = this.state.time.sec;
+        if (sec < 10)
+            sec = "0" + sec;
         return (
             <div className="body">
                 <div className="tool">
@@ -274,7 +277,7 @@ class Game extends React.Component {
                     </p>
                 </div>
                 <div className="timer">
-                    Time: {this.state.time.min} m {this.state.time.sec} s
+                    Time: {this.state.time.min} m {sec} s
                 </div>
                 <div className="gameBody">
                     <Board board={this.state.board} coor={this.state.coor} off={this.state.off}
