@@ -4,7 +4,7 @@ import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import { IoGameControllerOutline } from "react-icons/io5";
 import { RiLoginBoxLine } from "react-icons/ri";
-import styles from "./homepage.css";
+import styles from "./dashboard.css";
 import Logo from "./assets/joe_bruin.png";
 
 function DashBoard() {
