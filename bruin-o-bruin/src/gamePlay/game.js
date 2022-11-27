@@ -253,13 +253,9 @@ class Game extends React.Component {
     }
 
     updateTimer() {
-<<<<<<< HEAD
         if (!this.state.started)
             return
         var copy_timer = {...this.state.time}
-=======
-        var copy_timer = { ...this.state.time }
->>>>>>> 2b1d0eea5da29cfe9640ec099a5438486d44b206
         const new_second = this.state.second + 1
         if (copy_timer.sec === 59) {
             copy_timer.sec = 0;
