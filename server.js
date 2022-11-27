@@ -143,14 +143,18 @@ app.post('/server_postLike', (req, res) => {
 });
 
 app.post('/success', (req, res) => {
-  var user_name = req.body.user_name;
-  var user_id = req.body.user_id;
+  var username = req.body.username;
+  var userid = req.body.userid;
   var score = req.body.score;
   var time = req.body.time;
+  console.log(username, userid, score, time);
+  let winGame = [{ "valid": false }]
   db.connectDatabase(() => {
     // TODO: detailed implementation needed
-    db.addUserOrUpdateScoreboard("scoreboard", user_name, user_id, score= 100, time, (scoreInfo) => {
+    db.addUserOrUpdateScoreboard("scoreboard", username, userid, score, time, (scoreInfo) => {
       console.log(scoreInfo);
+      winGame = [{"valid": true}];
+      res.send(winGame)
       db.closeDatabase();
     });
   });
