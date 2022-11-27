@@ -6,6 +6,7 @@ import randomPlaceBlock from "./randomPlace.js"
 import LooseDisplay from "./loosePage.js"
 import WinDisplay from "./winPage.js"
 import HelpMessage from "./helpPopup.js"
+import NegativeDisplay from "./negativeScorePage.js";
 import "./gamePlay.css"
 
 async function handleSuccess(score, time) {
@@ -211,11 +212,6 @@ class Game extends React.Component {
 
     handleShuffleClick(remain_category) {
         const score = this.state.score - 1000;
-        if (score < 0) {
-            this.setState({
-                loose: true,
-            });
-        }
         var board = this.state.board
         var copy_remain_category = { ...remain_category }
         var category_list = Object.keys(copy_remain_category)
@@ -273,6 +269,7 @@ class Game extends React.Component {
                     <Hand hand={this.state.hand} />
                     <LooseDisplay loose={this.state.loose} />
                     <WinDisplay win={this.state.win} />
+                    <NegativeDisplay loose={this.state.score < 0}/>
                 </div>
             </div>
         )
