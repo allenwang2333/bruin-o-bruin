@@ -50,7 +50,7 @@ class QueryDatabase {
         let userInfo = {}; 
         this.db.all(queryString, (err, rows) => {
             if (err) throw err;
-            rows.forEach(function (row) {
+            rows.forEach((row) => {
                 userInfo[schema[table][1]] = row[schema[table][1]];
                 userInfo[schema[table][2]] = row[schema[table][2]];
                 userInfo[schema[table][3]] = row[schema[table][3]];

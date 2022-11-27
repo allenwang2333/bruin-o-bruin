@@ -56,7 +56,7 @@ app.post('/server_auth_signup', (req, res) => {
   });
 })
 
-app.post('/reset_passwd', function (req, res) {
+app.post('/reset_passwd', (req, res) => {
   var user_email = req.body.email;
   var user_name = req.body.fullname;
   var user_password = req.body.password;
@@ -120,7 +120,7 @@ app.post('/compose_text', (req, res) => {
   var post_img = '';
   var post_time = new Date().toLocaleString('en-US', {timeZone: 'America/Los_Angeles'});
   db.connectDatabase(() => {
-    db.addNewPost(table, post_title, author_name, author_id, post_body, post_likes, post_id, post_img, post_time, function (postInfo) {
+    db.addNewPost(table, post_title, author_name, author_id, post_body, post_likes, post_id, post_img, post_time, (postInfo) => {
       res.send("successfully posted");
       db.closeDatabase();
     });
@@ -151,6 +151,7 @@ app.post('/success', (req, res) => {
   time = new Date().toLocaleString('en-US', {timeZone: 'America/Los_Angeles'});
   db.connectDatabase(() => {
     // TODO: detailed implementation needed
+    // TODO: another bug, guests user shouldn't show up in the scoreboard
     db.addUserOrUpdateScoreboard("scoreboard", user_name, user_id, score= 100, time, (scoreInfo) => {
       console.log(scoreInfo);
       db.closeDatabase();
@@ -160,7 +161,7 @@ app.post('/success', (req, res) => {
 
 app.get('/posts', (req, res) => {
   db.connectDatabase(() => {
-    db.readTableAll("posts", function (posts) {
+    db.readTableAll("posts", (posts) => {
       let blogPosts = [
         { "valid": true },
       ];
@@ -183,18 +184,17 @@ app.get('/posts', (req, res) => {
 });
 
 app.get('/scoreboard', (req, res) => {
-  var scores = [{"valid": true}];
+  let scores = [{"valid": true}];
   db.connectDatabase(() => {
     db.readTableAll("scoreboard", (scoreInfo) => {
-      var userStatus = {};
       for (var i = 0; i < scoreInfo.length; i++) {
+        let userStatus = {};
         userStatus["username"] = scoreInfo[i].username;
         userStatus["userid"] = scoreInfo[i].userid;
         userStatus["score"] = scoreInfo[i].score;
         userStatus["time"] = scoreInfo[i].time;
         scores.push(userStatus);
       }
-      console.log(scores);
       res.send(scores);
       db.closeDatabase();
     });
