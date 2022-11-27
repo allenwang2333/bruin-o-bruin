@@ -51,7 +51,7 @@ const Post = ({ post: { postID, title, body,
   return (
     <div className="post-container">
       <h1 className="post-heading">{title}</h1>
-      <img className="post-image" src={imgUrl} alt="a post image" />
+      <img className="post-image" src={imgUrl} alt="a post" />
       <p className="post-content">{body}</p>
       <div className="post-footer">
         <div className="post-info">

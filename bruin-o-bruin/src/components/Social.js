@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Col, Container, Nav, Row } from "react-bootstrap";
+import { Nav } from "react-bootstrap";
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import logo from "./assets/joe_bruin.png";
@@ -9,12 +9,12 @@ import { v4 as uuidv4 } from 'uuid';
 import styles from "./SocialStyle.css";
 
 function Social() {
-    
+
     const ref = useRef();
     const closeTooltip = () => ref.current.close();
 
     const [image, setImage] = useState({ preview: '', data: '' })
-    const [status, setStatus] = useState('')
+    const status = useState('')[0]
 
     function importAll(r) {
         return r.keys().map(r);
@@ -46,7 +46,7 @@ function Social() {
             });
             const msgFromResponse = await response.text();
             console.log(msgFromResponse);
-            if (msgFromResponse == "successfully posted") {
+            if (msgFromResponse === "successfully posted") {
                 closeTooltip();
                 setImage({ preview: '', data: '' });
             }
@@ -58,7 +58,7 @@ function Social() {
             params.append('body', event.currentTarget.elements.body.value);
             params.append('author_name', sessionStorage.getItem("userName"));
             params.append('author_id', sessionStorage.getItem("userID"));
-            var post_id = uuidv4();
+            post_id = uuidv4();
             params.append('post_id', post_id);
             const response = await fetch('http://localhost:8080/compose_text', {
                 method: 'POST',
@@ -66,7 +66,7 @@ function Social() {
             });
             const msgFromResponse = await response.text();
             console.log(msgFromResponse);
-            if (msgFromResponse == "successfully posted") {
+            if (msgFromResponse === "successfully posted") {
                 closeTooltip();
             }
             alert(msgFromResponse);
@@ -115,7 +115,7 @@ function Social() {
                                                         <input type="file" id="image" name="file" onChange={handleFileChange} capture="environment" accept="image/png, image/jpeg" />
                                                     </div>
 
-                                                    {image.preview && <img src={image.preview} width='30%' height='30%' />}
+                                                    {image.preview && <img src={image.preview} alt="" width='30%' height='30%' />}
                                                     <hr></hr>
                                                     {status && <h4>{status}</h4>}
                                                     <button type="submit" id="submit" name="submit" className="btn btn-primary pull-right">Add Post</button>

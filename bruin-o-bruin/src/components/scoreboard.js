@@ -4,7 +4,7 @@ import axios from "axios";
 import "./scoreboard.css";
 
 export default function Board() {
-    const [period, setPeriod] = useState(0);
+    const period = useState(0)[0];
     const [Leaderboard, setBoard] = useState([]);
     async function getBoard() {
         const params = new Headers();
@@ -21,10 +21,6 @@ export default function Board() {
         const interval = setInterval(() => { getBoard(); }, 10000);//refreshes every 10 second
         return () => clearInterval(interval);
     }, []);
-
-    const handleClick = (e) => {
-        setPeriod(e.target.dataset.id)
-    }
 
     function importAll(r) {
         return r.keys().map(r);
