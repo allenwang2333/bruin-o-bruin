@@ -143,9 +143,10 @@ app.post('/server_postLike', (req, res) => {
 });
 
 app.post('/success', (req, res) => {
-  var user_name = req.body.author_name;
-  var user_id = req.body.author_id;
-  time = new Date().toLocaleString('en-US', {timeZone: 'America/Los_Angeles'});
+  var user_name = req.body.user_name;
+  var user_id = req.body.user_id;
+  var score = req.body.score;
+  var time = req.body.time;
   db.connectDatabase(() => {
     // TODO: detailed implementation needed
     db.addUserOrUpdateScoreboard("scoreboard", user_name, user_id, score= 100, time, (scoreInfo) => {
@@ -195,6 +196,8 @@ app.get('/scoreboard', (req, res) => {
       db.closeDatabase();
     });
   });
+  
+  //res.send([{"valid": true}, {"username": "test1", "userid": "test1", "score": 10, "time": "100"}, {"username": "test2", "userid": "test2", "score": 100, "time": "90"}]);
 });
 
 app.get('*', (req, res) => {

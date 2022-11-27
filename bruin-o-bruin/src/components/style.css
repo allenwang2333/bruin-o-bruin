@@ -1,11 +1,4 @@
 /* Buttons */
-.logout-btn {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
 
 .Auth-form-container {
     display: flex;
