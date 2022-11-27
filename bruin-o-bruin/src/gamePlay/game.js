@@ -29,6 +29,7 @@ class Game extends React.Component {
         const homeImg = importAll(require.context('../../../images/icon', false, /home-icon\.(png|jpe?g|svg)$/))[0];
         const restartImg = importAll(require.context('../../../images/icon', false, /restart-icon\.(png|jpe?g|svg)$/))[0];
         const helpImg = importAll(require.context('../../../images/icon', false, /help-icon\.(png|jpe?g|svg)$/))[0];
+        this.updateTimer = this.updateTimer.bind(this);
         this.state = {
             board: board,
             seen: seen,
@@ -48,7 +49,8 @@ class Game extends React.Component {
             win: false,
             score: 0,
             help: false,
-            time: { hr: 0, min: 0, sec: 0 }
+            time: { hr: 0, min: 0, sec: 0 },
+            intervalId: null
         }
     }
     
@@ -226,6 +228,37 @@ class Game extends React.Component {
     helpClick() {
         this.setState({ help: true });
         setTimeout(() => this.setState({help: false}), 500)
+    }
+
+    updateTimer() {
+        var copy_timer = {...this.state.time}
+        if (copy_timer.sec === 59)
+        {
+            if (copy_timer.min === 59)
+            {
+                copy_timer.min = 0;
+                copy_timer.hr++;
+            }
+            else
+            {
+                copy_timer.min++;
+            }
+            copy_timer.sec = 0;
+        }
+        else
+        {
+            copy_timer.sec++
+        }
+        this.setState(
+            {
+                time: copy_timer
+            }
+        )
+    }
+
+    componentDidMount() {
+        var intervalId = setInterval(this.updateTimer, 1000);
+        this.setState({intervalId: intervalId})
     }
 
     render() {
