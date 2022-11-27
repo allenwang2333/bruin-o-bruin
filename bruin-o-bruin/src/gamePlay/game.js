@@ -50,6 +50,7 @@ class Game extends React.Component {
             score: 0,
             help: false,
             time: { min: 0, sec: 0 },
+            second: 0,
             intervalId: null
         }
     }
@@ -232,6 +233,7 @@ class Game extends React.Component {
 
     updateTimer() {
         var copy_timer = {...this.state.time}
+        const new_second = this.state.second + 1
         if (copy_timer.sec === 59)
         {
             copy_timer.sec = 0;
@@ -243,7 +245,8 @@ class Game extends React.Component {
         }
         this.setState(
             {
-                time: copy_timer
+                time: copy_timer,
+                second: new_second
             }
         )
     }
