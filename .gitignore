@@ -132,3 +132,5 @@ dist
 
 .deployment
 .vscode/
+db/db.sqlite
+images/

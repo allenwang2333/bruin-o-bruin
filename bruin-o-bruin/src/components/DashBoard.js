@@ -4,7 +4,7 @@ import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import { IoGameControllerOutline } from "react-icons/io5";
 import { RiLoginBoxLine } from "react-icons/ri";
-import styles from "./DashBoard.css";
+import styles from "./dashboard.css";
 import Logo from "./assets/joe_bruin.png";
 
 function DashBoard() {
@@ -30,7 +30,7 @@ function DashBoard() {
         </div>
       </div>
       <div class="footer">
-        <a className="dashlink"href="https://github.com/allenwang2333/bruin-o-bruin" title="checkout our github repo">© 2022 FALL CS35L Team 47</a>
+        <a className="dashlink" href="https://github.com/allenwang2333/bruin-o-bruin" title="checkout our github repo">© 2022 FALL CS35L Team 47</a>
       </div>
     </div>
   );
