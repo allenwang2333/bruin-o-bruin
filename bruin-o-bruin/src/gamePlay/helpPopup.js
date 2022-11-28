@@ -23,7 +23,7 @@ class HelpMessage extends React.Component {
             >
                 <div className='help-text'>
                     <p>
-                        Each player has 7 slots (hand) to store blocks.<br />
+                        Each player has 5 slots (hand) to store blocks.<br />
                         Click a block on the board to move the block to hand.<br />
                         When there are three identical blocks in hand, they will be eliminated.<br />
                         You can shuffle the blocks on the board by the shuffle button.<br />
