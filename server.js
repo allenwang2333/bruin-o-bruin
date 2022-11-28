@@ -161,6 +161,7 @@ app.post('/success', (req, res) => {
 app.post('/posts', (req, res) => {
   var search = req.body.search;
   if (search === "") { // if search is empty, return all posts
+    console.log("search is empty");
     db.connectDatabase(() => {
       db.readTableAll("posts", (posts) => {
         let blogPosts = [

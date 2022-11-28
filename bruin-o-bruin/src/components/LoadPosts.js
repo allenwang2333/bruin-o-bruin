@@ -8,7 +8,7 @@ var username = sessionStorage.getItem("userName");
 const Posts = () => {
   let [blogPosts, setPosts] = useState([])
   async function getPosts() {
-    const params = new Headers();
+    const params = new URLSearchParams();
     var search = "";
     if(sessionStorage.getItem("search")){
       search = sessionStorage.getItem("search");
