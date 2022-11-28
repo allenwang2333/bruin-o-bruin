@@ -145,8 +145,8 @@ class Game extends React.Component {
             this.startTimer();
             remain--;
             if (remain === 0) {
-                handleSuccess(this.state.score, this.state.second);
                 clearInterval(this.state.intervalId);
+                setTimeout(handleSuccess(this.state.score, this.state.second), 150)
                 this.setState({
                     win: true,
                 });
