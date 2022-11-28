@@ -23,13 +23,13 @@ class HelpMessage extends React.Component {
             >
                 <div className='help-text'>
                     <p>
-                        Each player has a hand area of 7 slots to store blocks.<br />
-                        Click on a block in the board to move block to hand.<br />
-                        When there are three identical blocks in hand, it eliminates those blocks.<br />
-                        You can shuffle the blocks in the board with the shuffle button.<br />
-                        Each elimination grants you 100 pts. Each shuffle dedecuts 1000 pts.<br />
-                        You loose, when hand slot is full or you reach negative points.<br />
-                        You win, when the board is clear.
+                        Each player has 7 slots (hand) to store blocks.<br />
+                        Click a block on the board to move the block to hand.<br />
+                        When there are three identical blocks in hand, they will be eliminated.<br />
+                        You can shuffle the blocks on the board by the shuffle button.<br />
+                        Each elimination grants you 100 pts. Each shuffle deducts 1000 pts.<br />
+                        When your hand is full or you reach negative pts, you lose.<br />
+                        When the board is clear, you win.
                     </p>
                 </div>
             </Popup>
