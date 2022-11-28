@@ -14,6 +14,9 @@ const Posts = () => {
       search = sessionStorage.getItem("search");
       setTitle(search);
     }
+    else {
+      setTitle("posts");
+    }
     console.log(search);
     params.append("search", search);
     const response = await axios.post('/posts', params);
