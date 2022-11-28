@@ -1,6 +1,6 @@
 import Board from "./board.js"
 import Hand from "./hand.js"
-import React, { useEffect } from "react"
+import React from "react"
 import axios from "axios";
 import randomPlaceBlock from "./randomPlace.js"
 import LoseDisplay from "./losePage.js"
@@ -39,7 +39,7 @@ class Game extends React.Component {
         const cLayout = require("./layout.json")
         var board = cLayout.board;
         const coor = cLayout["board-coor"]
-        var placeResult = randomPlaceBlock(board, [0, 1, 2, 3, 4, 5, 6, 7, 8], cLayout.count)
+        var placeResult = randomPlaceBlock(board, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], cLayout.count)
         board = placeResult[0]
         const remain_category = placeResult[1]
         const seen = this.initSeen(board);
@@ -56,9 +56,9 @@ class Game extends React.Component {
         this.state = {
             board: board,
             seen: seen,
-            hand: Array(7).fill(null),
+            hand: Array(5).fill(null),
             handSize: 0,
-            category: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 },
+            category: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 },
             coor: coor,
             off: off,
             images: images,
@@ -154,7 +154,7 @@ class Game extends React.Component {
 
     handleEliminate(newHand) {
         var remain = this.state.remain;
-        var hand = Array(7).fill(null);
+        var hand = Array(5).fill(null);
         var handSize = this.state.handSize;
         var category = this.state.category;
         var score = this.state.score;
@@ -178,10 +178,10 @@ class Game extends React.Component {
                 win: true,
             });
         }
-        while (handIdx < 7) {
-            while (categoryIdx <= 8 && category[categoryIdx] === 0)
+        while (handIdx < 5) {
+            while (categoryIdx <= 9 && category[categoryIdx] === 0)
                 categoryIdx++;
-            if (categoryIdx === 9)
+            if (categoryIdx === 10)
                 break;
             hand[handIdx++] = this.state.images[categoryIdx];
             category[categoryIdx]--;
@@ -193,8 +193,8 @@ class Game extends React.Component {
             remain: remain,
         })
 
-        hand = Array(7).fill(null)
-        if (handSize === 7) {
+        hand = Array(5).fill(null)
+        if (handSize === 5) {
             clearInterval(this.state.intervalId);
             this.setState({
                 lose: true,
@@ -204,10 +204,10 @@ class Game extends React.Component {
 
         handIdx = 0;
         categoryIdx = 0;
-        while (handIdx < 7) {
-            while (categoryIdx <= 8 && category[categoryIdx] === 0)
+        while (handIdx < 5) {
+            while (categoryIdx <= 9 && category[categoryIdx] === 0)
                 categoryIdx++;
-            if (categoryIdx === 9)
+            if (categoryIdx === 10)
                 break;
             hand[handIdx++] = this.state.images[categoryIdx];
             category[categoryIdx]--;
