@@ -153,7 +153,10 @@ class QueryDatabase {
     }
 
     searchPosts(table, keyword, callback) {
-        var queryString = `SELECT * FROM ${table} WHERE title LIKE "%${keyword}%" OR content LIKE "%${keyword}%"`;
+        var queryString = `SELECT * FROM ${table} WHERE` +
+        `title LIKE "%${keyword}%"` +
+        `OR content LIKE "%${keyword}%"` + 
+        `OR author LIKE "%${keyword}%"`;
         let data = [];
         let hash = {};
         this.db.all(queryString, (err, rows) => {
