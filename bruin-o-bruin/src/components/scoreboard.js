@@ -34,10 +34,10 @@ export default function Board() {
                 <h1 className='leaderboard'>Leaderboard</h1>
             </div>
             <div className="rankings">
-                <Profiles Leaderboard={between(Leaderboard, period)}></Profiles>
+                <Profiles Leaderboard={rank(Leaderboard)}></Profiles>
             </div>
-            <img className="ranking-image ranking-image-left" src={trophyImg} alt="A trophy image" />
-            <img className="ranking-image ranking-image-right" src={trophyImg} alt="A trophy image" />
+            <img className="ranking-image ranking-image-left" src={trophyImg} alt="" />
+            <img className="ranking-image ranking-image-right" src={trophyImg} alt="" />
             <div className='ranking-background'></div>
             <div className='ranking-home'>
                 <button className="ranking-home-button">
@@ -49,28 +49,22 @@ export default function Board() {
 }
 
 // To make leaders arrange in order of score
-function between(data, between) {
-    const today = new Date(); // today's date
-    const previous = new Date(today);
-    previous.setDate(previous.getDate() - (between + 1)); // How many previous date to consider for leaderboard
-
-    let filter = data.filter(val => {
-
-        let userDate = new Date(val.post_time);
-        if (between === 0) return val;
-        return previous <= userDate && today >= userDate;
-    })
-
-    // sort in ascending order
-    return filter.sort((a, b) => {
-        if (a.score === b.score) {
-            if (a.time === b.time) {
-                return b.score - a.score;
-            } else {
-                return a.time - b.time;
+function rank(data) {
+    // sort in dscending order
+    return data.sort((a, b) => {
+        if (a.score > b.score) {
+            return -1;
+        }
+        else if (a.score < b.score) {
+            return 1;
+        }
+        else {
+            if (a.time < b.time) {
+                return -1;
             }
-        } else {
-            return b.score - a.score;
+            else {
+                return 1;
+            }
         }
     })
 
