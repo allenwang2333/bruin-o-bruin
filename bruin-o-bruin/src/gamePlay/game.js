@@ -128,7 +128,6 @@ class Game extends React.Component {
         if (board[layer][row][col].fill === 0)
             return;
         var seen = this.state.seen;
-        var remain = this.state.remain;
         const coor = JSON.stringify([layer.toString(), row.toString(), col.toString()])
         var idx = -1;
         for (let i = 0; i < seen.length; i++) {
@@ -141,26 +140,18 @@ class Game extends React.Component {
             this.checkSeen(layer, row, col, idx);
             this.handleEliminate(board[layer][row][col].category);
             this.startTimer();
-            remain--;
-            if (remain === 0) {
-                clearInterval(this.state.intervalId);
-                setTimeout(handleSuccess(this.state.score, this.state.second), 150)
-                this.setState({
-                    win: true,
-                });
-            }
             remain_category[board[layer][row][col].category]--;
             board[layer][row][col].fill = 0;
             board[layer][row][col].category = null;
             this.setState({
                 board: board,
-                remain: remain,
                 remain_category: remain_category,
             });
         }
     }
 
     handleEliminate(newHand) {
+        var remain = this.state.remain;
         var hand = Array(7).fill(null);
         var handSize = this.state.handSize;
         var category = this.state.category;
@@ -177,6 +168,14 @@ class Game extends React.Component {
             score += 100;
             handSize -= 3;
         }
+        remain--;
+        if (remain === 0) {
+            handleSuccess(score, this.state.second);
+            clearInterval(this.state.intervalId);
+            this.setState({
+                win: true,
+            });
+        }
         while (handIdx < 7) {
             while (categoryIdx <= 8 && category[categoryIdx] === 0)
                 categoryIdx++;
@@ -189,8 +188,8 @@ class Game extends React.Component {
             hand: hand,
             category: categoryCopy,
             handSize: handSize,
+            remain: remain,
         })
-
 
         hand = Array(7).fill(null)
         if (handSize === 7) {
