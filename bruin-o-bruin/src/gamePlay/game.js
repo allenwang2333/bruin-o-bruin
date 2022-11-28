@@ -1,6 +1,6 @@
 import Board from "./board.js"
 import Hand from "./hand.js"
-import React, {useEffect} from "react"
+import React, { useEffect } from "react"
 import axios from "axios";
 import randomPlaceBlock from "./randomPlace.js"
 import LooseDisplay from "./loosePage.js"
@@ -16,18 +16,20 @@ async function handleSuccess(score, time) {
             window.location.href = "/home";
         }, 2000);
     }
-    const params = new URLSearchParams();
-    params.append("score", score);
-    params.append("time", time);
-    params.append('username', sessionStorage.getItem("userName"));
-    params.append('userid', sessionStorage.getItem("userID"));
-    const response = await axios.post('/success', params);
-    if (response.data[0].valid) {
-        window.setTimeout(function () {
-            window.location.href = "/home";
-        }, 1500);
-    } else {
-        alert(response.data[1].message);
+    else {
+        const params = new URLSearchParams();
+        params.append("score", score);
+        params.append("time", time);
+        params.append('username', sessionStorage.getItem("userName"));
+        params.append('userid', sessionStorage.getItem("userID"));
+        const response = await axios.post('/success', params);
+        if (response.data[0].valid) {
+            window.setTimeout(function () {
+                window.location.href = "/home";
+            }, 1500);
+        } else {
+            alert(response.data[1].message);
+        }
     }
 }
 
@@ -137,7 +139,7 @@ class Game extends React.Component {
                 break;
             }
         }
-       if (idx !== -1) {
+        if (idx !== -1) {
             this.checkSeen(layer, row, col, idx);
             this.handleEliminate(board[layer][row][col].category);
             this.startTimer();
@@ -219,7 +221,7 @@ class Game extends React.Component {
 
     handleShuffleClick(remain_category) {
         const score = this.state.score - 1000;
-        if (score < 0){
+        if (score < 0) {
             clearInterval(this.state.intervalId);
         }
         var board = this.state.board
@@ -248,10 +250,10 @@ class Game extends React.Component {
         )
     }
 
-    parseSecond(sec){
+    parseSecond(sec) {
         const min = Math.floor(sec / 60)
         const remain_sec = sec - min * 60
-        const remain_time = {min: min, sec: remain_sec}
+        const remain_time = { min: min, sec: remain_sec }
         return remain_time
     }
 
@@ -266,10 +268,9 @@ class Game extends React.Component {
     }
 
     startTimer() {
-        if (!this.state.intervalId)
-        {
+        if (!this.state.intervalId) {
             const intervalId = setInterval(this.updateTimer, 1000)
-            this.setState({intervalId: intervalId})
+            this.setState({ intervalId: intervalId })
         }
     }
 
@@ -305,7 +306,7 @@ class Game extends React.Component {
                     <Hand hand={this.state.hand} />
                     <LooseDisplay loose={this.state.loose} />
                     <WinDisplay win={this.state.win} />
-                    <NegativeDisplay loose={this.state.score < 0}/>
+                    <NegativeDisplay loose={this.state.score < 0} />
                 </div>
             </div>
         )
