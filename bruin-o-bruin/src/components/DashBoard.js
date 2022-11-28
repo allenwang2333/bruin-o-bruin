@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Link } from "react-router-dom";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
@@ -8,7 +8,16 @@ import styles from "./dashboard.css";
 import Logo from "./assets/joe_bruin.png";
 
 function DashBoard() {
+
+  useEffect(() => {
+    //redirecting if user is logged in
+    if(sessionStorage.getItem("userName")){
+      window.location.href = "/home";
+    }
+  });
+
   return (
+
     <div>
       <div className="container-fluid">
         <div >

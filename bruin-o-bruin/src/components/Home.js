@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Link } from "react-router-dom";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
@@ -13,7 +13,14 @@ var username = sessionStorage.getItem("userName");
 
 const Home = () => {
 
-  function logout() {
+  useEffect(() => {
+    //redirecting if user is not logged in
+    if(!sessionStorage.getItem("userName")){
+      window.location.href = "/";
+    }
+  });
+
+  function logout(){
     sessionStorage.clear();
     alert("Successully logged out");
     window.setTimeout(function () {

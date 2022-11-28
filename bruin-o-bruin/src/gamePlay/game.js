@@ -1,6 +1,6 @@
 import Board from "./board.js"
 import Hand from "./hand.js"
-import React from "react"
+import React, {useEffect} from "react"
 import axios from "axios";
 import randomPlaceBlock from "./randomPlace.js"
 import LooseDisplay from "./loosePage.js"
@@ -137,7 +137,7 @@ class Game extends React.Component {
                 break;
             }
         }
-        if (idx !== -1) {
+       if (idx !== -1) {
             this.checkSeen(layer, row, col, idx);
             this.handleEliminate(board[layer][row][col].category);
             this.startTimer();

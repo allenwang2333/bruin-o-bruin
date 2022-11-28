@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Nav } from "react-bootstrap";
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
@@ -10,6 +10,13 @@ import styles from "./SocialStyle.css";
 
 function Social() {
 
+    useEffect(() => {
+        //stop redirecting if user is not logged in
+        if(!sessionStorage.getItem("userName")){
+          window.location.href = "/";
+        }
+      });
+      
     const ref = useRef();
     const closeTooltip = () => ref.current.close();
 
