@@ -1,7 +1,7 @@
 import React from 'react';
 import Popup from 'reactjs-popup';
 
-class LooseDisplay extends React.Component {
+class LoseDisplay extends React.Component {
     home(){
         window.location.href = "/home";
     }
@@ -12,14 +12,14 @@ class LooseDisplay extends React.Component {
 
     render() {
         return (
-            <Popup open={this.props.loose} position="center" 
+            <Popup open={this.props.lose} position="center" 
                    closeOnDocumentClick={false} closeOnEscape={false} className='popup'>
                 <div className='message'>
                     <p>
                         Your hand is full.
                     </p>
                     <p>
-                        You loose the game.
+                        You lose the game.
                     </p>
                 </div>
                 <div className='function-buttons'>
@@ -31,4 +31,4 @@ class LooseDisplay extends React.Component {
     }
 }
 
-export default LooseDisplay;
+export default LoseDisplay;
