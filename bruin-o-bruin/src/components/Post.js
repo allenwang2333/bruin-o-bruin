@@ -26,7 +26,7 @@ const Post = ({ post: { postID, title, body,
     params.append('postID', postID);
     params.append('count', count);
     console.log(like);
-    const response = await axios.post('http://localhost:8080/server_postLike', params);
+    const response = await axios.post('/server_postLike', params);
     if (!response.data[0].valid) {
       alert(response.data[1].message);
     }

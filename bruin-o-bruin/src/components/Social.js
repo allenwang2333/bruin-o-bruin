@@ -10,12 +10,12 @@ import styles from "./SocialStyle.css";
 
 function Social() {
 
-    useEffect(() => {
+    /*useEffect(() => {
         //stop redirecting if user is not logged in
         if(!sessionStorage.getItem("userName")){
           window.location.href = "/";
         }
-      });
+      });*/
       
     const ref = useRef();
     const closeTooltip = () => ref.current.close();
@@ -47,7 +47,7 @@ function Social() {
             var post_id = uuidv4();
             formData.append('post_id', post_id);
             formData.append('file', image.data);
-            const response = await fetch('http://localhost:8080/compose_pic', {
+            const response = await fetch('/compose_pic', {
                 method: 'POST',
                 body: formData,
             });
@@ -67,7 +67,7 @@ function Social() {
             params.append('author_id', sessionStorage.getItem("userID"));
             post_id = uuidv4();
             params.append('post_id', post_id);
-            const response = await fetch('http://localhost:8080/compose_text', {
+            const response = await fetch('/compose_text', {
                 method: 'POST',
                 body: params,
             });
@@ -78,6 +78,16 @@ function Social() {
             }
             alert(msgFromResponse);
         }
+    }
+
+    function handleSearch(event) {
+        event.preventDefault();
+        console.log(event.currentTarget.elements.search.value);
+        sessionStorage.setItem("search", event.currentTarget.elements.search.value);
+    }
+
+    function clearSearch() {
+        sessionStorage.removeItem("search");
     }
 
     return (
@@ -127,6 +137,25 @@ function Social() {
                                                     {status && <h4>{status}</h4>}
                                                     <button type="submit" id="submit" name="submit" className="btn btn-primary pull-right">Add Post</button>
                                                     <button type="reset" value="reset" onClick={setImage} className="btn btn-secondary pull-right">Clear</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Popup>
+                            </li>
+                            <li className="list-group-item fs-5 py-3 text-success shadow">
+                                <Popup repositionOnResize nested trigger={<span> <AiFillEdit /> Search Posts </span>}>
+                                <div>
+                                        <div className="col-md-15">
+                                            <div className="form-area">
+                                                <form onSubmit={handleSearch}>
+                                                    <br styles="clear:both" />
+                                                    <div>
+                                                        <input type="text" className="form-control" id="search" name="search" placeholder="Key word to search" required />
+                                                    </div>
+
+                                                    <button type="submit" id="submit" name="submit" className="btn btn-primary pull-right">Search</button>
+                                                    <button type="reset" value="reset" onClick={clearSearch} className="btn btn-secondary pull-right">Clear</button>
                                                 </form>
                                             </div>
                                         </div>
