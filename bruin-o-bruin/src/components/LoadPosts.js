@@ -13,9 +13,10 @@ const Posts = () => {
     if(sessionStorage.getItem("search")){
       search = sessionStorage.getItem("search");
     }
+    console.log(search);
     params.append("search", search);
     params.append('username', username);
-    const response = await axios.get('/posts', params);
+    const response = await axios.post('/posts', params);
     if(response.data[0].valid){
       setPosts(response.data.slice(1));
     } else {

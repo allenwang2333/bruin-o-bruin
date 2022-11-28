@@ -158,8 +158,8 @@ app.post('/success', (req, res) => {
   });
 });
 
-app.get('/posts', (req, res) => {
-  var search = req.query.search;
+app.post('/posts', (req, res) => {
+  var search = req.body.search;
   if (search === "") { // if search is empty, return all posts
     db.connectDatabase(() => {
       db.readTableAll("posts", (posts) => {
@@ -185,6 +185,27 @@ app.get('/posts', (req, res) => {
   }
   else { // if search is not empty, return posts that contain the search string
     console.log("searching for " + search);
+    db.connectDatabase(() => {
+      db.readTableAll("posts", (posts) => {
+        let blogPosts = [
+          { "valid": true },
+        ];
+
+        for (var i = posts.length - 1; i >= 0; i--) {
+          var data = {};
+          data["postID"] = posts[i].postid;
+          data["title"] = posts[i].title;
+          data["body"] = posts[i].content;
+          data["author"] = posts[i].author;
+          data["imgUrl"] = posts[i].image;
+          data["time"] = posts[i].time;
+          data["like"] = posts[i].likes;
+          blogPosts.push(data);
+        }
+        res.send(blogPosts);
+        db.closeDatabase();
+      });
+    });
   }
 });
 
