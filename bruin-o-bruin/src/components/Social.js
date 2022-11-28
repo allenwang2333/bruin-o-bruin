@@ -4,18 +4,18 @@ import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import logo from "./assets/joe_bruin.png";
 import Posts from "./LoadPosts";
-import { AiFillEdit } from "react-icons/ai";
+import { AiFillEdit, AiOutlineSearch} from "react-icons/ai";
 import { v4 as uuidv4 } from 'uuid';
 import styles from "./SocialStyle.css";
 
 function Social() {
 
-    /*useEffect(() => {
+    useEffect(() => {
         //stop redirecting if user is not logged in
         if(!sessionStorage.getItem("userName")){
           window.location.href = "/";
         }
-      });*/
+    });
       
     const ref = useRef();
     const closeTooltip = () => ref.current.close();
@@ -144,7 +144,7 @@ function Social() {
                                 </Popup>
                             </li>
                             <li className="list-group-item fs-5 py-3 text-success shadow">
-                                <Popup repositionOnResize nested trigger={<span> <AiFillEdit /> Search Posts </span>}>
+                                <Popup repositionOnResize nested trigger={<span> <AiOutlineSearch /> Search Posts </span>}>
                                 <div>
                                         <div className="col-md-15">
                                             <div className="form-area">
