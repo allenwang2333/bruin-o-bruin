@@ -143,8 +143,8 @@ class Game extends React.Component {
             this.startTimer();
             remain--;
             if (remain === 0) {
-                handleSuccess(this.state.score, this.state.second);
                 clearInterval(this.state.intervalId);
+                setTimeout(handleSuccess(this.state.score, this.state.second), 150)
                 this.setState({
                     win: true,
                 });
@@ -219,7 +219,7 @@ class Game extends React.Component {
 
     handleShuffleClick(remain_category) {
         const score = this.state.score - 1000;
-        if (score < 0){
+        if (score < 0) {
             clearInterval(this.state.intervalId);
         }
         var board = this.state.board
@@ -248,10 +248,10 @@ class Game extends React.Component {
         )
     }
 
-    parseSecond(sec){
+    parseSecond(sec) {
         const min = Math.floor(sec / 60)
         const remain_sec = sec - min * 60
-        const remain_time = {min: min, sec: remain_sec}
+        const remain_time = { min: min, sec: remain_sec }
         return remain_time
     }
 
@@ -266,10 +266,9 @@ class Game extends React.Component {
     }
 
     startTimer() {
-        if (!this.state.intervalId)
-        {
+        if (!this.state.intervalId) {
             const intervalId = setInterval(this.updateTimer, 1000)
-            this.setState({intervalId: intervalId})
+            this.setState({ intervalId: intervalId })
         }
     }
 
@@ -305,7 +304,7 @@ class Game extends React.Component {
                     <Hand hand={this.state.hand} />
                     <LooseDisplay loose={this.state.loose} />
                     <WinDisplay win={this.state.win} />
-                    <NegativeDisplay loose={this.state.score < 0}/>
+                    <NegativeDisplay loose={this.state.score < 0} />
                 </div>
             </div>
         )
