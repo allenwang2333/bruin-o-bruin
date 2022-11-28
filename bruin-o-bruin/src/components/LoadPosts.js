@@ -9,6 +9,11 @@ const Posts = () => {
   let [blogPosts, setPosts] = useState([])
   async function getPosts() {
     const params = new Headers();
+    var search = "";
+    if(sessionStorage.getItem("search")){
+      search = sessionStorage.getItem("search");
+    }
+    params.append("search", search);
     params.append('username', username);
     const response = await axios.get('/posts', params);
     if(response.data[0].valid){
