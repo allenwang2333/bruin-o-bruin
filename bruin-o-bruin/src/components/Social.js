@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import {Col, Container, Nav, Row } from "react-bootstrap";
+import { Nav } from "react-bootstrap";
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import logo from "./assets/joe_bruin.png";
@@ -9,17 +9,24 @@ import { v4 as uuidv4 } from 'uuid';
 import styles from "./SocialStyle.css";
 
 function Social() {
+
     useEffect(() => {
         //stop redirecting if user is not logged in
         if(!sessionStorage.getItem("userName")){
           window.location.href = "/";
         }
       });
+      
     const ref = useRef();
     const closeTooltip = () => ref.current.close();
 
     const [image, setImage] = useState({ preview: '', data: '' })
-    const [status, setStatus] = useState('')
+    const status = useState('')[0]
+
+    function importAll(r) {
+        return r.keys().map(r);
+    }
+    const homeIcon = importAll(require.context('../../../images/icon', false, /home-icon\.(png|jpe?g|svg)$/))[0];
 
     const handleFileChange = (e) => {
         const img = {
@@ -46,7 +53,7 @@ function Social() {
             });
             const msgFromResponse = await response.text();
             console.log(msgFromResponse);
-            if (msgFromResponse == "successfully posted") {
+            if (msgFromResponse === "successfully posted") {
                 closeTooltip();
                 setImage({ preview: '', data: '' });
             }
@@ -58,7 +65,7 @@ function Social() {
             params.append('body', event.currentTarget.elements.body.value);
             params.append('author_name', sessionStorage.getItem("userName"));
             params.append('author_id', sessionStorage.getItem("userID"));
-            var post_id = uuidv4();
+            post_id = uuidv4();
             params.append('post_id', post_id);
             const response = await fetch('http://localhost:8080/compose_text', {
                 method: 'POST',
@@ -66,7 +73,7 @@ function Social() {
             });
             const msgFromResponse = await response.text();
             console.log(msgFromResponse);
-            if (msgFromResponse == "successfully posted") {
+            if (msgFromResponse === "successfully posted") {
                 closeTooltip();
             }
             alert(msgFromResponse);
@@ -74,31 +81,26 @@ function Social() {
     }
 
     return (
-        <Container fluid>
-            <Row>
-                <Col md={4}>
-                    <Row className="justify-content-center align-items-center">
-                        <Col md="auto" className="text-sm-start text-center mb-sm-0 mb-3">
-                            <img src={logo} width="125" alt="logo" />
-                        </Col>
-                        <Col className="text-sm-start text-center text-success mb-sm-0 mb-3">
-                            <h1>Bruin O' Bruin Social</h1>
-                        </Col>
-                    </Row>
-                </Col>
-            </Row>
-            <Row>
-                <Col md={8}>
-                    <div className="main-container">
-                        <br></br>
-                        <h1 className="main-heading">
-                            Posts
-                        </h1>
-                        <Posts />
-                    </div>
-                </Col>
+        <div className="social">
+            <div className="social-header">
+                <div className="logo">
+                    <img className="logo-img" src={logo} alt="logo" />
+                </div>
+                <div className="title">
+                    <h1 className="title-content">Bruin O' Bruin Social</h1>
+                </div>
+                <div className="home-button">
+                    <button className="button">
+                        <img className="home-img" src={homeIcon} alt="home icon" onClick={() => window.location.href = "/home"} />
+                    </button>
+                </div>
+            </div>
+            <div className="social-body">
+                <div className="main-container">
+                    <Posts />
+                </div>
 
-                <Col md={2}>
+                <div className="sidebar">
                     <Nav className={styles.navContainer}>
                         <ul className="list-group">
                             <li className="list-group-item fs-5 py-3 text-success shadow">
@@ -108,7 +110,7 @@ function Social() {
                                             <div className="form-area">
                                                 <form onSubmit={handleSubmitPost}>
                                                     <br styles="clear:both" />
-                                                    <div className>
+                                                    <div>
                                                         <input type="text" className="form-control" id="title" name="title" placeholder="Title" required />
                                                     </div>
 
@@ -120,11 +122,11 @@ function Social() {
                                                         <input type="file" id="image" name="file" onChange={handleFileChange} capture="environment" accept="image/png, image/jpeg" />
                                                     </div>
 
-                                                    {image.preview && <img src={image.preview} width='30%' height='30%' />}
+                                                    {image.preview && <img src={image.preview} alt="" width='30%' height='30%' />}
                                                     <hr></hr>
                                                     {status && <h4>{status}</h4>}
                                                     <button type="submit" id="submit" name="submit" className="btn btn-primary pull-right">Add Post</button>
-                                                    <button type="reset" value="reset" onClick={setImage} className="btn btn-secondary pull-right">Cancel</button>
+                                                    <button type="reset" value="reset" onClick={setImage} className="btn btn-secondary pull-right">Clear</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -133,9 +135,9 @@ function Social() {
                             </li>
                         </ul>
                     </Nav>
-                </Col>
-            </Row>
-        </Container>
+                </div>
+            </div>
+        </div>
     );
 }
 

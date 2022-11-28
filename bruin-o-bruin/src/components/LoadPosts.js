@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./Posts.css";
 import Post from "./Post";
 import axios from "axios";
-var ReactDOM = require('react-dom');
 
 var username = sessionStorage.getItem("userName");
 
@@ -21,13 +20,13 @@ const Posts = () => {
 
   useEffect(() => {
     getPosts();
-    const interval = setInterval(() => {getPosts();}, 10000);//refreshes every 10 second
+    const interval = setInterval(() => {getPosts();}, 1000);//refreshes every 10 second
     return () => clearInterval(interval);
   }, []);
 
   return (
     <div className="posts-container">
-      <h1>Posts</h1>
+      <h1 className="posts-heading">Posts</h1>
       {blogPosts.map((post, index) => (
         <Post key={index} index={index} post={post} />
       ))}

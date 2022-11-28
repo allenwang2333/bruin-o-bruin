@@ -1,22 +1,30 @@
-.Game{
-    position: relative;
-    border: 2px solid black;
-    height: 500px;
-    border-radius: 9px;
+.body {
+    height: 100vh;
+    width: 100vw;
+    background-image: linear-gradient(90deg, rgb(39, 116, 174) 15%, rgb(259, 209, 0) 85%);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    margin: 0px;
 }
 
-.Board{
-    width: 100%;
-    height: 80px;
-    border: 2px solid black;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
+.at-hand {
+    top: 85%;
+    left: 50%;
+    position: fixed;
+    display: inline-block;
+    transform: translateX(-50%);
 }
 
-.block{
+.board {
+    top: 40%;
+    left: 50%;
+    position: fixed;
+    display: inline-block;
+    transform: translateX(-50%);
+
+}
+
+.block {
     pointer-events: auto;
     border-radius: 8px;
     width: 64px;
@@ -25,24 +33,154 @@
     font-size: 25px;
     color: crimson;
     position: absolute;
+    background-color: rgb(250, 250, 250);
     line-height: 50px;
     box-shadow: 2px 2px 4px #000;
-    border: 1px solid #c2cbcbee;
+    border: 0px;
     cursor: pointer;
     margin: 5px 5px 5px 0;
+    padding: 0;
 }
 
-.handBlock{
+.handBlock {
     pointer-events: none;
     border-radius: 8px;
     width: 64px;
     height: 64px;
     text-align: center;
+    vertical-align: middle;
     font-size: 25px;
     color: crimson;
     line-height: 50px;
+    background-color: rgb(250, 250, 250);
     box-shadow: 2px 2px 4px #000;
-    border: 1px solid #c2cbcbee;
+    border: 0px;
     cursor: pointer;
     margin: 5px 5px 5px 0;
+    padding: 0;
+}
+
+.popup-content {
+    margin: auto;
+    background: rgb(255, 255, 255);
+    width: 300px;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.popup-arrow {
+    color: rgb(255, 255, 255);
+}
+
+[role='tooltip'].popup-content {
+    width: 200px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 3px;
+}
+
+.popup-overlay {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+[data-popup='tooltip'].popup-overlay {
+    background: transparent;
+}
+
+.message {
+    font-size: x-large;
+    font-weight: 550;
+    text-align: center;
+    color: rgb(39, 116, 174)
+}
+
+.function-buttons {
+    text-align: center;
+}
+
+.popup-button {
+    display: inline-block;
+    text-align: center;
+    background-color: rgb(255, 209, 0);
+    border: 0;
+    border-radius: 5px;
+    margin: 10px;
+    transition: all .2s;
+}
+
+.popup-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+.popup-button:active {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+[role='tooltip'].help-popup-content {
+    width: 550px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 3px;
+    text-align: center;
+}
+
+.help-text {
+    padding-top: 10px;
+}
+
+.block-img {
+    max-width: 64px;
+    max-height: 64px;
+    border-radius: 8px;
+}
+
+.tool {
+    position: absolute;
+    left: 8px;
+    top: 5px;
+}
+
+.tool-button {
+    pointer-events: auto;
+    border-radius: 8px;
+    width: 48px;
+    height: 48px;
+    position: static;
+    box-shadow: 2px 2px 4px #000;
+    border: 0px;
+    cursor: pointer;
+    margin: 5px 5px 5px 0;
+    padding: 0;
+}
+
+.shuffle-icon,
+.home-icon,
+.restart-icon {
+    width: 40px;
+    height: 40px;
+}
+
+.help-icon {
+    width: 35px;
+    height: 35px;
+}
+
+.score-display {
+    position: absolute;
+    left: calc(100% - 200px);
+    top: 0px;
+    width: 200px;
+    height: 58px;
+    top: 5px;
+}
+
+.score {
+    font-size: xx-large;
+    font-weight: 600;
+}
+
+.timer {
+    position: absolute;
+    top: 50px;
+    left: calc(100% - 200px);
+    font-size: x-large;
+    font-weight: 500;
 }

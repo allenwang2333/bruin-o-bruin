@@ -148,7 +148,7 @@ export default function (props) {
       <div className="Auth-form-container">
         <form onSubmit={handleSubmitReset} className="Auth-form">
           <div className="Auth-form-content">
-            <h3 className="Auth-form-title">Reset</h3>
+            <h3 className="Auth-form-title">Reset Password</h3>
             <div className="text-center">
               Go back to{" "}
               <span className="link-primary" onClick={changeAuthMode}>
