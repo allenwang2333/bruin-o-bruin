@@ -53,17 +53,17 @@ function rank(data) {
     // sort in dscending order
     return data.sort((a, b) => {
         if (a.score > b.score) {
-            return 1;
+            return -1;
         }
         else if (a.score < b.score) {
-            return -1;
+            return 1;
         }
         else {
             if (a.time < b.time) {
-                return 1;
+                return -1;
             }
             else {
-                return -1;
+                return 1;
             }
         }
     })
