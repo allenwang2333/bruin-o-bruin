@@ -4,7 +4,6 @@ import axios from "axios";
 import "./scoreboard.css";
 
 export default function Board() {
-    const period = useState(0)[0];
     const [Leaderboard, setBoard] = useState([]);
     async function getBoard() {
         const params = new Headers();
