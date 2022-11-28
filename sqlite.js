@@ -152,6 +152,29 @@ class QueryDatabase {
         });
     }
 
+    searchPosts(table, keyword, callback) {
+        var queryString = `SELECT * FROM ${table} WHERE ` +
+        `title LIKE "%${keyword}%" ` +
+        `OR content LIKE "%${keyword}%" ` + 
+        `OR author LIKE "%${keyword}%"`;
+        let data = [];
+        let hash = {};
+        this.db.all(queryString, (err, rows) => {
+            if (err) throw err;
+            rows.forEach((row) => {
+                let rowInfo = {};
+                if (hash[rowInfo['postid']] !== 1) {
+                    for (var i = 0; i < schema[table].length; i++) {
+                        rowInfo[schema[table][i]] = row[schema[table][i]];
+                    }
+                    data.push(rowInfo);  
+                    hash[rowInfo['postid']] = 1;  
+                }
+            });
+            callback(data);
+        });
+    }
+
     addUserOrUpdateScoreboard(table, username, userid, score, time, callback) {
         var table = 'scoreboard';
         var queryString = `SELECT * FROM ${table} where userid == "${userid}"`;
@@ -220,5 +243,12 @@ function print(data) {
 // scoreboardDatabase.addUserOrUpdateScoreboard("scoreboard", "allen", "1234", "120", "2020", print);
 // scoreboardDatabase.readTableAll("scoreboard", print);
 // scoreboardDatabase.closeDatabase();
+
+// searchDatabase = new QueryDatabase("./db/db.sqlite", schema);
+// searchDatabase.connectDatabase(() => {
+//     searchDatabase.searchPosts("posts", "test", print);
+// });
+
+
 module.exports.QueryDatabase = QueryDatabase;
 module.exports.schema = schema;

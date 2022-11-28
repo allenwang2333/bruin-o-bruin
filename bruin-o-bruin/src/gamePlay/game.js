@@ -3,7 +3,7 @@ import Hand from "./hand.js"
 import React, { useEffect } from "react"
 import axios from "axios";
 import randomPlaceBlock from "./randomPlace.js"
-import LooseDisplay from "./loosePage.js"
+import LoseDisplay from "./losePage.js"
 import WinDisplay from "./winPage.js"
 import HelpMessage from "./helpPopup.js"
 import NegativeDisplay from "./negativeScorePage.js";
@@ -68,7 +68,7 @@ class Game extends React.Component {
             helpImg: helpImg,
             remain: cLayout.count,
             remain_category: remain_category,
-            loose: false,
+            lose: false,
             win: false,
             score: 0,
             help: false,
@@ -197,7 +197,7 @@ class Game extends React.Component {
         if (handSize === 7) {
             clearInterval(this.state.intervalId);
             this.setState({
-                loose: true,
+                lose: true,
             })
         }
         Object.assign(category, categoryCopy);
@@ -303,9 +303,9 @@ class Game extends React.Component {
                     <Board board={this.state.board} coor={this.state.coor} off={this.state.off}
                         images={this.state.images} onClick={(i, r, c) => this.handleClick(i, r, c)} />
                     <Hand hand={this.state.hand} />
-                    <LooseDisplay loose={this.state.loose} />
+                    <LoseDisplay lose={this.state.lose} />
                     <WinDisplay win={this.state.win} />
-                    <NegativeDisplay loose={this.state.score < 0} />
+                    <NegativeDisplay lose={this.state.score < 0} />
                 </div>
             </div>
         )

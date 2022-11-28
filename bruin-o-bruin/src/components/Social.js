@@ -4,7 +4,7 @@ import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import logo from "./assets/joe_bruin.png";
 import Posts from "./LoadPosts";
-import { AiFillEdit } from "react-icons/ai";
+import { AiFillEdit, AiOutlineSearch} from "react-icons/ai";
 import { v4 as uuidv4 } from 'uuid';
 import styles from "./SocialStyle.css";
 
@@ -15,7 +15,7 @@ function Social() {
         if(!sessionStorage.getItem("userName")){
           window.location.href = "/";
         }
-      });
+    });
       
     const ref = useRef();
     const closeTooltip = () => ref.current.close();
@@ -80,6 +80,16 @@ function Social() {
         }
     }
 
+    function handleSearch(event) {
+        event.preventDefault();
+        console.log(event.currentTarget.elements.search.value);
+        sessionStorage.setItem("search", event.currentTarget.elements.search.value);
+    }
+
+    function clearSearch() {
+        sessionStorage.removeItem("search");
+    }
+
     return (
         <div className="social">
             <div className="social-header">
@@ -127,6 +137,25 @@ function Social() {
                                                     {status && <h4>{status}</h4>}
                                                     <button type="submit" id="submit" name="submit" className="btn btn-primary pull-right">Add Post</button>
                                                     <button type="reset" value="reset" onClick={setImage} className="btn btn-secondary pull-right">Clear</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Popup>
+                            </li>
+                            <li className="list-group-item fs-5 py-3 text-success shadow">
+                                <Popup repositionOnResize nested trigger={<span> <AiOutlineSearch /> Search Posts </span>}>
+                                <div>
+                                        <div className="col-md-15">
+                                            <div className="form-area">
+                                                <form onSubmit={handleSearch}>
+                                                    <br styles="clear:both" />
+                                                    <div>
+                                                        <input type="text" className="form-control" id="search" name="search" placeholder="Key word to search" required />
+                                                    </div>
+
+                                                    <button type="submit" id="submit" name="submit" className="btn btn-primary pull-right">Search</button>
+                                                    <button type="reset" value="reset" onClick={clearSearch} className="btn btn-secondary pull-right">Clear</button>
                                                 </form>
                                             </div>
                                         </div>

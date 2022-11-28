@@ -4,13 +4,13 @@ var path = require('path');
 var sqlite_db = require('./sqlite.js');
 const schema = require('./sqlite.js');
 const { v4: uuidv4 } = require('uuid');
-const multer  = require('multer')
+const multer = require('multer')
 
 console.log(schema.schema);
 const db = new sqlite_db.QueryDatabase('./db/db.sqlite', schema.schema);
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(express.static(path.resolve(__dirname, '../wwwroot/bruin-o-bruin/build')));
+app.use(express.static(path.resolve(__dirname, '../bruin-o-bruin/bruin-o-bruin/build')));
 app.use('/images', express.static('images'));
 
 app.post('/server_auth_signin', (req, res) => {
@@ -82,7 +82,7 @@ const storage = multer.diskStorage({
     cb(null, 'images/')
   },
   filename: (req, file, cb) => {
-    cb(null,  uuidv4() + file.originalname)
+    cb(null, uuidv4() + file.originalname)
   }
 });
 
@@ -96,9 +96,9 @@ app.post('/compose_pic', upload.single('file'), (req, res) => {
   var post_id = req.body.post_id;
   var post_likes = 0;
   const url = req.protocol + '://' + req.get('host')
-  var post_img = url+'/images/'+req.file.filename;
-  var post_time = new Date().toLocaleString('en-US', {timeZone: 'America/Los_Angeles'});
-  db.connectDatabase( ()=> {
+  var post_img = url + '/images/' + req.file.filename;
+  var post_time = new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles' });
+  db.connectDatabase(() => {
     db.addNewPost(table, post_title, author_name, author_id, post_body, post_likes, post_id, post_img, post_time, (postInfo) => {
       res.send("successfully posted");
       db.closeDatabase();
@@ -115,7 +115,7 @@ app.post('/compose_text', (req, res) => {
   var post_id = req.body.post_id;
   var post_likes = 0;
   var post_img = '';
-  var post_time = new Date().toLocaleString('en-US', {timeZone: 'America/Los_Angeles'});
+  var post_time = new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles' });
   db.connectDatabase(() => {
     db.addNewPost(table, post_title, author_name, author_id, post_body, post_likes, post_id, post_img, post_time, (postInfo) => {
       res.send("successfully posted");
@@ -135,7 +135,7 @@ app.post('/server_postLike', (req, res) => {
         res.send([{ "valid": true }, { "message": "successfully posted" }]);
       }
       else {
-        res.send([{"valid": false}, {"message": "failed to post"}]);
+        res.send([{ "valid": false }, { "message": "failed to post" }]);
       }
       db.closeDatabase();
     });
@@ -150,7 +150,7 @@ app.post('/success', (req, res) => {
   let winGame = [{ "valid": false }];
   db.connectDatabase(() => {
     db.addUserOrUpdateScoreboard("scoreboard", username, userid, score, time, (scoreInfo) => {
-      winGame = [{"valid": true}];
+      winGame = [{ "valid": true }];
       console.log(scoreInfo)
       res.send(winGame)
       db.closeDatabase();
@@ -158,32 +158,59 @@ app.post('/success', (req, res) => {
   });
 });
 
-app.get('/posts', (req, res) => {
-  db.connectDatabase(() => {
-    db.readTableAll("posts", (posts) => {
-      let blogPosts = [
-        { "valid": true },
-      ];
-  
-      for (var i = posts.length - 1; i >= 0; i--) {
-        var data = {};
-        data["postID"] = posts[i].postid;
-        data["title"] = posts[i].title;
-        data["body"] = posts[i].content;
-        data["author"] = posts[i].author;   
-        data["imgUrl"] = posts[i].image;
-        data["time"] = posts[i].time;
-        data["like"] = posts[i].likes;
-        blogPosts.push(data);
-      }
-      res.send(blogPosts);
-      db.closeDatabase();
+app.post('/posts', (req, res) => {
+  var key = req.body.search;
+  if (key === "") { // if search is empty, return all posts
+    db.connectDatabase(() => {
+      db.readTableAll("posts", (posts) => {
+        let blogPosts = [
+          { "valid": true },
+        ];
+
+        for (var i = posts.length - 1; i >= 0; i--) {
+          var data = {};
+          data["postID"] = posts[i].postid;
+          data["title"] = posts[i].title;
+          data["body"] = posts[i].content;
+          data["author"] = posts[i].author;
+          data["imgUrl"] = posts[i].image;
+          data["time"] = posts[i].time;
+          data["like"] = posts[i].likes;
+          blogPosts.push(data);
+        }
+        res.send(blogPosts);
+        db.closeDatabase();
+      });
     });
-  });
+  }
+  else { // if search is not empty, return posts that contain the search string
+    console.log("searching for " + key);
+    db.connectDatabase(() => {
+      db.searchPosts("posts", key, (posts) => {
+        let blogPosts = [
+          { "valid": true },
+        ];
+
+        for (var i = posts.length - 1; i >= 0; i--) {
+          var data = {};
+          data["postID"] = posts[i].postid;
+          data["title"] = posts[i].title;
+          data["body"] = posts[i].content;
+          data["author"] = posts[i].author;
+          data["imgUrl"] = posts[i].image;
+          data["time"] = posts[i].time;
+          data["like"] = posts[i].likes;
+          blogPosts.push(data);
+        }
+        res.send(blogPosts);
+        db.closeDatabase();
+      });
+    });
+  }
 });
 
 app.get('/scoreboard', (req, res) => {
-  let scores = [{"valid": true}];
+  let scores = [{ "valid": true }];
   db.connectDatabase(() => {
     db.readTableAll("scoreboard", (scoreInfo) => {
       for (var i = 0; i < scoreInfo.length; i++) {
@@ -205,7 +232,7 @@ app.get('/scoreboard', (req, res) => {
 });
 
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../wwwroot/bruin-o-bruin/build', 'index.html'));
+  res.sendFile(path.resolve(__dirname, '../bruin-o-bruin/bruin-o-bruin/build', 'index.html'));
 });
 
 const PORT = process.env.PORT || 8080;

@@ -12,14 +12,14 @@ class NegativeDisplay extends React.Component {
 
     render() {
         return (
-            <Popup open={this.props.loose} position="center" 
+            <Popup open={this.props.lose} position="center" 
                    closeOnDocumentClick={false} closeOnEscape={false} className='popup'>
                 <div className='message'>
                     <p>
                         Your score is negative.
                     </p>
                     <p>
-                        You loose the game.
+                        You lose the game.
                     </p>
                 </div>
                 <div className='function-buttons'>
