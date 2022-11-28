@@ -159,9 +159,8 @@ app.post('/success', (req, res) => {
 });
 
 app.post('/posts', (req, res) => {
-  var search = req.body.search;
-  if (search === "") { // if search is empty, return all posts
-    console.log("search is empty");
+  var key = req.body.search;
+  if (key === "") { // if search is empty, return all posts
     db.connectDatabase(() => {
       db.readTableAll("posts", (posts) => {
         let blogPosts = [
@@ -185,9 +184,9 @@ app.post('/posts', (req, res) => {
     });
   }
   else { // if search is not empty, return posts that contain the search string
-    console.log("searching for " + search);
+    console.log("searching for " + key);
     db.connectDatabase(() => {
-      db.readTableAll("posts", (posts) => {
+      db.searchPosts("posts", key, (posts) => {
         let blogPosts = [
           { "valid": true },
         ];
