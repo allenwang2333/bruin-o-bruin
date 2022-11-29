@@ -13,6 +13,7 @@ cd bruin-o-bruin/bruin-o-bruin
 npm install
 npm run build
 cd ..
+npm install
 npm run dev
 ```  
 
