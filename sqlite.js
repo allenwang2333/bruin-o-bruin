@@ -153,6 +153,7 @@ class QueryDatabase {
     }
 
     searchPosts(table, keyword, callback) {
+        // search for content, title and author, case insensitive
         var queryString = `SELECT * FROM ${table} WHERE ` +
         `title LIKE "%${keyword}%" ` +
         `OR content LIKE "%${keyword}%" ` + 
