@@ -19,7 +19,7 @@ function Item(data) {
                         <div className="rank_item__rank">{index + 1}</div>
                         <div className="rank_item__item">
                             <span className='name text-dark'><b>{truncateName(value.username)} </b>
-                                score: {value.score} time: {value.timeString}</span>
+                                score: {value.score}  time: {value.timeString}</span>
                         </div>
                     </div>
                 )
