@@ -49,7 +49,7 @@ export default function Board() {
 
 // To make leaders arrange in order of score
 function rank(data) {
-    // sort in dscending order
+    // sort in descending order
     return data.sort((a, b) => {
         if (a.score > b.score) {
             return -1;
