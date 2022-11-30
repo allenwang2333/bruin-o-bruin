@@ -130,7 +130,6 @@ app.post('/server_postLike', (req, res) => {
   var id = req.body.postID;
   db.connectDatabase(() => {
     db.likeOrUnlikePost(table, id, count, (postInfo) => {
-      // TODO: send new like count to front end
       if (Object.keys(postInfo).length !== 0) {
         res.send([{ "valid": true }, { "message": "successfully posted" }]);
       }
@@ -143,13 +142,14 @@ app.post('/server_postLike', (req, res) => {
 });
 
 app.post('/success', (req, res) => {
+  let table = "scoreboard";
   var username = req.body.username;
   var userid = req.body.userid;
   var score = req.body.score;
   var time = req.body.time;
   let winGame = [{ "valid": false }];
   db.connectDatabase(() => {
-    db.addUserOrUpdateScoreboard("scoreboard", username, userid, score, time, (scoreInfo) => {
+    db.addUserOrUpdateScoreboard(table, username, userid, score, time, (scoreInfo) => {
       winGame = [{ "valid": true }];
       console.log(scoreInfo)
       res.send(winGame)
