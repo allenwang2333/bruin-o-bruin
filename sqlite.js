@@ -25,7 +25,7 @@ class QueryDatabase {
             }
             //console.log("-------- Connected to " + this.filePath + " database --------");
         });
-        callback();
+        callback(); // callback to the next function, very important for not using async in JS.
     }
 
     readTableAll(table, callback) {
