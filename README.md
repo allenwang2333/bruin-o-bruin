@@ -4,9 +4,12 @@
 
 ## Group project for CS 35L Fall 2022
 
-inspired by 羊了个羊  
+A board elimination game web app created with Node.js inspired by 羊了个羊 (A similar type of elimination game from China)  
 
 ## Run locally
+
+Require Node.js v16.18.0
+
 ```
 git clone git@github.com:allenwang2333/bruin-o-bruin.git
 cd bruin-o-bruin/bruin-o-bruin
@@ -19,7 +22,7 @@ npm run dev
 
 Then, check http://localhost:8080/ to see the web-app 
 
-## Run on remote 
+## Run remotely
 
 Checkout https://bruinobruin.azurewebsites.net/ for Azure website
 
