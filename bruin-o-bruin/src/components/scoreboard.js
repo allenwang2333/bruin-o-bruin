@@ -61,11 +61,9 @@ function rank(data) {
             // TODO: Potential bug with time ranking, need to test
             // Earlier results has lower ranking than expected
             // Compare time of a and b in seconds
-            let aTime = a.time.split(":");
-            let bTime = b.time.split(":");
-            let aTimeInSec = parseInt(aTime[0]) * 60 + parseInt(aTime[1]);
-            let bTimeInSec = parseInt(bTime[0]) * 60 + parseInt(bTime[1]);
-            if (aTimeInSec < bTimeInSec) {
+            let aTime = parseInt(a.time);
+            let bTime = parseInt(b.time);
+            if (aTime < bTime) {
                 return -1;
             }
             else {
