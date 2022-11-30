@@ -130,7 +130,6 @@ app.post('/server_postLike', (req, res) => {
   var id = req.body.postID;
   db.connectDatabase(() => {
     db.likeOrUnlikePost(table, id, count, (postInfo) => {
-      // TODO: send new like count to front end
       if (Object.keys(postInfo).length !== 0) {
         res.send([{ "valid": true }, { "message": "successfully posted" }]);
       }
