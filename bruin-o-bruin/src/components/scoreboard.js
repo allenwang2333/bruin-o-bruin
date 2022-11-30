@@ -49,7 +49,7 @@ export default function Board() {
 
 // To make leaders arrange in order of score
 function rank(data) {
-    // sort in dscending order
+    // sort in descending order
     return data.sort((a, b) => {
         if (a.score > b.score) {
             return -1;
@@ -58,7 +58,10 @@ function rank(data) {
             return 1;
         }
         else {
-            if (a.time < b.time) {
+            // Compare time of a and b in seconds
+            let aTime = parseInt(a.time);
+            let bTime = parseInt(b.time);
+            if (aTime < bTime) {
                 return -1;
             }
             else {
