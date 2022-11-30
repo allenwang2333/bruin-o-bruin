@@ -58,8 +58,6 @@ function rank(data) {
             return 1;
         }
         else {
-            // TODO: Potential bug with time ranking, need to test
-            // Earlier results has lower ranking than expected
             // Compare time of a and b in seconds
             let aTime = parseInt(a.time);
             let bTime = parseInt(b.time);
