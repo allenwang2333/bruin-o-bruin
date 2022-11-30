@@ -58,6 +58,8 @@ function rank(data) {
             return 1;
         }
         else {
+            // TODO: Potential bug with time ranking, need to test
+            // Earlier results has lower ranking than expected
             if (a.time < b.time) {
                 return -1;
             }
