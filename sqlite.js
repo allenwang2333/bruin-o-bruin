@@ -25,7 +25,7 @@ class QueryDatabase {
             }
             //console.log("-------- Connected to " + this.filePath + " database --------");
         });
-        callback();
+        callback(); // callback to the next function, very important for not using async in JS.
     }
 
     readTableAll(table, callback) {
@@ -153,6 +153,7 @@ class QueryDatabase {
     }
 
     searchPosts(table, keyword, callback) {
+        // search for content, title and author, case insensitive
         var queryString = `SELECT * FROM ${table} WHERE ` +
         `title LIKE "%${keyword}%" ` +
         `OR content LIKE "%${keyword}%" ` + 
