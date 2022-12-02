@@ -36,7 +36,7 @@ async function handleSuccess(score, time) {
 class Game extends React.Component {
     constructor() {
         super();
-        const cLayout = require("./layout.json")
+        const cLayout = JSON.parse(JSON.stringify(require("./layout.json")))
         var board = cLayout.board;
         const coor = cLayout["board-coor"]
         var placeResult = randomPlaceBlock(board, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], cLayout.count)
